@@ -203,7 +203,7 @@ export const authOptions: NextAuthOptions = {
       },
       async authorize(credentials) {
         if (!credentials?.email || !credentials?.password) {
-          throw new Error("Please provide email and password");
+          throw new Error("Email and password are required");
         }
 
         const response = await login(credentials, Languages.ENGLISH as LanguageType);
@@ -214,69 +214,79 @@ export const authOptions: NextAuthOptions = {
             name: response.user.name,
             email: response.user.email,
             role: response.user.role as UserRole,
-            image: undefined,
-            phone: undefined,
-            country: undefined,
-            city: undefined,
-            postalCode: undefined,
-            streetAddress: undefined,
           };
         }
 
-        throw new Error(
-          JSON.stringify({
-            validationError: response.error,
-            responseError: response.message,
-          })
-        );
+        throw new Error(JSON.stringify({
+          validationError: response.error,
+          responseError: response.message,
+        }));
       },
     }),
   ],
   callbacks: {
     async jwt({ token, user }) {
+      // Initial sign-in: populate token with user data
       if (user) {
-        // Initial sign in
         return {
           id: user.id,
           name: user.name,
           email: user.email,
           role: user.role,
-          image: user.image,
-          phone: user.phone,
-          country: user.country,
-          city: user.city,
-          postalCode: user.postalCode,
-          streetAddress: user.streetAddress,
+          image: user.image ?? null,
+          phone: user.phone ?? null,
+          country: user.country ?? null,
+          city: user.city ?? null,
+          postalCode: user.postalCode ?? null,
+          streetAddress: user.streetAddress ?? null,
         } as JWT;
       }
 
-      // Return previous token if the user data has not changed
+      // Fetch fresh user data if token exists
       if (!token.email) return token;
 
-      // Fetch fresh user data
-      const dbUser = await db.user.findUnique({
-        where: { email: token.email },
-      });
+      try {
+        const dbUser = await db.user.findUnique({
+          where: { email: token.email },
+          select: {
+            id: true,
+            name: true,
+            email: true,
+            role: true,
+            image: true,
+            phone: true,
+            country: true,
+            city: true,
+            postalCode: true,
+            streetAddress: true,
+          },
+        });
 
-      if (!dbUser) return token;
+        if (!dbUser) return token;
 
-      return {
-        id: dbUser.id,
-        name: dbUser.name,
-        email: dbUser.email,
-        role: dbUser.role,
-        image: dbUser.image,
-        phone: dbUser.phone,
-        country: dbUser.country,
-        city: dbUser.city,
-        postalCode: dbUser.postalCode,
-        streetAddress: dbUser.streetAddress,
-      } as JWT;
+        return {
+          id: dbUser.id,
+          name: dbUser.name,
+          email: dbUser.email,
+          role: dbUser.role,
+          image: dbUser.image ?? null,
+          phone: dbUser.phone ?? null,
+          country: dbUser.country ?? null,
+          city: dbUser.city ?? null,
+          postalCode: dbUser.postalCode ?? null,
+          streetAddress: dbUser.streetAddress ?? null,
+        } as JWT;
+      } catch (error) {
+        console.error("❌ JWT Callback Error:", {
+          error: error instanceof Error ? error.message : "Unknown error",
+          timestamp: new Date().toISOString(),
+        });
+        return token;
+      }
     },
     session({ session, token }) {
       if (token) {
         session.user = {
-          ...session.user,
           id: token.id,
           name: token.name,
           email: token.email,
