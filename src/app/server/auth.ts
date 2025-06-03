@@ -1,4 +1,4 @@
-// import { Environments, Languages, Pages, Routes, UserRole } from "@/constants/enums";
+// import { Environments, Languages, Pages, Routes, UserRole } from "@/constants/enums";Add commentMore actions
 // import { LanguageType } from "@/i18n.config";
 // import { DefaultSession, User, type NextAuthOptions } from "next-auth";
 // import CredentialsProvider from "next-auth/providers/credentials";
@@ -191,22 +191,15 @@ export const authOptions: NextAuthOptions = {
     CredentialsProvider({
       name: "Credentials",
       credentials: {
-        email: {
-          label: "Email",
-          type: "email",
-          placeholder: "example@email.com",
-        },
-        password: {
-          label: "Password",
-          type: "password",
-        },
+        email: { label: "Email", type: "email", placeholder: "example@email.com" },
+        password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
-        if (!credentials?.email || !credentials?.password) {
-          throw new Error("Email and password are required");
-        }
-
         try {
+          if (!credentials?.email || !credentials?.password) {
+            throw new Error("Email and password are required");
+          }
+
           const response = await login(credentials, Languages.ENGLISH as LanguageType);
 
           if (response.status === 200 && response.user) {
@@ -223,8 +216,11 @@ export const authOptions: NextAuthOptions = {
             responseError: response.message,
           }));
         } catch (error) {
-          console.error("Auth Error:", error);
-          throw new Error("Authentication failed. Please try again.");
+          console.error("❌ Authorize Error:", {
+            error: error instanceof Error ? error.message : "Unknown error",
+            timestamp: new Date().toISOString(),
+          });
+          throw error;
         }
       },
     }),
@@ -265,7 +261,10 @@ export const authOptions: NextAuthOptions = {
           },
         });
 
-        if (!dbUser) return token;
+        if (!dbUser) {
+          console.warn("❌ User not found in JWT callback, token unchanged", { email: token.email });
+          return token;
+        }
 
         return {
           id: dbUser.id,
@@ -280,26 +279,37 @@ export const authOptions: NextAuthOptions = {
           streetAddress: dbUser.streetAddress ?? null,
         } as JWT;
       } catch (error) {
-        console.error("JWT Callback Error:", error);
+        console.error("❌ JWT Callback Error:", {
+          error: error instanceof Error ? error.message : "Unknown error",
+          timestamp: new Date().toISOString(),
+        });
         return token;
       }
     },
-    session({ session, token }) {
-      if (token) {
-        session.user = {
-          id: token.id,
-          name: token.name,
-          email: token.email,
-          role: token.role,
-          image: token.image,
-          phone: token.phone,
-          country: token.country,
-          city: token.city,
-          postalCode: token.postalCode,
-          streetAddress: token.streetAddress,
-        };
+    async session({ session, token }) {
+      try {
+        if (token) {
+          session.user = {
+            id: token.id,
+            name: token.name,
+            email: token.email,
+            role: token.role,
+            image: token.image,
+            phone: token.phone,
+            country: token.country,
+            city: token.city,
+            postalCode: token.postalCode,
+            streetAddress: token.streetAddress,
+          };
+        }
+        return session;
+      } catch (error) {
+        console.error("❌ Session Callback Error:", {
+          error: error instanceof Error ? error.message : "Unknown error",
+          timestamp: new Date().toISOString(),
+        });
+        return session;
       }
-      return session;
     },
   },
   session: {
@@ -308,8 +318,8 @@ export const authOptions: NextAuthOptions = {
     updateAge: 24 * 60 * 60, // 1 day
   },
   pages: {
-    signIn: `/${Routes.AUTH}/${Pages.LOGIN}`,
-    error: `/${Routes.AUTH}/error`,
+    signIn: `/${Routes.AUTH}/${Pages.LOGIN}`, // e.g., /auth/login
+    error: `/${Routes.AUTH}/${Pages.ERROR}`, // e.g., /auth/error
   },
   secret: process.env.NEXTAUTH_SECRET,
   debug: process.env.NODE_ENV === Environments.DEV,

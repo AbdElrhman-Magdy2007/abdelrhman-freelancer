@@ -3,8 +3,8 @@
   "installCommand": "npm install",
   "framework": "nextjs",
   "env": {
-    "NEXTAUTH_URL": "https://abdelrhman-portfolio-abdo1234.vercel.app",
-    "NEXT_PUBLIC_API_URL": "https://abdelrhman-portfolio-abdo1234.vercel.app",
+    "NEXTAUTH_URL": "https://portfolio-abdelrhman-abdo1234.vercel.app",
+    "NEXT_PUBLIC_API_URL": "https://portfolio-abdelrhman-abdo1234.vercel.app",
     "NODE_ENV": "production"
   },
   "headers": [
@@ -24,6 +24,16 @@
           "value": "1; mode=block"
         }
       ]
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/api/:path*",
+      "destination": "/api/:path*"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/"
     }
   ]
 } 
