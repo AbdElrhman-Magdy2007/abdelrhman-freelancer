@@ -186,7 +186,7 @@ declare module "next-auth/jwt" {
 
 // NextAuth.js Configuration
 export const authOptions: NextAuthOptions = {
-  adapter: PrismaAdapter(db), // Use Prisma with Neon
+  adapter: PrismaAdapter(db),
   providers: [
     CredentialsProvider({
       name: "Credentials",
@@ -206,46 +206,49 @@ export const authOptions: NextAuthOptions = {
           throw new Error("Email and password are required");
         }
 
-        const response = await login(credentials, Languages.ENGLISH as LanguageType);
+        try {
+          const response = await login(credentials, Languages.ENGLISH as LanguageType);
 
-        if (response.status === 200 && response.user) {
-          return {
-            id: response.user.id,
-            name: response.user.name,
-            email: response.user.email,
-            role: response.user.role as UserRole,
-          };
+          if (response.status === 200 && response.user) {
+            return {
+              id: response.user.id,
+              name: response.user.name,
+              email: response.user.email,
+              role: response.user.role as UserRole,
+            };
+          }
+
+          throw new Error(JSON.stringify({
+            validationError: response.error,
+            responseError: response.message,
+          }));
+        } catch (error) {
+          console.error("Auth Error:", error);
+          throw new Error("Authentication failed. Please try again.");
         }
-
-        throw new Error(JSON.stringify({
-          validationError: response.error,
-          responseError: response.message,
-        }));
       },
     }),
   ],
   callbacks: {
     async jwt({ token, user }) {
-      // Initial sign-in: populate token with user data
-      if (user) {
-        return {
-          id: user.id,
-          name: user.name,
-          email: user.email,
-          role: user.role,
-          image: user.image ?? null,
-          phone: user.phone ?? null,
-          country: user.country ?? null,
-          city: user.city ?? null,
-          postalCode: user.postalCode ?? null,
-          streetAddress: user.streetAddress ?? null,
-        } as JWT;
-      }
-
-      // Fetch fresh user data if token exists
-      if (!token.email) return token;
-
       try {
+        if (user) {
+          return {
+            id: user.id,
+            name: user.name,
+            email: user.email,
+            role: user.role,
+            image: user.image ?? null,
+            phone: user.phone ?? null,
+            country: user.country ?? null,
+            city: user.city ?? null,
+            postalCode: user.postalCode ?? null,
+            streetAddress: user.streetAddress ?? null,
+          } as JWT;
+        }
+
+        if (!token.email) return token;
+
         const dbUser = await db.user.findUnique({
           where: { email: token.email },
           select: {
@@ -277,10 +280,7 @@ export const authOptions: NextAuthOptions = {
           streetAddress: dbUser.streetAddress ?? null,
         } as JWT;
       } catch (error) {
-        console.error("❌ JWT Callback Error:", {
-          error: error instanceof Error ? error.message : "Unknown error",
-          timestamp: new Date().toISOString(),
-        });
+        console.error("JWT Callback Error:", error);
         return token;
       }
     },
@@ -309,6 +309,7 @@ export const authOptions: NextAuthOptions = {
   },
   pages: {
     signIn: `/${Routes.AUTH}/${Pages.LOGIN}`,
+    error: `/${Routes.AUTH}/error`,
   },
   secret: process.env.NEXTAUTH_SECRET,
   debug: process.env.NODE_ENV === Environments.DEV,
