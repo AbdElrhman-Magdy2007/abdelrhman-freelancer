@@ -131,6 +131,12 @@
       "namedRegex": "^/admin/users(?:/)?$"
     },
     {
+      "page": "/auth/error",
+      "regex": "^/auth/error(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/auth/error(?:/)?$"
+    },
+    {
       "page": "/auth/signin",
       "regex": "^/auth/signin(?:/)?$",
       "routeKeys": {},
