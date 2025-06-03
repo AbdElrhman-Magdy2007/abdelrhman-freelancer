@@ -230,17 +230,12 @@ export const authOptions: NextAuthOptions = {
       try {
         if (user) {
           return {
+            ...token,
             id: user.id,
             name: user.name,
             email: user.email,
             role: user.role,
-            image: user.image ?? null,
-            phone: user.phone ?? null,
-            country: user.country ?? null,
-            city: user.city ?? null,
-            postalCode: user.postalCode ?? null,
-            streetAddress: user.streetAddress ?? null,
-          } as JWT;
+          };
         }
 
         if (!token.email) return token;
@@ -261,23 +256,21 @@ export const authOptions: NextAuthOptions = {
           },
         });
 
-        if (!dbUser) {
-          console.warn("❌ User not found in JWT callback, token unchanged", { email: token.email });
-          return token;
-        }
+        if (!dbUser) return token;
 
         return {
+          ...token,
           id: dbUser.id,
           name: dbUser.name,
           email: dbUser.email,
           role: dbUser.role,
-          image: dbUser.image ?? null,
-          phone: dbUser.phone ?? null,
-          country: dbUser.country ?? null,
-          city: dbUser.city ?? null,
-          postalCode: dbUser.postalCode ?? null,
-          streetAddress: dbUser.streetAddress ?? null,
-        } as JWT;
+          image: dbUser.image,
+          phone: dbUser.phone,
+          country: dbUser.country,
+          city: dbUser.city,
+          postalCode: dbUser.postalCode,
+          streetAddress: dbUser.streetAddress,
+        };
       } catch (error) {
         console.error("❌ JWT Callback Error:", {
           error: error instanceof Error ? error.message : "Unknown error",
@@ -318,8 +311,8 @@ export const authOptions: NextAuthOptions = {
     updateAge: 24 * 60 * 60, // 1 day
   },
   pages: {
-    signIn: `/${Routes.AUTH}/${Pages.LOGIN}`, // e.g., /auth/login
-    error: `/${Routes.AUTH}/${Pages.ERROR}`, // e.g., /auth/error
+    signIn: `/${Routes.AUTH}/${Pages.LOGIN}`,
+    error: `/${Routes.AUTH}/${Pages.ERROR}`,
   },
   secret: process.env.NEXTAUTH_SECRET,
   debug: process.env.NODE_ENV === Environments.DEV,
