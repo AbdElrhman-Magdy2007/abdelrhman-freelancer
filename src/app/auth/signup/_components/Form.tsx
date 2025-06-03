@@ -200,6 +200,8 @@ function RegisterForm() {
               <FormFields
                 {...field}
                 type={field.type as InputTypes}
+                pattern=".*"
+                ariaLabel={field.name}
                 label={
                   field.name === 'email' ? 'Email' :
                   field.name === 'password' ? 'Password' :
