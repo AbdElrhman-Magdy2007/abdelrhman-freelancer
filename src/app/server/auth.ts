@@ -235,10 +235,10 @@ export const authOptions: NextAuthOptions = {
             name: user.name,
             email: user.email,
             role: user.role,
-          };
+          } as JWT;
         }
 
-        if (!token.email) return token;
+        if (!token.email) return token as JWT;
 
         const dbUser = await db.user.findUnique({
           where: { email: token.email },
@@ -256,7 +256,7 @@ export const authOptions: NextAuthOptions = {
           },
         });
 
-        if (!dbUser) return token;
+        if (!dbUser) return token as JWT;
 
         return {
           ...token,
@@ -270,7 +270,7 @@ export const authOptions: NextAuthOptions = {
           city: dbUser.city,
           postalCode: dbUser.postalCode,
           streetAddress: dbUser.streetAddress,
-        };
+        } as JWT;
       } catch (error) {
         console.error("❌ JWT Callback Error:", {
           error: error instanceof Error ? error.message : "Unknown error",
