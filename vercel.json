@@ -3,8 +3,8 @@
   "installCommand": "npm install",
   "framework": "nextjs",
   "env": {
-    "NEXTAUTH_URL": "https://portfolio-abdelrhman-a1223.vercel.app",
-    "NEXT_PUBLIC_API_URL": "https://portfolio-abdelrhman-a1223.vercel.app",
+    "NEXTAUTH_URL": "https://portfolio-abdelrhman-a222.vercel.app",
+    "NEXT_PUBLIC_API_URL": "https://portfolio-abdelrhman-a222.vercel.app",
     "NODE_ENV": "production"
   },
   "headers": [
