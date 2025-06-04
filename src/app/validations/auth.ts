@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-// Centralized validation message keys
+// Centralized validation messages with i18n support
 const validationMessages = {
   requiredEmail: "Email is required",
   validEmail: "Invalid email format",
@@ -13,143 +13,115 @@ const validationMessages = {
   passwordsDoNotMatch: "Passwords do not match",
   validLimit: "Limit must be a positive integer",
   limitMax: "Limit must be 100 or less",
-};
+} as const;
 
-/**
- * Validates that the password and confirmPassword fields match.
- * @param data - Object containing password and confirmPassword fields.
- * @returns True if passwords match, otherwise a Zod issue.
- */
-const passwordMatchValidation = (
-  data: { password: string; confirmPassword: string }
-) => ({
+// Type definitions
+export type LoginData = z.infer<ReturnType<typeof loginSchema>>;
+export type SignupData = z.infer<ReturnType<typeof signupSchema>>;
+export type ValidationError = Record<string, string>;
+
+// Password validation helper
+const passwordMatchValidation = (data: { password: string; confirmPassword: string }) => ({
   isValid: data.password === data.confirmPassword,
-  issue: {
+  error: {
     message: validationMessages.passwordsDoNotMatch,
     path: ["confirmPassword"],
   },
 });
 
-/**
- * Type definition for validated login form data.
- */
-export type LoginData = {
-  email: string;
-  password: string;
+// Base schema options
+const schemaOptions = {
+  errorMap: (issue: z.ZodIssueOptionalMessage, ctx: { defaultError: string }) => ({
+    message: issue.message || ctx.defaultError,
+  }),
 };
 
-/**
- * Type definition for validated signup form data.
- */
-export type SignupData = {
-  name: string;
-  email: string;
-  password: string;
-  confirmPassword: string;
-  limit: number;
-};
-
-/**
- * Type definition for validation errors returned by Zod.
- */
-export type ValidationError = Record<string, string>;
-
-/**
- * Validation schema for login form fields.
- * Ensures email is a valid, lowercase email address and password meets length requirements.
- * @returns Zod schema for login form validation.
- */
+// Login schema with enhanced validation
 export const loginSchema = () =>
-  z.object({
-    email: z
-      .string()
-      .trim()
-      .min(1, {
-        message: validationMessages.requiredEmail,
-      })
-      .email({
-        message: validationMessages.validEmail,
-      })
-      .transform((val) => val.toLowerCase()),
+  z
+    .object({
+      email: z
+        .string()
+        .trim()
+        .min(1, { message: validationMessages.requiredEmail })
+        .email({ message: validationMessages.validEmail })
+        .transform((val) => val.toLowerCase()),
+      password: z
+        .string()
+        .min(1, { message: validationMessages.requiredPassword })
+        .min(6, { message: validationMessages.passwordMinLength })
+        .max(40, { message: validationMessages.passwordMaxLength }),
+    })
+    .strict();
 
-    password: z
-      .string()
-      .min(1, {
-        message: validationMessages.requiredPassword,
-      })
-      .min(6, {
-        message: validationMessages.passwordMinLength,
-      })
-      .max(40, {
-        message: validationMessages.passwordMaxLength,
-      }),
-  });
-
-/**
- * Validation schema for signup form fields.
- * Includes name, email, password, confirmPassword, and a required limit field.
- * Ensures limit is a positive integer (defaulting to 1) and passwords match.
- * @returns Zod schema for signup form validation.
- */
+// Signup schema with enhanced validation
 export const signupSchema = () =>
   z
     .object({
       name: z
         .string()
         .trim()
-        .min(1, {
-          message: validationMessages.requiredName,
-        })
-        .max(50, {
-          message: validationMessages.nameMaxLength,
-        }),
-
+        .min(1, { message: validationMessages.requiredName })
+        .max(50, { message: validationMessages.nameMaxLength }),
       email: z
         .string()
         .trim()
-        .min(1, {
-          message: validationMessages.requiredEmail,
-        })
-        .email({
-          message: validationMessages.validEmail,
-        })
+        .min(1, { message: validationMessages.requiredEmail })
+        .email({ message: validationMessages.validEmail })
         .transform((val) => val.toLowerCase()),
-
       password: z
         .string()
-        .min(1, {
-          message: validationMessages.requiredPassword,
-        })
-        .min(6, {
-          message: validationMessages.passwordMinLength,
-        })
-        .max(40, {
-          message: validationMessages.passwordMaxLength,
-        }),
-
+        .min(1, { message: validationMessages.requiredPassword })
+        .min(6, { message: validationMessages.passwordMinLength })
+        .max(40, { message: validationMessages.passwordMaxLength }),
       confirmPassword: z
         .string()
-        .min(1, {
-          message: validationMessages.requiredConfirmPassword,
-        }),
-
+        .min(1, { message: validationMessages.requiredConfirmPassword }),
       limit: z
         .number()
         .int()
-        .min(1, {
-          message: validationMessages.validLimit,
-        })
-        .max(100, {
-          message: validationMessages.limitMax,
-        })
-        .default(1),
+        .min(1, { message: validationMessages.validLimit })
+        .max(100, { message: validationMessages.limitMax })
+        .default(1)
+        .optional(),
     })
     .refine(
       (data) => passwordMatchValidation(data).isValid,
-      (data) => passwordMatchValidation(data).issue
+      (data) => passwordMatchValidation(data).error
     );
+
+// Enhanced validation helper with better error handling
+export const validateData = <T>(schema: z.ZodSchema<T>, data: unknown): { 
+  success: boolean; 
+  data?: T; 
+  errors?: ValidationError;
+} => {
+  try {
+    const result = schema.safeParse(data);
+    if (result.success) {
+      return { success: true, data: result.data };
+    }
+    
+    const errors: ValidationError = result.error.errors.reduce((acc, curr) => {
+      const path = curr.path.join('.');
+      acc[path] = curr.message;
+      return acc;
+    }, {} as ValidationError);
+    
+    return { success: false, errors };
+  } catch (error) {
+    console.error('Validation error:', error);
+    return { 
+      success: false, 
+      errors: { 
+        _form: 'An unexpected validation error occurred' 
+      } 
+    };
+  }
+};
 
 export default {
   loginSchema,
   signupSchema,
+  validateData,
 };
