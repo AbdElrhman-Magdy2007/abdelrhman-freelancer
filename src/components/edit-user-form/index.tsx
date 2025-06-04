@@ -177,6 +177,8 @@ function EditUserForm({ user }: { user: Session["user"] }) {
                 error={state?.error?.[field.name]?.join(', ')}
                 readonly={field.type === InputTypes.EMAIL}
                 disabled={pending}
+                pattern={field.type === InputTypes.EMAIL ? '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$' : '^.{2,}$'}
+                ariaLabel={`${field.name} input field`}
               />
             </motion.div>
           );

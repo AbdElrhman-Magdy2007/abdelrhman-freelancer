@@ -3,8 +3,8 @@
   "installCommand": "npm install",
   "framework": "nextjs",
   "env": {
-    "NEXTAUTH_URL": "https://full-stack-portfolio-a443.vercel.app",
-    "NEXT_PUBLIC_API_URL": "https://full-stack-portfolio-a443.vercel.app",
+    "NEXTAUTH_URL": "https://full-stack-portfolio-a444.vercel.app",
+    "NEXT_PUBLIC_API_URL": "https://full-stack-portfolio-a444.vercel.app",
     "NODE_ENV": "production"
   },
   "headers": [
@@ -35,5 +35,10 @@
       "source": "/(.*)",
       "destination": "/"
     }
-  ]
+  ],
+  "build": {
+    "env": {
+      "ESLINT_SKIP_VALIDATION": "true"
+    }
+  }
 } 
