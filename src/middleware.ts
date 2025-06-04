@@ -10,15 +10,7 @@ export default withAuth(
   async function middleware(request: NextRequest) {
     const url = request.nextUrl.clone();
     const pathname = url.pathname;
-
-    // Skip middleware for API routes, static files, and public assets
-    if (
-      pathname.startsWith("/api") ||
-      pathname.startsWith("/_next") ||
-      pathname.includes(".")
-    ) {
-      return NextResponse.next();
-    }
+    console.log("Pathname:", pathname);
 
     const requestHeaders = new Headers(request.headers);
     requestHeaders.set("x-url", request.url);
@@ -33,32 +25,26 @@ export default withAuth(
 
     // Define route types
     const isAuthPage = pathname.startsWith(`/${Routes.AUTH}`);
-    // تحسين التحقق من صفحة الخطأ لتشمل query params
-    const isErrorPage = pathname.startsWith(`/${Routes.AUTH}/${Pages.ERROR}`);
     const protectedRoutes = [Routes.PROFILE, Routes.ADMIN];
     const isProtectedRoute = protectedRoutes.some((route) =>
       pathname.startsWith(`/${route}`)
     );
 
-    // Skip middleware for error page to prevent redirect loops
-    if (isErrorPage) {
-      return response;
-    }
-
     // Redirect unauthenticated users trying to access protected routes
     if (!isAuthenticated && isProtectedRoute) {
-      const redirectUrl = new URL(`/${Routes.AUTH}/${Pages.LOGIN}`, request.url);
-      redirectUrl.searchParams.set("callbackUrl", pathname);
+      const redirectUrl = new URL(`/${Routes.AUTH}${Pages.LOGIN}`, request.url);
+      console.log("Redirecting to Login:", redirectUrl.toString());
       return NextResponse.redirect(redirectUrl);
     }
 
-    // Redirect authenticated users trying to access auth pages (except error page)
+    // Redirect authenticated users trying to access auth pages
     if (isAuthPage && isAuthenticated) {
       const role = token?.role as UserRole;
       const redirectUrl =
         role === UserRole.ADMIN
           ? new URL(`/${Routes.ADMIN}`, request.url)
           : new URL(`/${Routes.PROFILE}`, request.url);
+      console.log("Redirecting Authenticated User to:", redirectUrl.toString());
       return NextResponse.redirect(redirectUrl);
     }
 
@@ -69,6 +55,7 @@ export default withAuth(
       token?.role !== UserRole.ADMIN
     ) {
       const redirectUrl = new URL(`/${Routes.PROFILE}`, request.url);
+      console.log("Redirecting Non-Admin to Profile:", redirectUrl.toString());
       return NextResponse.redirect(redirectUrl);
     }
 
@@ -76,19 +63,7 @@ export default withAuth(
   },
   {
     callbacks: {
-      authorized: async ({ req, token }) => {
-        // تحسين التحقق من المصادقة
-        const pathname = req.nextUrl.pathname;
-        if (
-          pathname.startsWith("/api") ||
-          pathname.startsWith("/_next") ||
-          pathname.includes(".") ||
-          pathname.startsWith(`/${Routes.AUTH}`)
-        ) {
-          return true;
-        }
-        return !!token;
-      },
+      authorized: () => true, // Let middleware handle checks
     },
   }
 );
