@@ -174,10 +174,8 @@ export const authOptions: NextAuthOptions = {
       }
     },
     async redirect({ url, baseUrl }) {
-      // منع التوجيه المزدوج إلى صفحات المصادقة
-      if (url.startsWith(`/${Routes.AUTH}`)) {
-        return url;
-      }
+      // By default, redirect to the base URL on success
+      // NextAuth will handle redirects for errors or other flows automatically
       return baseUrl;
     },
   },
