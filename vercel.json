@@ -1,9 +1,12 @@
 {
-  "buildCommand": "prisma generate && next build",
+  "version": 2,
+  "buildCommand": "next build",
+  "devCommand": "next dev",
   "installCommand": "npm install",
   "framework": "nextjs",
+  "regions": ["fra1"],
   "env": {
-    "NEXTAUTH_URL": "https://full-stack-portfolio-a333-i49walgev.vercel.app",
+    "NEXTAUTH_URL": "https://full-stack-portfolio-a333-2e72oea0q.vercel.app",
     "NEXT_PUBLIC_API_URL": "https://full-stack-portfolio-a333-i49walgev.vercel.app",
     "NODE_ENV": "production"
   },
@@ -27,6 +30,10 @@
     }
   ],
   "rewrites": [
+    {
+      "source": "/api/auth/error",
+      "destination": "/auth/error"
+    },
     {
       "source": "/api/:path*",
       "destination": "/api/:path*"

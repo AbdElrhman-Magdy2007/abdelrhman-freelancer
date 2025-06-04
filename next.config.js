@@ -2,6 +2,7 @@
 const nextConfig = {
   // Enable React strict mode for better development experience
   reactStrictMode: true,
+  swcMinify: true,
 
   // Configure security headers
   async headers() {
@@ -44,7 +45,8 @@ const nextConfig = {
 
   // Configure image optimization
   images: {
-    domains: [],
+    domains: ['full-stack-portfolio-a333-2e72oea0q.vercel.app'],
+    unoptimized: true,
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
     formats: ['image/webp'],
@@ -55,10 +57,8 @@ const nextConfig = {
   experimental: {
     optimizeCss: true,
     scrollRestoration: true,
-    serverActions: {
-      allowedOrigins: ['localhost:3000'],
-      bodySizeLimit: '2mb'
-    }
+    serverActions: true,
+    serverComponentsExternalPackages: ['mongoose'],
   },
 
   // Configure environment variables
@@ -81,9 +81,22 @@ const nextConfig = {
   output: 'standalone',
 
   // Configure webpack
-  webpack: (config, { isServer }) => {
-    // Add any custom webpack configurations here
+  webpack: (config) => {
+    config.experiments = {
+      ...config.experiments,
+      topLevelAwait: true,
+    };
     return config;
+  },
+
+  async redirects() {
+    return [
+      {
+        source: '/api/auth/error',
+        destination: '/auth/error',
+        permanent: true,
+      }
+    ];
   },
 };
 
