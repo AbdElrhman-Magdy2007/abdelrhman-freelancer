@@ -3,6 +3,7 @@ import NextAuth from "next-auth";
 import { NextRequest } from "next/server";
 import { loginSchema } from "@/app/validations/auth";
 import { RateLimiter } from "@/lib/rate-limiter";
+import { authConfig } from "@/config/auth.config";
 
 // Initialize rate limiter
 const rateLimiter = new RateLimiter({
@@ -57,8 +58,23 @@ const createSuccessResponse = (data: any, status: number = 200) => {
   );
 };
 
-// Initialize NextAuth handler
-const handler = NextAuth(authOptions);
+// Initialize NextAuth handler with custom error handling
+const handler = NextAuth({
+  ...authOptions,
+  pages: {
+    ...authOptions.pages,
+    error: '/auth/error', // توجيه الأخطاء إلى صفحة الخطأ المخصصة
+  },
+  callbacks: {
+    ...authOptions.callbacks,
+    async redirect({ url, baseUrl }) {
+      // التحقق من أن عنوان URL آمن
+      if (url.startsWith(baseUrl)) return url;
+      if (url.startsWith('/')) return `${baseUrl}${url}`;
+      return baseUrl;
+    },
+  },
+});
 
 // Middleware for rate limiting and security checks
 async function withSecurityMiddleware(request: NextRequest, handler: Function) {
@@ -88,7 +104,7 @@ async function withSecurityMiddleware(request: NextRequest, handler: Function) {
     return await handler(request);
   } catch (error) {
     console.error('Security Middleware Error:', error);
-    return createErrorResponse('Internal server error');
+    return createErrorResponse(authConfig.messages.errors.default);
   }
 }
 
@@ -107,12 +123,12 @@ export async function GET(request: NextRequest) {
       console.error('Auth GET Error:', error);
       if (error instanceof Error && error.message.includes('configuration')) {
         return createErrorResponse(
-          'Authentication configuration error. Please check your environment variables.',
+          authConfig.messages.errors.configuration,
           500,
           { error: error.message }
         );
       }
-      return createErrorResponse('Authentication failed');
+      return createErrorResponse(authConfig.messages.errors.default);
     }
   });
 }
@@ -145,12 +161,12 @@ export async function POST(request: NextRequest) {
       console.error('Auth POST Error:', error);
       if (error instanceof Error && error.message.includes('configuration')) {
         return createErrorResponse(
-          'Authentication configuration error. Please check your environment variables.',
+          authConfig.messages.errors.configuration,
           500,
           { error: error.message }
         );
       }
-      return createErrorResponse('Authentication failed');
+      return createErrorResponse(authConfig.messages.errors.default);
     }
   });
 }

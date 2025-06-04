@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { getToken } from "next-auth/jwt";
 import { withAuth } from "next-auth/middleware";
 import { Routes, Pages, UserRole } from "./constants/enums";
+import { authConfig } from "@/config/auth.config";
 
 // تكوين الأمان
 const securityConfig = {
@@ -19,6 +20,7 @@ export default withAuth(
     try {
       const url = request.nextUrl.clone();
       const pathname = url.pathname;
+      const baseUrl = process.env.NEXTAUTH_URL || request.url.split('/').slice(0, 3).join('/');
       console.log("Pathname:", pathname);
 
       // إضافة رؤوس الأمان
@@ -48,7 +50,7 @@ export default withAuth(
 
       // إعادة توجيه المستخدمين غير المصادقين
       if (!isAuthenticated && isProtectedRoute) {
-        const redirectUrl = new URL(`/${Routes.AUTH}${Pages.LOGIN}`, request.url);
+        const redirectUrl = new URL(`/${Routes.AUTH}${Pages.LOGIN}`, baseUrl);
         redirectUrl.searchParams.set('callbackUrl', pathname);
         console.log("Redirecting to Login:", redirectUrl.toString());
         return NextResponse.redirect(redirectUrl);
@@ -59,7 +61,7 @@ export default withAuth(
         const role = token?.role as UserRole;
         const redirectUrl = new URL(
           role === UserRole.ADMIN ? `/${Routes.ADMIN}` : `/${Routes.PROFILE}`,
-          request.url
+          baseUrl
         );
         console.log("Redirecting Authenticated User to:", redirectUrl.toString());
         return NextResponse.redirect(redirectUrl);
@@ -71,7 +73,7 @@ export default withAuth(
         pathname.startsWith(`/${Routes.ADMIN}`) &&
         token?.role !== UserRole.ADMIN
       ) {
-        const redirectUrl = new URL(`/${Routes.PROFILE}`, request.url);
+        const redirectUrl = new URL(`/${Routes.PROFILE}`, baseUrl);
         console.log("Redirecting Non-Admin to Profile:", redirectUrl.toString());
         return NextResponse.redirect(redirectUrl);
       }
@@ -80,7 +82,7 @@ export default withAuth(
     } catch (error) {
       console.error('Middleware Error:', error);
       // في حالة حدوث خطأ، إعادة توجيه إلى صفحة الخطأ
-      const errorUrl = new URL(`/${Routes.AUTH}/${Pages.ERROR}`, request.url);
+      const errorUrl = new URL(`/${Routes.AUTH}/${Pages.ERROR}`, process.env.NEXTAUTH_URL || request.url);
       errorUrl.searchParams.set('error', 'Configuration');
       return NextResponse.redirect(errorUrl);
     }

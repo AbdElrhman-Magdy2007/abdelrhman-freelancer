@@ -1,6 +1,30 @@
 {
   "version": 4,
   "routes": {
+    "/auth/signin": {
+      "experimentalBypassFor": [
+        {
+          "type": "header",
+          "key": "Next-Action"
+        },
+        {
+          "type": "header",
+          "key": "content-type",
+          "value": "multipart/form-data;.*"
+        }
+      ],
+      "initialRevalidateSeconds": false,
+      "srcRoute": "/auth/signin",
+      "dataRoute": "/auth/signin.rsc",
+      "allowHeader": [
+        "host",
+        "x-matched-path",
+        "x-prerender-revalidate",
+        "x-prerender-revalidate-if-generated",
+        "x-next-revalidated-tags",
+        "x-next-revalidate-tag-token"
+      ]
+    },
     "/auth/error": {
       "experimentalBypassFor": [
         {
@@ -49,7 +73,7 @@
         "x-next-revalidate-tag-token"
       ]
     },
-    "/auth/signup": {
+    "/": {
       "experimentalBypassFor": [
         {
           "type": "header",
@@ -62,8 +86,8 @@
         }
       ],
       "initialRevalidateSeconds": false,
-      "srcRoute": "/auth/signup",
-      "dataRoute": "/auth/signup.rsc",
+      "srcRoute": "/",
+      "dataRoute": "/index.rsc",
       "allowHeader": [
         "host",
         "x-matched-path",
@@ -97,7 +121,7 @@
         "x-next-revalidate-tag-token"
       ]
     },
-    "/": {
+    "/auth/signup": {
       "experimentalBypassFor": [
         {
           "type": "header",
@@ -110,32 +134,8 @@
         }
       ],
       "initialRevalidateSeconds": false,
-      "srcRoute": "/",
-      "dataRoute": "/index.rsc",
-      "allowHeader": [
-        "host",
-        "x-matched-path",
-        "x-prerender-revalidate",
-        "x-prerender-revalidate-if-generated",
-        "x-next-revalidated-tags",
-        "x-next-revalidate-tag-token"
-      ]
-    },
-    "/auth/signin": {
-      "experimentalBypassFor": [
-        {
-          "type": "header",
-          "key": "Next-Action"
-        },
-        {
-          "type": "header",
-          "key": "content-type",
-          "value": "multipart/form-data;.*"
-        }
-      ],
-      "initialRevalidateSeconds": false,
-      "srcRoute": "/auth/signin",
-      "dataRoute": "/auth/signin.rsc",
+      "srcRoute": "/auth/signup",
+      "dataRoute": "/auth/signup.rsc",
       "allowHeader": [
         "host",
         "x-matched-path",
@@ -149,8 +149,8 @@
   "dynamicRoutes": {},
   "notFoundRoutes": [],
   "preview": {
-    "previewModeId": "b6cb4af0b2af983260b08900c8f79b48",
-    "previewModeSigningKey": "cadc333ba2cd3cce95e9e939f00b6425f54815e0b23f6655a1f55697d66f8ec8",
-    "previewModeEncryptionKey": "323b164fea28890098d5eca31e6ada196e685b9b799c8508e761d63c724eb806"
+    "previewModeId": "b93bb31761f6f5e2ca751a65f5fd997e",
+    "previewModeSigningKey": "a04f4dffe5c86fe65c0c0885c9d859944f34b242d377f91ab5f7b05ffa1586ff",
+    "previewModeEncryptionKey": "c017926dae2b22d622048f275061dc82afcfd635f3b9b493b425bcb03125c02a"
   }
 }

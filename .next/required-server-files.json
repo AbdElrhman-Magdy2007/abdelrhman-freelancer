@@ -2,9 +2,10 @@
   "version": 1,
   "config": {
     "env": {
-      "NEXT_PUBLIC_API_URL": "https://full-stack-portfolio-a333-i49walgev.vercel.app"
+      "NEXT_PUBLIC_API_URL": "https://full-stack-portfolio-a333-i49walgev.vercel.app",
+      "NEXTAUTH_URL": "https://full-stack-portfolio-a333-i49walgev.vercel.app",
+      "NEXTAUTH_SECRET": "60d665bff7695e6de1f0528f2d43376489f244dacf8f098279c870109ceac7c6"
     },
-    "webpack": null,
     "eslint": {
       "ignoreDuringBuilds": false
     },
