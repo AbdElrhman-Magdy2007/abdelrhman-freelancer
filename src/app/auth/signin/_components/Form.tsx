@@ -3,7 +3,7 @@
 import { useState, useRef, useCallback, useReducer, memo } from 'react';
 import { motion } from 'framer-motion';
 import { toast } from 'sonner';
-import { useParams, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { InputTypes, Pages } from '@/constants/enums';
 import useFormFields from '@/hooks/useFormFields';
 import { signIn } from 'next-auth/react';
@@ -41,7 +41,6 @@ const LoginForm = memo(() => {
   const [isFormValid, setIsFormValid] = useState(true);
   const [errors, dispatchErrors] = useReducer(errorsReducer, {});
   const [sparkles, setSparkles] = useState<{ id: number; x: number; y: number }[]>([]);
-  const params = useParams();
 
   const { getFormFields } = useFormFields({ slug: Pages.LOGIN });
   const formFields = getFormFields().map(field => ({
@@ -90,10 +89,7 @@ const LoginForm = memo(() => {
             const validationErrors = parsedError.validationError || {};
 
             dispatchErrors({ type: 'SET_ERRORS', payload: validationErrors });
-            if (
-              parsedError.responseError &&
-              parsedError.responseError !== lastToastMessage
-            ) {
+            if (parsedError.responseError && parsedError.responseError !== lastToastMessage) {
               toast.error(parsedError.responseError, {
                 style: toastStyles.error,
                 duration: 3000,
@@ -111,9 +107,7 @@ const LoginForm = memo(() => {
               setLastToastMessage('An unexpected error occurred');
             }
           }
-        }
-
-        if (res?.ok) {
+        } else if (res?.ok && !res.error) { // Strict check for success
           if ('Login successful' !== lastToastMessage) {
             toast.success('Login successful', {
               style: toastStyles.success,
@@ -122,7 +116,17 @@ const LoginForm = memo(() => {
             });
             setLastToastMessage('Login successful');
           }
-          router.replace('/');
+          router.replace('/'); // Redirect only on success
+        } else {
+          console.warn('Unexpected signIn response:', res);
+          if ('Login failed' !== lastToastMessage) {
+            toast.error('Login failed', {
+              style: toastStyles.error,
+              duration: 3000,
+              className: 'glass-card border-gradient animate-glow toast-error',
+            });
+            setLastToastMessage('Login failed');
+          }
         }
       } catch (error) {
         if ('An unexpected error occurred' !== lastToastMessage) {
@@ -231,6 +235,8 @@ const LoginForm = memo(() => {
               error={errors[field.name]?.[0]}
               disabled={isLoading}
               onValidationChange={handleValidationChange}
+              pattern={field.name === 'email' ? '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$' : '^.{6,}$'}
+              ariaLabel={field.name === 'email' ? 'Email input field' : 'Password input field'}
               className={clsx(
                 'w-full p-3 rounded-lg bg-slate-900/50 border border-slate-700',
                 'text-slate-300 placeholder-slate-500 focus:ring-2 focus:ring-blue-400',
@@ -269,6 +275,22 @@ const LoginForm = memo(() => {
           )}
         </Button>
       </motion.div>
+      {sparkles.map((sparkle) => (
+        <motion.div
+          key={sparkle.id}
+          className="sparkle absolute rounded-full"
+          style={{
+            left: sparkle.x,
+            top: sparkle.y,
+            width: 8,
+            height: 8,
+            background: 'linear-gradient(135deg, hsl(215 91% 70% / 0.8), hsl(271 81% 75% / 0.8))',
+          }}
+          initial={{ scale: 0, opacity: 1, rotate: 0 }}
+          animate={{ scale: 2, opacity: 0, rotate: 180 }}
+          transition={{ duration: 0.6, ease: 'easeOut' }}
+        />
+      ))}
     </form>
   );
 });

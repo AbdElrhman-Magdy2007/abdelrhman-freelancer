@@ -36,7 +36,7 @@ const CustomToast = ({ message, type, id }: { message: string; type: 'success' |
 
   const createSparkle = (x: number, y: number) => {
     const sparkleId = Date.now();
-    const size = Math.random() * 6 + 2; // Vary sparkle size between 2px and 8px
+    const size = Math.random() * 6 + 2;
     setSparkles((prev) => [
       ...prev,
       { id: sparkleId, x: x + Math.random() * 10 - 5, y: y + Math.random() * 10 - 5, size },
@@ -129,11 +129,7 @@ function RegisterForm() {
 
   // Handle notifications and redirection
   useEffect(() => {
-    if (
-      state.status &&
-      state.message &&
-      state.message !== lastToastMessage
-    ) {
+    if (state.status && state.message && state.message !== lastToastMessage) {
       const isSuccess = state.status === 201;
       toast.custom((t) => (
         <CustomToast message={state.message!} type={isSuccess ? 'success' : 'error'} id={t} />
@@ -147,11 +143,13 @@ function RegisterForm() {
       });
       setLastToastMessage(state.message);
 
-      if (isSuccess) {
+      if (isSuccess && !pending) {
         router.replace(`/${Routes.AUTH}/${Pages.LOGIN}`);
+      } else if (!isSuccess && state.status >= 400) {
+        console.warn('Signup failed with status:', state.status, state.error);
       }
     }
-  }, [router, state.message, state.status, lastToastMessage]);
+  }, [router, state.message, state.status, lastToastMessage, pending]);
 
   const createSparkle = (x: number, y: number) => {
     const id = Date.now();
@@ -297,8 +295,7 @@ function RegisterForm() {
         animate="visible"
         custom={getFormFields().length + 1}
       >
-        
-        {/* <span className="sparkle-container relative inline-block">
+        <span className="sparkle-container relative inline-block">
           <Link
             href={`/${Routes.AUTH}/${Pages.LOGIN}`}
             className={clsx(
@@ -310,7 +307,7 @@ function RegisterForm() {
             <span className="relative z-10">Sign In</span>
             <span className="absolute inset-0 bg-gradient-to-r from-blue-400/50 to-purple-400/50 opacity-0 group-hover:opacity-50 transition-opacity duration-600 rounded-full" />
           </Link>
-        </span> */}
+        </span>
       </motion.div>
       {sparkles.map((sparkle) => (
         <motion.div
