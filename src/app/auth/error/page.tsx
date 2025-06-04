@@ -12,10 +12,16 @@ export default function AuthError() {
   useEffect(() => {
     if (!searchParams) return;
     
-    const error = searchParams.get('error');
+    const errorType = searchParams.get('error');
+    const specificMessage = searchParams.get('message');
     const errorMessages = authConfig.messages.errors;
 
-    switch (error) {
+    if (specificMessage) {
+      setErrorMessage(specificMessage);
+      return;
+    }
+
+    switch (errorType) {
       case 'Configuration':
         setErrorMessage(errorMessages.configuration);
         break;
@@ -47,7 +53,7 @@ export default function AuthError() {
         setErrorMessage('فشل إرسال بريد إلكتروني للتحقق');
         break;
       case 'CredentialsSignin':
-        setErrorMessage('فشل تسجيل الدخول. يرجى التحقق من بيانات الاعتماد');
+        setErrorMessage(errorMessages.default);
         break;
       case 'SessionRequired':
         setErrorMessage('يجب تسجيل الدخول للوصول إلى هذه الصفحة');
@@ -60,11 +66,11 @@ export default function AuthError() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-8">
-        <div>
-          <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
+        <div className="text-center">
+          <h2 className="mt-6 text-3xl font-extrabold text-gray-900">
             خطأ في المصادقة
           </h2>
-          <p className="mt-2 text-center text-sm text-gray-600">
+          <p className="mt-2 text-sm text-red-600">
             {errorMessage}
           </p>
         </div>
