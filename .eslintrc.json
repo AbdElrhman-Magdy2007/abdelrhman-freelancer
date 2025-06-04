@@ -6,5 +6,9 @@
   "rules": {
     "react/no-unescaped-entities": "off",
     "@next/next/no-img-element": "off"
+  },
+  "parserOptions": {
+    "ecmaVersion": 2020,
+    "sourceType": "module"
   }
 } 
