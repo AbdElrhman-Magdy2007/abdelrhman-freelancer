@@ -1,3 +1,4 @@
+// src/app/server/auth.ts
 import { Environments, Languages, Pages, Routes, UserRole } from "@/constants/enums";
 import { LanguageType } from "@/i18n.config";
 import { DefaultSession, NextAuthOptions, User } from "next-auth";
@@ -174,8 +175,12 @@ export const authOptions: NextAuthOptions = {
       }
     },
     async redirect({ url, baseUrl }) {
-      // By default, redirect to the base URL on success
-      // NextAuth will handle redirects for errors or other flows automatically
+      console.log('🔄 Redirect Callback:', { url, baseUrl });
+      // Allow NextAuth to handle /auth routes and prevent infinite loops
+      if (url.startsWith('/api/auth') || url.startsWith(`/${Routes.AUTH}`)) {
+        return url;
+      }
+      // Redirect to base URL for non-auth routes
       return baseUrl;
     },
   },
