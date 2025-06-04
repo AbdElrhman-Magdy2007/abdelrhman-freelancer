@@ -1,68 +1,88 @@
-// /** @type {import('next').NextConfig} */
-// const nextConfig = {
-//   experimental: {
-//     serverActions: {
-//       bodySizeLimit: "5mb", // Increase max body size to 5MB
-//     },
-//   },
-//   images: {
-//     remotePatterns: [
-//       {
-//         protocol: "https",
-//         hostname: "**", // Allow images from any HTTPS hostname
-//       },
-//       {
-//         protocol: "http",
-//         hostname: "localhost",
-//         port: "3000",
-//         pathname: "/Uploads/**", // Allow local uploads
-//       },
-//     ],
-//   },
-//   webpack(config) {
-//     // Add rule for handling .mp4, .jpeg, .jpg, .svg, .png files
-//     config.module.rules.push({
-//       test: /\.(mp4|jpeg|jpg|svg|png)$/,
-//       type: "asset/resource",
-//       generator: {
-//         filename: "static/media/[name].[hash][ext]", // Output to static/media/
-//       },
-//     });
-//     return config;
-//   },
-// };
-
-// module.exports = nextConfig;
-
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  experimental: {
-    serverActions: {
-      bodySizeLimit: "5mb", // Support large image uploads
-    },
+  // Enable React strict mode for better development experience
+  reactStrictMode: true,
+
+  // Configure security headers
+  async headers() {
+    return [
+      {
+        source: '/:path*',
+        headers: [
+          {
+            key: 'X-DNS-Prefetch-Control',
+            value: 'on'
+          },
+          {
+            key: 'Strict-Transport-Security',
+            value: 'max-age=63072000; includeSubDomains; preload'
+          },
+          {
+            key: 'X-XSS-Protection',
+            value: '1; mode=block'
+          },
+          {
+            key: 'X-Frame-Options',
+            value: 'SAMEORIGIN'
+          },
+          {
+            key: 'X-Content-Type-Options',
+            value: 'nosniff'
+          },
+          {
+            key: 'Referrer-Policy',
+            value: 'strict-origin-when-cross-origin'
+          },
+          {
+            key: 'Permissions-Policy',
+            value: 'camera=(), microphone=(), geolocation=()'
+          }
+        ]
+      }
+    ];
   },
+
+  // Configure image optimization
   images: {
-    remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "**",
-      },
-      {
-        protocol: "http",
-        hostname: "localhost",
-        port: "3000",
-        pathname: "/Uploads/**", // Allow images from public/Uploads
-      },
-    ],
+    domains: [],
+    deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
+    imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
+    formats: ['image/webp'],
+    minimumCacheTTL: 60,
   },
-  webpack(config) {
-    config.module.rules.push({
-      test: /\.(mp4|jpeg|jpg|svg|png)$/,
-      type: "asset/resource",
-      generator: {
-        filename: "static/media/[name].[hash][ext]",
-      },
-    });
+
+  // Configure experimental features
+  experimental: {
+    optimizeCss: true,
+    scrollRestoration: true,
+    serverActions: {
+      allowedOrigins: ['localhost:3000'],
+      bodySizeLimit: '2mb'
+    }
+  },
+
+  // Configure environment variables
+  env: {
+    NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL,
+    NEXTAUTH_URL: process.env.NEXTAUTH_URL,
+    NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
+  },
+
+  // Configure compiler options
+  compiler: {
+    removeConsole: process.env.NODE_ENV === 'production',
+    styledComponents: true,
+  },
+
+  // Configure page extensions
+  pageExtensions: ['tsx', 'ts', 'jsx', 'js'],
+
+  // Configure build output
+  output: 'standalone',
+
+  // Configure webpack
+  webpack: (config, { isServer }) => {
+    // Add any custom webpack configurations here
     return config;
   },
 };

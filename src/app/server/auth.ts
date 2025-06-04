@@ -8,6 +8,17 @@ import { db } from "@/lib/prisma";
 import { login } from "./_actions/auth";
 import { JWT } from "next-auth/jwt";
 
+// Validate required environment variables
+const requiredEnvVars = ['NEXTAUTH_URL', 'NEXTAUTH_SECRET'];
+const missingEnvVars = requiredEnvVars.filter(envVar => !process.env[envVar]);
+
+if (missingEnvVars.length > 0) {
+  throw new Error(
+    `Missing required environment variables: ${missingEnvVars.join(', ')}. ` +
+    'Please check your .env file and ensure all required variables are set.'
+  );
+}
+
 // Module Declarations for Type Safety
 declare module "next-auth" {
   interface Session extends DefaultSession {
@@ -175,7 +186,6 @@ export const authOptions: NextAuthOptions = {
       }
     },
     async redirect({ url, baseUrl }) {
-      console.log('🔄 Redirect Callback:', { url, baseUrl });
       // Allow NextAuth to handle /auth routes and prevent infinite loops
       if (url.startsWith('/api/auth') || url.startsWith(`/${Routes.AUTH}`)) {
         return url;
@@ -190,7 +200,7 @@ export const authOptions: NextAuthOptions = {
     updateAge: 24 * 60 * 60, // 1 day
   },
   pages: {
-    signIn: `/${Routes.AUTH}/${Pages.LOGIN}`,
+    signIn: `/${Routes.AUTH}${Pages.LOGIN}`,
     error: `/${Routes.AUTH}/${Pages.ERROR}`,
     signOut: `/${Routes.AUTH}/${Pages.LOGOUT}`,
     verifyRequest: `/${Routes.AUTH}/${Pages.VERIFY_REQUEST}`,

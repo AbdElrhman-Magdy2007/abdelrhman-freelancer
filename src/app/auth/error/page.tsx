@@ -1,24 +1,56 @@
 'use client';
 
 import { useSearchParams } from 'next/navigation';
-import { useEffect, useState, Suspense } from 'react';
-import { Responses } from '@/constants/enums';
+import { useEffect, useState } from 'react';
+import Link from 'next/link';
 
-function ErrorContent() {
+export default function AuthError() {
   const searchParams = useSearchParams();
-  const [error, setError] = useState<string>('');
+  const [errorMessage, setErrorMessage] = useState<string>('');
 
   useEffect(() => {
     if (!searchParams) return;
     
-    const errorParam = searchParams.get('error');
-    if (errorParam) {
-      try {
-        const errorData = JSON.parse(errorParam);
-        setError(errorData.message || 'An authentication error occurred');
-      } catch {
-        setError('An authentication error occurred');
-      }
+    const error = searchParams.get('error');
+    switch (error) {
+      case 'Configuration':
+        setErrorMessage('خطأ في إعدادات المصادقة. يرجى التحقق من ملف .env.local');
+        break;
+      case 'AccessDenied':
+        setErrorMessage('تم رفض الوصول. يرجى تسجيل الدخول أولاً');
+        break;
+      case 'Verification':
+        setErrorMessage('فشل التحقق من البريد الإلكتروني');
+        break;
+      case 'OAuthSignin':
+        setErrorMessage('خطأ في تسجيل الدخول باستخدام OAuth');
+        break;
+      case 'OAuthCallback':
+        setErrorMessage('خطأ في معالجة استجابة OAuth');
+        break;
+      case 'OAuthCreateAccount':
+        setErrorMessage('فشل إنشاء حساب OAuth');
+        break;
+      case 'EmailCreateAccount':
+        setErrorMessage('فشل إنشاء حساب بالبريد الإلكتروني');
+        break;
+      case 'Callback':
+        setErrorMessage('خطأ في معالجة استجابة المصادقة');
+        break;
+      case 'OAuthAccountNotLinked':
+        setErrorMessage('البريد الإلكتروني مرتبط بحساب آخر');
+        break;
+      case 'EmailSignin':
+        setErrorMessage('فشل إرسال بريد إلكتروني للتحقق');
+        break;
+      case 'CredentialsSignin':
+        setErrorMessage('فشل تسجيل الدخول. يرجى التحقق من بيانات الاعتماد');
+        break;
+      case 'SessionRequired':
+        setErrorMessage('يجب تسجيل الدخول للوصول إلى هذه الصفحة');
+        break;
+      default:
+        setErrorMessage('حدث خطأ غير متوقع');
     }
   }, [searchParams]);
 
@@ -27,35 +59,23 @@ function ErrorContent() {
       <div className="max-w-md w-full space-y-8">
         <div>
           <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-            Authentication Error
+            خطأ في المصادقة
           </h2>
-          <div className="mt-2 text-center text-sm text-gray-600">
-            <p className="text-red-600">{error}</p>
-          </div>
+          <p className="mt-2 text-center text-sm text-gray-600">
+            {errorMessage}
+          </p>
         </div>
         <div className="mt-8 space-y-6">
           <div className="flex items-center justify-center">
-            <a
+            <Link
               href="/auth/signin"
               className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
             >
-              Return to Sign In
-            </a>
+              العودة إلى صفحة تسجيل الدخول
+            </Link>
           </div>
         </div>
       </div>
     </div>
-  );
-}
-
-export default function AuthError() {
-  return (
-    <Suspense fallback={
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-indigo-600"></div>
-      </div>
-    }>
-      <ErrorContent />
-    </Suspense>
   );
 } 
