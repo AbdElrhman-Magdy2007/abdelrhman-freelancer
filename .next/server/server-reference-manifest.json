@@ -21,6 +21,72 @@
       "layer": {
         "app/api/auth/[...nextauth]/route": "rsc"
       }
+    },
+    "7f6ce78ca510471bed79a9fd057096b46ea8be23fa": {
+      "workers": {
+        "app/projects/page": {
+          "moduleId": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5Craya%5C%5CShoppingCart%5C%5Cportfolio%20-%20Copy%20-%20Copy%20-%20Copy%20-%20Copy%20-%20Copy%5C%5Csrc%5C%5Capp%5C%5Cserver%5C%5Cdb%5C%5Cproducts.ts%22%2C%5B%7B%22id%22%3A%227f6ce78ca510471bed79a9fd057096b46ea8be23fa%22%2C%22exportedName%22%3A%22getAllProducts%22%7D%2C%7B%22id%22%3A%227f8dfbafa8764ad0718826a449791ff4e1adfe74cc%22%2C%22exportedName%22%3A%22getProductsCount%22%7D%2C%7B%22id%22%3A%227fa624c09f5b849cc24bd75870f06c52852199c913%22%2C%22exportedName%22%3A%22getProductsByCategoryId%22%7D%2C%7B%22id%22%3A%227fc47268b2fa335e776c6baac82208e0ef7c7a9ef4%22%2C%22exportedName%22%3A%22getProducts%22%7D%2C%7B%22id%22%3A%227fc95cc4a35aa2688fea6a4e733e3879f181fb43a5%22%2C%22exportedName%22%3A%22getBestSellers%22%7D%2C%7B%22id%22%3A%227fdd9393769371e63e4f9ed0d97ced33211dd316ff%22%2C%22exportedName%22%3A%22getProductsByCategory%22%7D%5D%5D%5D&__client_imported__=true!",
+          "async": false
+        }
+      },
+      "layer": {
+        "app/projects/page": "action-browser"
+      }
+    },
+    "7f8dfbafa8764ad0718826a449791ff4e1adfe74cc": {
+      "workers": {
+        "app/projects/page": {
+          "moduleId": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5Craya%5C%5CShoppingCart%5C%5Cportfolio%20-%20Copy%20-%20Copy%20-%20Copy%20-%20Copy%20-%20Copy%5C%5Csrc%5C%5Capp%5C%5Cserver%5C%5Cdb%5C%5Cproducts.ts%22%2C%5B%7B%22id%22%3A%227f6ce78ca510471bed79a9fd057096b46ea8be23fa%22%2C%22exportedName%22%3A%22getAllProducts%22%7D%2C%7B%22id%22%3A%227f8dfbafa8764ad0718826a449791ff4e1adfe74cc%22%2C%22exportedName%22%3A%22getProductsCount%22%7D%2C%7B%22id%22%3A%227fa624c09f5b849cc24bd75870f06c52852199c913%22%2C%22exportedName%22%3A%22getProductsByCategoryId%22%7D%2C%7B%22id%22%3A%227fc47268b2fa335e776c6baac82208e0ef7c7a9ef4%22%2C%22exportedName%22%3A%22getProducts%22%7D%2C%7B%22id%22%3A%227fc95cc4a35aa2688fea6a4e733e3879f181fb43a5%22%2C%22exportedName%22%3A%22getBestSellers%22%7D%2C%7B%22id%22%3A%227fdd9393769371e63e4f9ed0d97ced33211dd316ff%22%2C%22exportedName%22%3A%22getProductsByCategory%22%7D%5D%5D%5D&__client_imported__=true!",
+          "async": false
+        }
+      },
+      "layer": {
+        "app/projects/page": "action-browser"
+      }
+    },
+    "7fa624c09f5b849cc24bd75870f06c52852199c913": {
+      "workers": {
+        "app/projects/page": {
+          "moduleId": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5Craya%5C%5CShoppingCart%5C%5Cportfolio%20-%20Copy%20-%20Copy%20-%20Copy%20-%20Copy%20-%20Copy%5C%5Csrc%5C%5Capp%5C%5Cserver%5C%5Cdb%5C%5Cproducts.ts%22%2C%5B%7B%22id%22%3A%227f6ce78ca510471bed79a9fd057096b46ea8be23fa%22%2C%22exportedName%22%3A%22getAllProducts%22%7D%2C%7B%22id%22%3A%227f8dfbafa8764ad0718826a449791ff4e1adfe74cc%22%2C%22exportedName%22%3A%22getProductsCount%22%7D%2C%7B%22id%22%3A%227fa624c09f5b849cc24bd75870f06c52852199c913%22%2C%22exportedName%22%3A%22getProductsByCategoryId%22%7D%2C%7B%22id%22%3A%227fc47268b2fa335e776c6baac82208e0ef7c7a9ef4%22%2C%22exportedName%22%3A%22getProducts%22%7D%2C%7B%22id%22%3A%227fc95cc4a35aa2688fea6a4e733e3879f181fb43a5%22%2C%22exportedName%22%3A%22getBestSellers%22%7D%2C%7B%22id%22%3A%227fdd9393769371e63e4f9ed0d97ced33211dd316ff%22%2C%22exportedName%22%3A%22getProductsByCategory%22%7D%5D%5D%5D&__client_imported__=true!",
+          "async": false
+        }
+      },
+      "layer": {
+        "app/projects/page": "action-browser"
+      }
+    },
+    "7fc47268b2fa335e776c6baac82208e0ef7c7a9ef4": {
+      "workers": {
+        "app/projects/page": {
+          "moduleId": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5Craya%5C%5CShoppingCart%5C%5Cportfolio%20-%20Copy%20-%20Copy%20-%20Copy%20-%20Copy%20-%20Copy%5C%5Csrc%5C%5Capp%5C%5Cserver%5C%5Cdb%5C%5Cproducts.ts%22%2C%5B%7B%22id%22%3A%227f6ce78ca510471bed79a9fd057096b46ea8be23fa%22%2C%22exportedName%22%3A%22getAllProducts%22%7D%2C%7B%22id%22%3A%227f8dfbafa8764ad0718826a449791ff4e1adfe74cc%22%2C%22exportedName%22%3A%22getProductsCount%22%7D%2C%7B%22id%22%3A%227fa624c09f5b849cc24bd75870f06c52852199c913%22%2C%22exportedName%22%3A%22getProductsByCategoryId%22%7D%2C%7B%22id%22%3A%227fc47268b2fa335e776c6baac82208e0ef7c7a9ef4%22%2C%22exportedName%22%3A%22getProducts%22%7D%2C%7B%22id%22%3A%227fc95cc4a35aa2688fea6a4e733e3879f181fb43a5%22%2C%22exportedName%22%3A%22getBestSellers%22%7D%2C%7B%22id%22%3A%227fdd9393769371e63e4f9ed0d97ced33211dd316ff%22%2C%22exportedName%22%3A%22getProductsByCategory%22%7D%5D%5D%5D&__client_imported__=true!",
+          "async": false
+        }
+      },
+      "layer": {
+        "app/projects/page": "action-browser"
+      }
+    },
+    "7fc95cc4a35aa2688fea6a4e733e3879f181fb43a5": {
+      "workers": {
+        "app/projects/page": {
+          "moduleId": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5Craya%5C%5CShoppingCart%5C%5Cportfolio%20-%20Copy%20-%20Copy%20-%20Copy%20-%20Copy%20-%20Copy%5C%5Csrc%5C%5Capp%5C%5Cserver%5C%5Cdb%5C%5Cproducts.ts%22%2C%5B%7B%22id%22%3A%227f6ce78ca510471bed79a9fd057096b46ea8be23fa%22%2C%22exportedName%22%3A%22getAllProducts%22%7D%2C%7B%22id%22%3A%227f8dfbafa8764ad0718826a449791ff4e1adfe74cc%22%2C%22exportedName%22%3A%22getProductsCount%22%7D%2C%7B%22id%22%3A%227fa624c09f5b849cc24bd75870f06c52852199c913%22%2C%22exportedName%22%3A%22getProductsByCategoryId%22%7D%2C%7B%22id%22%3A%227fc47268b2fa335e776c6baac82208e0ef7c7a9ef4%22%2C%22exportedName%22%3A%22getProducts%22%7D%2C%7B%22id%22%3A%227fc95cc4a35aa2688fea6a4e733e3879f181fb43a5%22%2C%22exportedName%22%3A%22getBestSellers%22%7D%2C%7B%22id%22%3A%227fdd9393769371e63e4f9ed0d97ced33211dd316ff%22%2C%22exportedName%22%3A%22getProductsByCategory%22%7D%5D%5D%5D&__client_imported__=true!",
+          "async": false
+        }
+      },
+      "layer": {
+        "app/projects/page": "action-browser"
+      }
+    },
+    "7fdd9393769371e63e4f9ed0d97ced33211dd316ff": {
+      "workers": {
+        "app/projects/page": {
+          "moduleId": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5Craya%5C%5CShoppingCart%5C%5Cportfolio%20-%20Copy%20-%20Copy%20-%20Copy%20-%20Copy%20-%20Copy%5C%5Csrc%5C%5Capp%5C%5Cserver%5C%5Cdb%5C%5Cproducts.ts%22%2C%5B%7B%22id%22%3A%227f6ce78ca510471bed79a9fd057096b46ea8be23fa%22%2C%22exportedName%22%3A%22getAllProducts%22%7D%2C%7B%22id%22%3A%227f8dfbafa8764ad0718826a449791ff4e1adfe74cc%22%2C%22exportedName%22%3A%22getProductsCount%22%7D%2C%7B%22id%22%3A%227fa624c09f5b849cc24bd75870f06c52852199c913%22%2C%22exportedName%22%3A%22getProductsByCategoryId%22%7D%2C%7B%22id%22%3A%227fc47268b2fa335e776c6baac82208e0ef7c7a9ef4%22%2C%22exportedName%22%3A%22getProducts%22%7D%2C%7B%22id%22%3A%227fc95cc4a35aa2688fea6a4e733e3879f181fb43a5%22%2C%22exportedName%22%3A%22getBestSellers%22%7D%2C%7B%22id%22%3A%227fdd9393769371e63e4f9ed0d97ced33211dd316ff%22%2C%22exportedName%22%3A%22getProductsByCategory%22%7D%5D%5D%5D&__client_imported__=true!",
+          "async": false
+        }
+      },
+      "layer": {
+        "app/projects/page": "action-browser"
+      }
     }
   },
   "edge": {},

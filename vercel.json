@@ -3,8 +3,8 @@
   "installCommand": "npm install",
   "framework": "nextjs",
   "env": {
-    "NEXTAUTH_URL": "https://full-stack-portfolio-a333.vercel.app",
-    "NEXT_PUBLIC_API_URL": "https://full-stack-portfolio-a333.vercel.app",
+    "NEXTAUTH_URL": "https://full-stack-portfolio-a333-i49walgev.vercel.app",
+    "NEXT_PUBLIC_API_URL": "https://full-stack-portfolio-a333-i49walgev.vercel.app",
     "NODE_ENV": "production"
   },
   "headers": [
