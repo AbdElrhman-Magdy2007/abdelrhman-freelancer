@@ -55,6 +55,7 @@ export enum Pages {
   SALES = "Sales",
   PRODUCTS = "PRODUCTS",
   LOGOUT = "LOGOUT",
+  VERIFY_REQUEST = "verify-request",
 }
 
 /**

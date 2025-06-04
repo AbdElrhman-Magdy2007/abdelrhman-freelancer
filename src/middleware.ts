@@ -11,7 +11,7 @@ export default withAuth(
     const url = request.nextUrl.clone();
     const pathname = url.pathname;
 
-    // Skip middleware for API routes and static files
+    // Skip middleware for API routes, static files, and public assets
     if (
       pathname.startsWith("/api") ||
       pathname.startsWith("/_next") ||
@@ -33,13 +33,14 @@ export default withAuth(
 
     // Define route types
     const isAuthPage = pathname.startsWith(`/${Routes.AUTH}`);
-    const isErrorPage = pathname === `/${Routes.AUTH}/${Pages.ERROR}`;
+    // تحسين التحقق من صفحة الخطأ لتشمل query params
+    const isErrorPage = pathname.startsWith(`/${Routes.AUTH}/${Pages.ERROR}`);
     const protectedRoutes = [Routes.PROFILE, Routes.ADMIN];
     const isProtectedRoute = protectedRoutes.some((route) =>
       pathname.startsWith(`/${route}`)
     );
 
-    // Skip middleware for error page
+    // Skip middleware for error page to prevent redirect loops
     if (isErrorPage) {
       return response;
     }
@@ -51,8 +52,8 @@ export default withAuth(
       return NextResponse.redirect(redirectUrl);
     }
 
-    // Redirect authenticated users trying to access auth pages
-    if (isAuthPage && isAuthenticated && !isErrorPage) {
+    // Redirect authenticated users trying to access auth pages (except error page)
+    if (isAuthPage && isAuthenticated) {
       const role = token?.role as UserRole;
       const redirectUrl =
         role === UserRole.ADMIN
@@ -75,7 +76,19 @@ export default withAuth(
   },
   {
     callbacks: {
-      authorized: () => true,
+      authorized: async ({ req, token }) => {
+        // تحسين التحقق من المصادقة
+        const pathname = req.nextUrl.pathname;
+        if (
+          pathname.startsWith("/api") ||
+          pathname.startsWith("/_next") ||
+          pathname.includes(".") ||
+          pathname.startsWith(`/${Routes.AUTH}`)
+        ) {
+          return true;
+        }
+        return !!token;
+      },
     },
   }
 );
