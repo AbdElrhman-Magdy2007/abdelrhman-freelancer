@@ -3,6 +3,7 @@
 import { useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
+import { authConfig } from '@/config/auth.config';
 
 export default function AuthError() {
   const searchParams = useSearchParams();
@@ -12,15 +13,17 @@ export default function AuthError() {
     if (!searchParams) return;
     
     const error = searchParams.get('error');
+    const errorMessages = authConfig.messages.errors;
+
     switch (error) {
       case 'Configuration':
-        setErrorMessage('خطأ في إعدادات المصادقة. يرجى التحقق من ملف .env.local');
+        setErrorMessage(errorMessages.configuration);
         break;
       case 'AccessDenied':
-        setErrorMessage('تم رفض الوصول. يرجى تسجيل الدخول أولاً');
+        setErrorMessage(errorMessages.accessDenied);
         break;
       case 'Verification':
-        setErrorMessage('فشل التحقق من البريد الإلكتروني');
+        setErrorMessage(errorMessages.verification);
         break;
       case 'OAuthSignin':
         setErrorMessage('خطأ في تسجيل الدخول باستخدام OAuth');
@@ -50,7 +53,7 @@ export default function AuthError() {
         setErrorMessage('يجب تسجيل الدخول للوصول إلى هذه الصفحة');
         break;
       default:
-        setErrorMessage('حدث خطأ غير متوقع');
+        setErrorMessage(errorMessages.default);
     }
   }, [searchParams]);
 
