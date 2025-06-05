@@ -78,7 +78,9 @@ export const authOptions: NextAuthOptions = {
       async authorize(credentials) {
         try {
           if (!credentials?.email || !credentials?.password) {
-            throw new Error("Email and password are required");
+            throw new Error(JSON.stringify({
+              validationError: { email: ["Email is required"], password: ["Password is required"] }
+            }));
           }
 
           const response = await login(credentials, Languages.ENGLISH as LanguageType);
@@ -100,6 +102,7 @@ export const authOptions: NextAuthOptions = {
           console.error("❌ Authorize Error:", {
             error: error instanceof Error ? error.message : "Unknown error",
             timestamp: new Date().toISOString(),
+            email: credentials?.email
           });
           throw error;
         }
@@ -137,7 +140,10 @@ export const authOptions: NextAuthOptions = {
           },
         });
 
-        if (!dbUser) return token as JWT;
+        if (!dbUser) {
+          console.error("User not found in database:", token.email);
+          return token as JWT;
+        }
 
         return {
           ...token,
@@ -156,6 +162,7 @@ export const authOptions: NextAuthOptions = {
         console.error("❌ JWT Callback Error:", {
           error: error instanceof Error ? error.message : "Unknown error",
           timestamp: new Date().toISOString(),
+          email: token.email
         });
         return token;
       }
@@ -181,6 +188,7 @@ export const authOptions: NextAuthOptions = {
         console.error("❌ Session Callback Error:", {
           error: error instanceof Error ? error.message : "Unknown error",
           timestamp: new Date().toISOString(),
+          email: token?.email
         });
         return session;
       }
