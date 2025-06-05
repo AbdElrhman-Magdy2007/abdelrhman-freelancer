@@ -141,6 +141,7 @@ export async function POST(request: NextRequest) {
       const validationResult = loginSchema().safeParse(body);
       
       if (!validationResult.success) {
+        console.error('Validation Error:', validationResult.error.format());
         return createErrorResponse(
           'Invalid request data',
           400,
@@ -158,7 +159,12 @@ export async function POST(request: NextRequest) {
       
       return response;
     } catch (error) {
-      console.error('Auth POST Error:', error);
+      console.error('Auth POST Error:', {
+        error: error instanceof Error ? error.message : 'Unknown error',
+        timestamp: new Date().toISOString(),
+        url: request.url
+      });
+
       let errorMessage = authConfig.messages.errors.default;
       let errorDetails = {};
 
@@ -167,19 +173,18 @@ export async function POST(request: NextRequest) {
           // Attempt to parse JSON error message from authorize callback
           const parsedError = JSON.parse(error.message);
           if (parsedError.validationError) {
-            errorMessage = 'خطأ في التحقق من الصحة:'; // Placeholder, will refine in error page
+            errorMessage = 'خطأ في التحقق من الصحة';
             errorDetails = { validation: parsedError.validationError };
           } else if (parsedError.responseError) {
-            errorMessage = parsedError.responseError; // Use the message from the login response
+            errorMessage = parsedError.responseError;
           } else if (error.message.includes('configuration')) {
-             errorMessage = authConfig.messages.errors.configuration;
+            errorMessage = 'خطأ في تكوين المصادقة';
           } else {
             errorMessage = error.message;
           }
         } catch (parseError) {
-          // If parsing fails, use the original error message or a default
-           if (error.message.includes('configuration')) {
-             errorMessage = authConfig.messages.errors.configuration;
+          if (error.message.includes('configuration')) {
+            errorMessage = 'خطأ في تكوين المصادقة';
           } else {
             errorMessage = error.message;
           }
@@ -188,18 +193,18 @@ export async function POST(request: NextRequest) {
 
       // Redirect to the error page with specific error details
       const errorUrl = new URL(`/auth/error`, request.url);
-      errorUrl.searchParams.set('error', 'CredentialsSignin'); // Use a general error type
-       if (errorMessage !== authConfig.messages.errors.default) {
-           errorUrl.searchParams.set('message', errorMessage);
-       }
-
-      // Note: Passing complex objects like validation errors via URL params can be tricky.
-      // For simplicity here, we pass the main message. A more robust solution might involve
-      // storing error details server-side and passing an ID, or using client-side state.
+      errorUrl.searchParams.set('error', 'CredentialsSignin');
+      errorUrl.searchParams.set('message', errorMessage);
+      if (Object.keys(errorDetails).length > 0) {
+        errorUrl.searchParams.set('details', JSON.stringify(errorDetails));
+      }
 
       return new Response(null, {
-        status: 302, // Found
-        headers: { Location: errorUrl.toString() },
+        status: 302,
+        headers: { 
+          Location: errorUrl.toString(),
+          ...securityHeaders
+        },
       });
     }
   });

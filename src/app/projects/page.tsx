@@ -165,7 +165,7 @@ const buttonVariants: Variants = {
 // Project Card Component
 const ProjectCard: React.FC<{ project: Project }> = ({ project }) => {
   const isRecent = new Date(project.createdAt).getTime() > Date.now() - 5 * 60 * 1000;
-  const isValidDemoUrl = project.demoUrl && !project.demoUrl.includes('/admin/') && project.demoUrl !== 'http://localhost:3000/admin/menu-items/new';
+  const isValidDemoUrl = project.demoUrl && !project.demoUrl.includes('/admin/') && project.demoUrl !== 'https://full-stack-portfolio-a333-jq4tls75b.vercel.app/admin/menu-items/new';
   const isValidGithubUrl = project.githubUrl && !project.githubUrl.includes('/admin/');
   const imageSrc = project.image && project.image !== '/placeholder-image.png' ? project.image : DEFAULT_IMAGE;
 
