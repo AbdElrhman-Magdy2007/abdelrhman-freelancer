@@ -1,0 +1,21 @@
+{
+  "/api/test-db/route": "/api/test-db",
+  "/api/upload/route": "/api/upload",
+  "/api/verify-auth/route": "/api/verify-auth",
+  "/api/auth/[...nextauth]/route": "/api/auth/[...nextauth]",
+  "/_not-found/page": "/_not-found",
+  "/page": "/",
+  "/auth/signin/page": "/auth/signin",
+  "/profile/page": "/profile",
+  "/auth/signup/page": "/auth/signup",
+  "/settings/page": "/settings",
+  "/auth/error/page": "/auth/error",
+  "/projects/page": "/projects",
+  "/admin/categories/page": "/admin/categories",
+  "/admin/menu-items/page": "/admin/menu-items",
+  "/admin/page": "/admin",
+  "/admin/menu-items/new/page": "/admin/menu-items/new",
+  "/admin/users/page": "/admin/users",
+  "/admin/menu-items/[productId]/edit/page": "/admin/menu-items/[productId]/edit",
+  "/admin/users/[userId]/edit/page": "/admin/users/[userId]/edit"
+}
