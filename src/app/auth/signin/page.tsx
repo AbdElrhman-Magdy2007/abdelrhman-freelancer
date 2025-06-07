@@ -1,10 +1,12 @@
 'use client';
+
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
+// import Header from '@/components/Header';
 import { buttonVariants } from '@/components/ui/button';
 import { Pages, Routes } from '@/constants/enums';
 import Link from 'next/link';
-import LoginForm from './_components/Form';
+import Form from './_components/Form';
 
 // Fallback component in case Form fails to load
 const FallbackForm: React.FC = () => (
@@ -69,6 +71,7 @@ const ParticleBackground: React.FC = () => {
           custom={particle.id}
         />
       ))}
+      {/* Pulsating Gradient Wave */}
       <motion.div
         className="absolute inset-0"
         style={{
@@ -84,6 +87,7 @@ const ParticleBackground: React.FC = () => {
           ease: 'easeInOut',
         }}
       />
+      {/* Static Sparkle Bursts */}
       {Array.from({ length: 3 }).map((_, i) => (
         <div
           key={`sparkle-${i}`}
@@ -140,6 +144,7 @@ export default function SignInPage() {
   return (
     <main className="relative flex items-center justify-center min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 overflow-hidden dark">
       <ParticleBackground />
+      {/* <Header /> */}
       <motion.div
         className="w-full max-w-md sm:max-w-lg p-6 sm:p-8 glass-card border-gradient hover:scale-105 transition-transform duration-300 animate-glow z-10"
         variants={containerVariants}
@@ -157,7 +162,7 @@ export default function SignInPage() {
           Sign In
         </motion.h2>
         <motion.div variants={childVariants} className="min-h-[200px]">
-          {LoginForm ? <LoginForm /> : <FallbackForm />}
+          {Form ? <Form /> : <FallbackForm />}
         </motion.div>
         <motion.p
           className="text-center text-slate-300 text-sm sm:text-base mt-8"

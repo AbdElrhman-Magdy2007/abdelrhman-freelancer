@@ -29,7 +29,7 @@ interface NavLinksProps {
  */
 const NavLinks: React.FC<NavLinksProps> = React.memo(
   ({ navItems, isMobile = false, toggleMobileMenu }) => {
-    const { dir }: { dir: 'ltr' | 'rtl' } = useLanguage();
+    const { dir } = useLanguage();
     const pathname = usePathname();
 
     // Get current hash from window.location (for client-side hash links)
@@ -110,7 +110,6 @@ const NavLinks: React.FC<NavLinksProps> = React.memo(
         ? 'block w-full text-center py-2 px-4 sm:py-3 sm:px-5 rounded-xl' // Reduced padding
         : 'inline-block rounded-lg px-1.5 py-1 sm:px-2 sm:py-1.5', // Reduced padding
       'focus:outline-none focus:ring-4 focus:ring-primary/40 focus:ring-offset-1',
-        'tracking-tight text-right' // 'text-left',
     );
 
     return (
@@ -120,7 +119,6 @@ const NavLinks: React.FC<NavLinksProps> = React.memo(
           isMobile
             ? 'flex-col space-y-4 sm:space-y-5 md:space-y-6 items-center' // Reduced vertical spacing
             : 'items-center space-x-2 sm:space-x-3 md:space-x-4', // Reduced horizontal spacing
-           'space-x-reverse' // RTL'',
         )}
         role="navigation"
         aria-label={('navigationLinks')}
@@ -148,15 +146,11 @@ const NavLinks: React.FC<NavLinksProps> = React.memo(
                     isActive
                       ? 'text-primary bg-gradient-to-r from-primary/20 to-primary/10 shadow-glow'
                       : 'text-foreground/80 hover:text-primary hover:bg-primary/10',
-                    // dir === 'rtl' && isActive
-                    //   ? 'bg-gradient-to-l'
-                    //   : 'bg-gradient-to-r',
-                    'group flex items-center justify-center',
+
                     item.href === '/profile' && 'hover:bg-blue-500/15 hover:text-blue-500',
                   )}
                   aria-current={isActive ? 'page' : undefined}
-                  aria-label={`Navigate to ${item.name} page`}
-                  tabIndex={0}
+             
                 >
                   {/* {item.icon && (
                     <span
@@ -173,15 +167,14 @@ const NavLinks: React.FC<NavLinksProps> = React.memo(
                   <motion.span
                     className={clsx(
                       'absolute bottom-0 w-full h-0.4 bg-gradient-to-r', // Thinner underline
-                     'right-0 bg-gradient-to-l' // 'left-0 bg-gradient-to-r',
-                      // isActive
-                      //   ? item.href === '/profile'
-                      //     ? 'from-blue-500 to-blue-500/60'
-                      //     : 'from-primary to-primary/60'
-                      //   : 'from-primary to-primary/60',
-                      // isActive ? 'opacity-100' : 'opacity-0 group-hover:opacity-100',
+                      isActive
+                        ? item.href === '/profile'
+                          ? 'from-blue-500 to-blue-500/60'
+                          : 'from-primary to-primary/60'
+                        : 'from-primary to-primary/60',
+                      isActive ? 'opacity-100' : 'opacity-0 group-hover:opacity-100',
                     )}
-                    // initial={{ scaleX: dir === 'rtl' ? -1 : 1 }}
+                    initial={{ scaleX: 1 }}
                     animate={{ scaleX: isActive ? 1 : 0 }}
                     whileHover={{ scaleX: 1 }}
                     transition={{ duration: 0.3, ease: 'easeOut' }}

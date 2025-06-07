@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { getToken } from "next-auth/jwt";
 import { withAuth } from "next-auth/middleware";
 import { Routes, Pages, UserRole } from "./constants/enums";
-import { authConfig } from "@/config/auth.config";
+// import { authConfig } from "@/config/auth.config";
 
 // تكوين الأمان
 const securityConfig = {
@@ -43,6 +43,7 @@ export default withAuth(
 
       // تعريف أنواع المسارات
       const isAuthPage = pathname.startsWith(`/${Routes.AUTH}`);
+      const isLoginPage = pathname === `/${Routes.AUTH}${Pages.LOGIN}`;
       const protectedRoutes = [Routes.PROFILE, Routes.ADMIN];
       const isProtectedRoute = protectedRoutes.some((route) =>
         pathname.startsWith(`/${route}`)
@@ -57,7 +58,7 @@ export default withAuth(
       }
 
       // إعادة توجيه المستخدمين المصادقين
-      if (isAuthPage && isAuthenticated) {
+      if (isAuthenticated && isLoginPage) {
         const role = token?.role as UserRole;
         const redirectUrl = new URL(
           role === UserRole.ADMIN ? `/${Routes.ADMIN}` : `/${Routes.PROFILE}`,

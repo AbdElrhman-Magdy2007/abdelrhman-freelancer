@@ -63,6 +63,31 @@ export default async function AdminLayout({
         </div>
       </main>
 
+      {/* Particle Background */}
+      <div className="particle-wave">
+        <div className="particle" style={{ left: "10%", top: "20%", animationDuration: "4s" }}></div>
+        <div className="particle" style={{ left: "30%", top: "50%", animationDuration: "5s" }}></div>
+        <div className="particle" style={{ left: "70%", top: "30%", animationDuration: "3s" }}></div>
+        <div className="particle" style={{ left: "50%", top: "80%", animationDuration: "6s" }}></div>
+      </div>
+
+      {/* JavaScript for Particle Animation */}
+      <script
+        dangerouslySetInnerHTML={{
+          __html: `
+            function createParticle() {
+              const particle = document.createElement("div");
+              particle.className = "particle";
+              particle.style.left = \`\${Math.random() * 100}%\`;
+              particle.style.top = \`\${Math.random() * 100}%\`;
+              particle.style.animationDuration = \`\${Math.random() * 3 + 3}s\`;
+              document.querySelector(".particle-wave").appendChild(particle);
+              setTimeout(() => particle.remove(), 6000);
+            }
+            setInterval(createParticle, 2000);
+          `,
+        }}
+      />
     </div>
   );
 }

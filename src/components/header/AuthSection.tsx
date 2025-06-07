@@ -1,3 +1,212 @@
+// "use client";
+
+// import { signOut, useSession } from "next-auth/react";
+// import { Button } from "../ui/button";
+// import { usePathname, useParams, useRouter } from "next/navigation";
+// import { Pages, Routes, Languages } from "@/constants/enums";
+// import { motion } from "framer-motion";
+// import clsx from "clsx";
+// import { Loader } from "lucide-react";
+// import { useCallback, useMemo, useEffect, useState } from "react";
+
+// // Define interfaces for type safety
+// interface AuthSectionProps {
+//   onCloseMenu?: () => void;
+//   className?: string;
+// }
+
+// interface ButtonConfig {
+//   label: string;
+//   path: string;
+//   isActive: boolean;
+//   variant: "link" | "default";
+//   ariaLabel: string;
+// }
+
+// /**
+//  * AuthSection component renders a modern, responsive authentication UI with glassmorphism effects
+//  * and dynamic animations, designed to integrate seamlessly with a modern website
+//  * @param {AuthSectionProps} props - Component props
+//  * @returns {JSX.Element} Styled authentication section
+//  */
+// function AuthSection({ onCloseMenu, className }: AuthSectionProps): JSX.Element {
+//   const { data: session, status } = useSession();
+//   const router = useRouter();
+//   const pathname = usePathname();
+//   const params = useParams();
+//   const isArabic = params?.locale === Languages.ARABIC;
+//   const [mounted, setMounted] = useState(false);
+
+//   // Handle client-side mounting
+//   useEffect(() => {
+//     setMounted(true);
+//   }, []);
+
+//   // Memoized navigation handler
+//   const navigateWithClose = useCallback(
+//     (path: string) => {
+//       router.push(path);
+//       onCloseMenu?.();
+//     },
+//     [router, onCloseMenu]
+//   );
+
+//   // Memoized sign out handler
+//   const handleSignOut = useCallback(async () => {
+//     try {
+//       await signOut({ callbackUrl: `/${Routes.ROOT}` });
+//       onCloseMenu?.();
+//     } catch (error) {
+//       console.error("Sign out error:", error);
+//     }
+//   }, [onCloseMenu]);
+
+//   // Memoized button configurations
+//   const buttons = useMemo<ButtonConfig[]>(
+//     () => [
+//       {
+//         label: "Login",
+//         path: `/${Routes.AUTH}${Pages.LOGIN}`,
+//         isActive: pathname?.startsWith(`/${Routes.AUTH}${Pages.LOGIN}`) ?? false,
+//         variant: "link",
+//         ariaLabel: "Navigate to login page",
+//       },
+//       {
+//         label: "Sign Up",
+//         path: `/${Routes.AUTH}${Pages.Register}`,
+//         isActive: pathname?.startsWith(`/${Routes.AUTH}${Pages.Register}`) ?? false,
+//         variant: "default",
+//         ariaLabel: "Navigate to sign up page",
+//       },
+//     ],
+//     [pathname]
+//   );
+
+//   // Animation variants for buttons
+//   const buttonVariants = {
+//     hidden: { opacity: 0, scale: 0.9 },
+//     visible: { opacity: 1, scale: 1, transition: { duration: 0.3, ease: "easeOut" } },
+//     hover: { scale: 1.05, transition: { duration: 0.2 } },
+//     tap: { scale: 0.95 },
+//   };
+
+//   // Error state
+//   if (!pathname) {
+//     return (
+//       <motion.div
+//         initial={{ opacity: 0 }}
+//         animate={{ opacity: 1 }}
+//         className="text-rose-500 dark:text-rose-400 font-semibold text-sm p-4 rounded-xl bg-rose-50/50 dark:bg-rose-900/20 backdrop-blur-md"
+//         role="alert"
+//         aria-live="assertive"
+//       >
+//         Error: Unable to determine current path
+//       </motion.div>
+//     );
+//   }
+
+//   // Loading state
+//   if (status === "loading" || !mounted) {
+//     return (
+//       <motion.div
+//         initial={{ opacity: 0 }}
+//         animate={{ opacity: 1 }}
+//         dir="ltr"
+//         className="flex items-center justify-center gap-4 p-4 sm:gap-6 md:gap-8"
+//       >
+//         <div className="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2 rounded-md">
+//           <Loader className="w-4 h-4 animate-spin" aria-hidden="true" />
+//           <span>Loading...</span>
+//         </div>
+//       </motion.div>
+//     );
+//   }
+
+//   // Authenticated state
+//   if (session?.user) {
+//     return (
+//       <motion.div
+//         initial={{ opacity: 0 }}
+//         animate={{ opacity: 1 }}
+//         dir="ltr"
+//         className="flex items-center justify-center gap-4 p-4 sm:gap-6 md:gap-8"
+//       >
+//         <motion.div variants={buttonVariants} whileHover="hover" whileTap="tap">
+//           <Button
+//             className={clsx(
+//               "px-4 py-3 rounded-xl bg-gradient-to-r from-blue-500 to-blue-600 text-white",
+//               "dark:from-blue-700 dark:to-blue-800 dark:text-gray-100",
+//               "hover:from-blue-600 hover:to-blue-700",
+//               "dark:hover:from-blue-800 dark:hover:to-blue-900",
+//               "active:from-blue-700 active:to-blue-800",
+//               "dark:active:from-blue-900 dark:active:to-blue-950",
+//               "shadow-md hover:shadow-lg hover:shadow-blue-500/30 dark:hover:shadow-blue-800/30",
+//               "transition-all duration-300 ease-in-out backdrop-blur-md",
+//               "focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:shadow-lg",
+//               "text-base font-semibold"
+//             )}
+//             size="lg"
+//             onClick={handleSignOut}
+//             aria-label="Sign Out"
+//           >
+//             Sign Out
+//           </Button>
+//         </motion.div>
+//       </motion.div>
+//     );
+//   }
+
+//   // Unauthenticated state
+//   return (
+//     <motion.div
+//       initial={{ opacity: 0 }}
+//       animate={{ opacity: 1 }}
+//       dir="ltr"
+//       className="flex items-center justify-center gap-4 p-4 sm:gap-6 md:gap-8"
+//     >
+//       {buttons.map((button, index) => (
+//         <motion.div
+//           key={button.path}
+//           variants={buttonVariants}
+//           initial="hidden"
+//           animate="visible"
+//           whileHover="hover"
+//           whileTap="tap"
+//           transition={{ delay: index * 0.1 }}
+//         >
+//           <Button
+//             variant={button.variant}
+//             className={clsx(
+//               button.variant === "default" && [
+//                 "px-4 py-3 rounded-xl bg-gradient-to-r from-blue-500 to-blue-600 text-white",
+//                 "dark:from-blue-700 dark:to-blue-800 dark:text-gray-100",
+//                 "hover:from-blue-600 hover:to-blue-700",
+//                 "dark:hover:from-blue-800 dark:hover:to-blue-900",
+//                 "active:from-blue-700 active:to-blue-800",
+//                 "dark:active:from-blue-900 dark:active:to-blue-950",
+//                 "shadow-md hover:shadow-lg hover:shadow-blue-500/30 dark:hover:shadow-blue-800/30",
+//                 "transition-all duration-300 ease-in-out backdrop-blur-md",
+//                 "focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:shadow-lg",
+//                 "text-base font-semibold"
+//               ],
+//               button.variant === "link" && [
+//                 "text-blue-600 dark:text-blue-400",
+//                 "hover:text-blue-700 dark:hover:text-blue-300",
+//                 "transition-colors duration-200"
+//               ]
+//             )}
+//             onClick={() => navigateWithClose(button.path)}
+//             aria-label={button.ariaLabel}
+//           >
+//             {button.label}
+//           </Button>
+//         </motion.div>
+//       ))}
+//     </motion.div>
+//   );
+// }
+
+// export default AuthSection;
 "use client";
 
 import { signOut, useSession } from "next-auth/react";
@@ -12,10 +221,6 @@ import { useCallback, useMemo } from "react";
 // Define interfaces for type safety
 interface AuthSectionProps {
   onCloseMenu?: () => void;
-    isAuthenticated: boolean;
-  user: { name: string; email: string } | null;
-  logout: () => void;
-  className: string;
 }
 
 interface ButtonConfig {
@@ -24,16 +229,7 @@ interface ButtonConfig {
   isActive: boolean;
   variant: "link" | "default";
   ariaLabel: string;
-    isAuthenticated: boolean;
-  user: { name: string; email: string } | null;
-  logout: () => void;
-  className?: string;
-  size?: "sm" | "md" | "lg";
-  onClick?: () => void;
-  disabled?: boolean;
-  type?: "button" | "submit" | "reset";
-  [key: string]: any; // Allow additional properties for flexibility
-  }
+}
 
 /**
  * AuthSection component renders a modern, responsive authentication UI with glassmorphism effects
@@ -76,11 +272,6 @@ function AuthSection({ onCloseMenu }: AuthSectionProps): JSX.Element {
         isActive: pathname?.startsWith(`/${Routes.AUTH}${Pages.LOGIN}`) ?? false,
         variant: "link",
         ariaLabel: "Navigate to login page",
-        isAuthenticated: false,
-        user: null,
-        logout: function (): void {
-          throw new Error("Function not implemented.");
-        }
       },
       {
         label: "Sign Up",
@@ -88,11 +279,6 @@ function AuthSection({ onCloseMenu }: AuthSectionProps): JSX.Element {
         isActive: pathname?.startsWith(`/${Routes.AUTH}${Pages.Register}`) ?? false,
         variant: "default",
         ariaLabel: "Navigate to sign up page",
-        isAuthenticated: false,
-        user: null,
-        logout: function (): void {
-          throw new Error("Function not implemented.");
-        }
       },
     ],
     [pathname]

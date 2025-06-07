@@ -1,10 +1,10 @@
 'use client';
 
-import { useState, useRef, useCallback, useReducer, memo } from 'react';
+import { useState, useRef, useCallback, useReducer, memo, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { toast } from 'sonner';
-import { useRouter } from 'next/navigation';
-import { InputTypes, Pages } from '@/constants/enums';
+import { useParams, useRouter } from 'next/navigation';
+import { Pages, InputTypes } from '@/constants/enums';
 import useFormFields from '@/hooks/useFormFields';
 import { signIn } from 'next-auth/react';
 import { Button } from '@/components/ui/button';
@@ -41,12 +41,22 @@ const LoginForm = memo(() => {
   const [isFormValid, setIsFormValid] = useState(true);
   const [errors, dispatchErrors] = useReducer(errorsReducer, {});
   const [sparkles, setSparkles] = useState<{ id: number; x: number; y: number }[]>([]);
+  const [toastMessage, setToastMessage] = useState<{ type: 'success' | 'error'; message: string } | null>(null);
+  const params = useParams();
 
   const { getFormFields } = useFormFields({ slug: Pages.LOGIN });
-  const formFields = getFormFields().map(field => ({
-    ...field,
-    type: field.type as InputTypes
-  }));
+  const formFields = getFormFields();
+
+  useEffect(() => {
+    if (toastMessage) {
+      toast[toastMessage.type](toastMessage.message, {
+        style: toastStyles[toastMessage.type],
+        duration: 3000,
+        className: `glass-card border-gradient animate-glow toast-${toastMessage.type}`,
+      });
+      setToastMessage(null);
+    }
+  }, [toastMessage]);
 
   const onSubmit = useCallback(
     async (e: React.FormEvent<HTMLFormElement>) => {
@@ -65,11 +75,7 @@ const LoginForm = memo(() => {
 
       if (Object.keys(newErrors).length > 0) {
         dispatchErrors({ type: 'SET_ERRORS', payload: newErrors });
-        toast.error('Please fill in all required fields', {
-          style: toastStyles.error,
-          duration: 3000,
-          className: 'glass-card border-gradient animate-glow toast-error',
-        });
+        setToastMessage({ type: 'error', message: 'Please fill in all required fields' });
         return;
       }
 
@@ -89,52 +95,31 @@ const LoginForm = memo(() => {
             const validationErrors = parsedError.validationError || {};
 
             dispatchErrors({ type: 'SET_ERRORS', payload: validationErrors });
-            if (parsedError.responseError && parsedError.responseError !== lastToastMessage) {
-              toast.error(parsedError.responseError, {
-                style: toastStyles.error,
-                duration: 3000,
-                className: 'glass-card border-gradient animate-glow toast-error',
-              });
+            if (
+              parsedError.responseError &&
+              parsedError.responseError !== lastToastMessage
+            ) {
+              setToastMessage({ type: 'error', message: parsedError.responseError });
               setLastToastMessage(parsedError.responseError);
             }
           } catch (parseError) {
             if ('An unexpected error occurred' !== lastToastMessage) {
-              toast.error('An unexpected error occurred', {
-                style: toastStyles.error,
-                duration: 3000,
-                className: 'glass-card border-gradient animate-glow toast-error',
-              });
+              setToastMessage({ type: 'error', message: 'An unexpected error occurred' });
               setLastToastMessage('An unexpected error occurred');
             }
           }
-        } else if (res?.ok && !res.error) { // Strict check for success
+        }
+
+        if (res?.ok) {
           if ('Login successful' !== lastToastMessage) {
-            toast.success('Login successful', {
-              style: toastStyles.success,
-              duration: 3000,
-              className: 'glass-card border-gradient animate-glow toast-success',
-            });
+            setToastMessage({ type: 'success', message: 'Login successful' });
             setLastToastMessage('Login successful');
           }
-          router.replace('/'); // Redirect only on success
-        } else {
-          console.warn('Unexpected signIn response:', res);
-          if ('Login failed' !== lastToastMessage) {
-            toast.error('Login failed', {
-              style: toastStyles.error,
-              duration: 3000,
-              className: 'glass-card border-gradient animate-glow toast-error',
-            });
-            setLastToastMessage('Login failed');
-          }
+          router.replace('/');
         }
       } catch (error) {
         if ('An unexpected error occurred' !== lastToastMessage) {
-          toast.error('An unexpected error occurred', {
-            style: toastStyles.error,
-            duration: 3000,
-            className: 'glass-card border-gradient animate-glow toast-error',
-          });
+          setToastMessage({ type: 'error', message: 'An unexpected error occurred' });
           setLastToastMessage('An unexpected error occurred');
         }
       } finally {
@@ -146,15 +131,15 @@ const LoginForm = memo(() => {
 
   const toastStyles = {
     error: {
-      color: '#F87171',
-      backgroundColor: 'hsl(217 33% 17.5% / 0.2)',
-      border: '1px solid hsl(3 81% 67% / 0.5)',
+      color: '#F87171', // red-400
+      backgroundColor: 'hsl(217 33% 17.5% / 0.2)', // slate-900/20
+      border: '1px solid hsl(3 81% 67% / 0.5)', // red-400/50
       borderRadius: '0.5rem',
       padding: '12px 16px',
       fontFamily: 'Inter, sans-serif',
-      fontSize: '0.875rem',
+      fontSize: '0.875rem', // text-sm
       fontWeight: 500,
-      boxShadow: '0 4px 12px hsl(215 91% 70% / 0.2)',
+      boxShadow: '0 4px 12px hsl(215 91% 70% / 0.2)', // shadow-blue-400/20
       backdropFilter: 'blur(8px)',
       display: 'flex',
       alignItems: 'center',
@@ -163,15 +148,15 @@ const LoginForm = memo(() => {
       overflow: 'hidden',
     },
     success: {
-      color: '#34D399',
-      backgroundColor: 'hsl(217 33% 17.5% / 0.2)',
-      border: '1px solid hsl(160 64% 43% / 0.5)',
+      color: '#34D399', // green-400
+      backgroundColor: 'hsl(217 33% 17.5% / 0.2)', // slate-900/20
+      border: '1px solid hsl(160 64% 43% / 0.5)', // green-400/50
       borderRadius: '0.5rem',
       padding: '12px 16px',
       fontFamily: 'Inter, sans-serif',
-      fontSize: '0.875rem',
+      fontSize: '0.875rem', // text-sm
       fontWeight: 500,
-      boxShadow: '0 4px 12px hsl(215 91% 70% / 0.2)',
+      boxShadow: '0 4px 12px hsl(215 91% 70% / 0.2)', // shadow-blue-400/20
       backdropFilter: 'blur(8px)',
       display: 'flex',
       alignItems: 'center',
@@ -203,9 +188,33 @@ const LoginForm = memo(() => {
     }),
   };
 
-  const handleValidationChange = (isValid: boolean) => {
-    setIsFormValid(isValid);
+  const toastVariants = {
+    hidden: { opacity: 0, x: 50, scale: 0.95 },
+    visible: {
+      opacity: 1,
+      x: 0,
+      scale: 1,
+      transition: {
+        duration: 0.4,
+        ease: 'easeOut',
+        type: 'spring',
+        stiffness: 100,
+      },
+    },
+    exit: {
+      opacity: 0,
+      x: 50,
+      scale: 0.95,
+      transition: {
+        duration: 0.3,
+        ease: 'easeIn',
+      },
+    },
   };
+
+  function handleValidationChange(isValid: boolean): void {
+    setIsFormValid(isValid);
+  }
 
   return (
     <form
@@ -230,12 +239,13 @@ const LoginForm = memo(() => {
           >
             <FormFields
               {...field}
+              type={field.type === 'email' ? InputTypes.EMAIL : InputTypes.PASSWORD}
               label={field.name === 'email' ? 'Email' : 'Password'}
               placeholder={field.name === 'email' ? 'Enter your email' : 'Enter your password'}
               error={errors[field.name]?.[0]}
               disabled={isLoading}
               onValidationChange={handleValidationChange}
-              pattern={field.name === 'email' ? '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$' : '^.{6,}$'}
+              pattern={field.name === 'email' ? '[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,}$' : '.*'}
               ariaLabel={field.name === 'email' ? 'Email input field' : 'Password input field'}
               className={clsx(
                 'w-full p-3 rounded-lg bg-slate-900/50 border border-slate-700',
@@ -243,10 +253,41 @@ const LoginForm = memo(() => {
                 'transition-all duration-200 hover:shadow-md hover:shadow-blue-400/20'
               )}
             />
+            {field.name === 'email' && (
+              <motion.div
+                className="absolute inset-0 pointer-events-none"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: document.activeElement?.getAttribute('name') === 'email' ? 0.3 : 0 }}
+                transition={{ duration: 0.3 }}
+              >
+                {Array.from({ length: 5 }).map((_, i) => (
+                  <motion.div
+                    key={`sparkle-field-${i}`}
+                    className="sparkle"
+                    style={{
+                      width: `${Math.random() * 2 + 2}px`,
+                      height: `${Math.random() * 2 + 2}px`,
+                      top: `${Math.random() * 100}%`,
+                      left: `${Math.random() * 100}%`,
+                    }}
+                    animate={{
+                      scale: [0, 1.5, 0],
+                      opacity: [0, 0.8, 0],
+                      rotate: [0, 180],
+                    }}
+                    transition={{
+                      duration: 1.5,
+                      repeat: Infinity,
+                      delay: Math.random() * 0.5,
+                      ease: 'easeInOut',
+                    }}
+                  />
+                ))}
+              </motion.div>
+            )}
           </motion.div>
         ))}
       </div>
-
       <motion.div
         variants={fieldVariants}
         initial="hidden"
@@ -266,10 +307,7 @@ const LoginForm = memo(() => {
           onClick={(e) => createSparkle(e.clientX, e.clientY)}
         >
           {isLoading ? (
-            <span className="flex items-center justify-center gap-2">
-              <Loader className="animate-spin h-5 w-5" />
-              Logging in...
-            </span>
+            <Loader className="w-5 h-5 animate-spin" />
           ) : (
             'Login'
           )}
@@ -294,5 +332,7 @@ const LoginForm = memo(() => {
     </form>
   );
 });
+
+LoginForm.displayName = 'LoginForm';
 
 export default LoginForm;
