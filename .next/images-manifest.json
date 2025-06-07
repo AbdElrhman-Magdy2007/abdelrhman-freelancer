@@ -24,7 +24,9 @@
     "path": "/_next/image",
     "loader": "default",
     "loaderFile": "",
-    "domains": [],
+    "domains": [
+      "full-stack-portfolio-a333-2e72oea0q.vercel.app"
+    ],
     "disableStaticImages": false,
     "minimumCacheTTL": 60,
     "formats": [
@@ -34,7 +36,7 @@
     "contentSecurityPolicy": "script-src 'none'; frame-src 'none'; sandbox;",
     "contentDispositionType": "attachment",
     "remotePatterns": [],
-    "unoptimized": false,
+    "unoptimized": true,
     "sizes": [
       640,
       750,

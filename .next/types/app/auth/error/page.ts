@@ -1,4 +1,4 @@
-// File: C:\Users\raya\ShoppingCart\portfolio - Copy - Copy - Copy - Copy - Copy\src\app\auth\error\page.tsx
+// File: C:\Users\raya\ShoppingCart\portfolio - Copy - Copy - Copy - Copy - Copy - Copy (2)\src\app\auth\error\page.tsx
 import * as entry from '../../../../../src/app/auth/error/page.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 

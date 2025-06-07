@@ -48,5 +48,11 @@
     "env": {
       "ESLINT_SKIP_VALIDATION": "true"
     }
-  }
+  },
+  "builds": [
+    {
+      "src": "package.json",
+      "use": "@vercel/next"
+    }
+  ]
 } 

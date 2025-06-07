@@ -5,10 +5,22 @@
   ],
   "rules": {
     "react/no-unescaped-entities": "off",
-    "@next/next/no-img-element": "off"
+    "@next/next/no-img-element": "off",
+    "react/display-name": "off",
+    "react/prop-types": "off",
+    "no-unused-vars": "warn",
+    "no-console": "warn"
   },
   "parserOptions": {
-    "ecmaVersion": 2020,
-    "sourceType": "module"
+    "ecmaVersion": 2022,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
   }
 } 

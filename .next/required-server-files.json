@@ -2,8 +2,8 @@
   "version": 1,
   "config": {
     "env": {
-      "NEXT_PUBLIC_API_URL": "https://full-stack-portfolio-a333-i49walgev.vercel.app",
-      "NEXTAUTH_URL": "https://full-stack-portfolio-a333-i49walgev.vercel.app",
+      "NEXT_PUBLIC_API_URL": "http://localhost:3000/",
+      "NEXTAUTH_URL": "http://localhost:3000/",
       "NEXTAUTH_SECRET": "60d665bff7695e6de1f0528f2d43376489f244dacf8f098279c870109ceac7c6"
     },
     "eslint": {
@@ -52,7 +52,9 @@
       "path": "/_next/image",
       "loader": "default",
       "loaderFile": "",
-      "domains": [],
+      "domains": [
+        "full-stack-portfolio-a333-2e72oea0q.vercel.app"
+      ],
       "disableStaticImages": false,
       "minimumCacheTTL": 60,
       "formats": [
@@ -62,7 +64,7 @@
       "contentSecurityPolicy": "script-src 'none'; frame-src 'none'; sandbox;",
       "contentDispositionType": "attachment",
       "remotePatterns": [],
-      "unoptimized": false
+      "unoptimized": true
     },
     "devIndicators": {
       "position": "bottom-left"
@@ -100,7 +102,7 @@
         "transform": "lodash/{{member}}"
       }
     },
-    "outputFileTracingRoot": "C:\\Users\\raya\\ShoppingCart\\portfolio - Copy - Copy - Copy - Copy - Copy",
+    "outputFileTracingRoot": "C:\\Users\\raya\\ShoppingCart\\portfolio - Copy - Copy - Copy - Copy - Copy - Copy (2)",
     "experimental": {
       "nodeMiddleware": false,
       "cacheLife": {
@@ -201,7 +203,7 @@
       "useCache": false,
       "serverActions": {
         "allowedOrigins": [
-          "localhost:3000"
+          "full-stack-portfolio-a333-2e72oea0q.vercel.app"
         ],
         "bodySizeLimit": "2mb"
       },
@@ -293,10 +295,17 @@
       "styledComponents": true
     },
     "turbopack": {
-      "root": "C:\\Users\\raya\\ShoppingCart\\portfolio - Copy - Copy - Copy - Copy - Copy"
-    }
+      "root": "C:\\Users\\raya\\ShoppingCart\\portfolio - Copy - Copy - Copy - Copy - Copy - Copy (2)"
+    },
+    "_originalRedirects": [
+      {
+        "source": "/api/auth/error",
+        "destination": "/auth/error",
+        "permanent": true
+      }
+    ]
   },
-  "appDir": "C:\\Users\\raya\\ShoppingCart\\portfolio - Copy - Copy - Copy - Copy - Copy",
+  "appDir": "C:\\Users\\raya\\ShoppingCart\\portfolio - Copy - Copy - Copy - Copy - Copy - Copy (2)",
   "relativeAppDir": "",
   "files": [
     ".next\\routes-manifest.json",
@@ -319,7 +328,7 @@
     ".next\\server\\next-font-manifest.js",
     ".next\\server\\next-font-manifest.json",
     ".next\\static\\css\\52fd4112eb5e74f5.css",
-    ".next\\static\\css\\b79cfd2c3e98a1d2.css"
+    ".next\\static\\css\\ee4db9eb5578c4f7.css"
   ],
   "ignore": [
     "node_modules\\next\\dist\\compiled\\@ampproject\\toolbox-optimizer\\**\\*"

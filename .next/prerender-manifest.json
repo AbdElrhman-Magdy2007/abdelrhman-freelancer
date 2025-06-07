@@ -1,30 +1,6 @@
 {
   "version": 4,
   "routes": {
-    "/auth/signin": {
-      "experimentalBypassFor": [
-        {
-          "type": "header",
-          "key": "Next-Action"
-        },
-        {
-          "type": "header",
-          "key": "content-type",
-          "value": "multipart/form-data;.*"
-        }
-      ],
-      "initialRevalidateSeconds": false,
-      "srcRoute": "/auth/signin",
-      "dataRoute": "/auth/signin.rsc",
-      "allowHeader": [
-        "host",
-        "x-matched-path",
-        "x-prerender-revalidate",
-        "x-prerender-revalidate-if-generated",
-        "x-next-revalidated-tags",
-        "x-next-revalidate-tag-token"
-      ]
-    },
     "/auth/error": {
       "experimentalBypassFor": [
         {
@@ -144,13 +120,37 @@
         "x-next-revalidated-tags",
         "x-next-revalidate-tag-token"
       ]
+    },
+    "/auth/signin": {
+      "experimentalBypassFor": [
+        {
+          "type": "header",
+          "key": "Next-Action"
+        },
+        {
+          "type": "header",
+          "key": "content-type",
+          "value": "multipart/form-data;.*"
+        }
+      ],
+      "initialRevalidateSeconds": false,
+      "srcRoute": "/auth/signin",
+      "dataRoute": "/auth/signin.rsc",
+      "allowHeader": [
+        "host",
+        "x-matched-path",
+        "x-prerender-revalidate",
+        "x-prerender-revalidate-if-generated",
+        "x-next-revalidated-tags",
+        "x-next-revalidate-tag-token"
+      ]
     }
   },
   "dynamicRoutes": {},
   "notFoundRoutes": [],
   "preview": {
-    "previewModeId": "b93bb31761f6f5e2ca751a65f5fd997e",
-    "previewModeSigningKey": "a04f4dffe5c86fe65c0c0885c9d859944f34b242d377f91ab5f7b05ffa1586ff",
-    "previewModeEncryptionKey": "c017926dae2b22d622048f275061dc82afcfd635f3b9b493b425bcb03125c02a"
+    "previewModeId": "39aea2507923a3a49556d266f6bf6755",
+    "previewModeSigningKey": "8f5ef597da4afe7f6f728e79ba0dc2ceba061ffef9a5e75558fd14208094a192",
+    "previewModeEncryptionKey": "7bc7324ea6f5acdfbe7e95b87a19479ac4aa105a0dcf2e2563f1aaab38b264a1"
   }
 }

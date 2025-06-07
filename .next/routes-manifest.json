@@ -10,6 +10,12 @@
       "internal": true,
       "statusCode": 308,
       "regex": "^(?:/((?:[^/]+?)(?:/(?:[^/]+?))*))/$"
+    },
+    {
+      "source": "/api/auth/error",
+      "destination": "/auth/error",
+      "statusCode": 308,
+      "regex": "^(?!/_next)/api/auth/error(?:/)?$"
     }
   ],
   "headers": [
