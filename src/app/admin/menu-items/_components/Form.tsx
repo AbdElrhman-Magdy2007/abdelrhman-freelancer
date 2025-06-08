@@ -406,13 +406,13 @@ function Form({ categories, product }: FormProps) {
                   ) : (
                     <FormFields
                       {...field}
+                      pattern={field.pattern || ""}
                       type={field.type as InputTypes}
                       error={state?.error?.[field.name]}
                       value={formValues[field.name as keyof FormValues] ?? ""}
                       defaultValue={formValues[field.name as keyof FormValues] ?? ""}
                       onChange={handleFieldChange(field.name as keyof FormValues)}
-                      pattern={field.pattern ?? ""}
-                      ariaLabel={field.ariaLabel ?? field.label ?? field.name}
+                      ariaLabel={field.ariaLabel || field.label || field.name}
                       className={cn(
                         "w-full p-3 bg-gray-800/50 border border-indigo-600/30 rounded-lg",
                         "text-indigo-200 placeholder-indigo-400/50",

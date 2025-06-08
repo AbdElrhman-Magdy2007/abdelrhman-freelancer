@@ -164,7 +164,7 @@ function EditUserForm({ user }: { user: Session["user"] }) {
             state?.formData?.get(field.name) ?? formData().get(field.name);
           return (
             <motion.div
-              key={field.name}
+              key={`field-${field.name}`}
               className="mb-4"
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
