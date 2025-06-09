@@ -4,11 +4,11 @@ import { motion } from 'framer-motion';
 import { Card } from '@/components/ui/card';
 
 const About = () => {
-  const stats = [
-    { label: 'Years of Expertise', value: '5+' },
-    { label: 'Successful Projects', value: '25+' },
-    { label: 'Delighted Clients', value: '12+' }
-  ];
+  // const stats = [
+  //   { label: 'Years of Expertise', value: '5+' },
+  //   { label: 'Successful Projects', value: '25+' },
+  //   { label: 'Delighted Clients', value: '12+' }
+  // ];
 
   // Animation variants
   const containerVariants = {
@@ -45,14 +45,21 @@ const About = () => {
 
           <motion.div variants={itemVariants} className="glass-card p-8 mb-12">
             <p className="text-lg leading-relaxed mb-6">
-              I'm Abdelrahman Magdy, a web developer with 5+ years of experience crafting innovative web solutions. I specialize in turning complex challenges into seamless, user-focused applications using React, Next.js, and TypeScript.
+            Looking for a web developer who can build fast, reliable, and high-performing websites?
+I'm Abdurrahman — a web developer with 2+ years of experience, having worked with over 15 satisfied clients on successful projects.
+I specialize in React.js, Next.js, TypeScript, Tailwind CSS, Stripe, and PayPal integrations.
+Whether you need an e-commerce platform, admin dashboard, or a sleek service website — I’ve got you covered.
+I focus on user experience, clean design, fast loading, and delivering practical, scalable solutions.
+Let’s turn your idea into a powerful digital product that drives results and impresses your users.
+
+
             </p>
-            <p className="text-lg leading-relaxed">
+            {/* <p className="text-lg leading-relaxed">
               Having worked with startups and global brands, I deliver projects that combine stunning design with robust performance. My mission? To create digital experiences that inspire and drive results. Let's build something extraordinary together!
-            </p>
+            </p> */}
           </motion.div>
 
-          <motion.div 
+          {/* <motion.div 
             variants={containerVariants} 
             className="grid grid-cols-1 md:grid-cols-3 gap-6"
           >
@@ -68,7 +75,7 @@ const About = () => {
                 <div className="text-gray-300">{stat.label}</div>
               </motion.div>
             ))}
-          </motion.div>
+          </motion.div> */}
         </motion.div>
       </div>
     </section>
