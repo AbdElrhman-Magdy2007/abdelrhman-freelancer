@@ -108,7 +108,7 @@ const Hero = () => {
   // Hardcoded user data for the avatar (replace with actual user data if available)
   const user = {
     name: "Abdelrahman Magdy",
-    image: "/images/avatar.jpg", // Replace with actual image path or URL
+    image: "/images/avatar.jpeg", // Replace with actual image path or URL
   };
 
   return (
