@@ -1,224 +1,14 @@
-// "use client";
-
-// import { signOut, useSession } from "next-auth/react";
-// import { Button } from "../ui/button";
-// import { usePathname, useParams, useRouter } from "next/navigation";
-// import { Pages, Routes, Languages } from "@/constants/enums";
-// import { motion } from "framer-motion";
-// import clsx from "clsx";
-// import { Loader } from "lucide-react";
-// import { useCallback, useMemo, useEffect, useState } from "react";
-
-// // Define interfaces for type safety
-// interface AuthSectionProps {
-//   onCloseMenu?: () => void;
-//   className?: string;
-// }
-
-// interface ButtonConfig {
-//   label: string;
-//   path: string;
-//   isActive: boolean;
-//   variant: "link" | "default";
-//   ariaLabel: string;
-// }
-
-// /**
-//  * AuthSection component renders a modern, responsive authentication UI with glassmorphism effects
-//  * and dynamic animations, designed to integrate seamlessly with a modern website
-//  * @param {AuthSectionProps} props - Component props
-//  * @returns {JSX.Element} Styled authentication section
-//  */
-// function AuthSection({ onCloseMenu, className }: AuthSectionProps): JSX.Element {
-//   const { data: session, status } = useSession();
-//   const router = useRouter();
-//   const pathname = usePathname();
-//   const params = useParams();
-//   const isArabic = params?.locale === Languages.ARABIC;
-//   const [mounted, setMounted] = useState(false);
-
-//   // Handle client-side mounting
-//   useEffect(() => {
-//     setMounted(true);
-//   }, []);
-
-//   // Memoized navigation handler
-//   const navigateWithClose = useCallback(
-//     (path: string) => {
-//       router.push(path);
-//       onCloseMenu?.();
-//     },
-//     [router, onCloseMenu]
-//   );
-
-//   // Memoized sign out handler
-//   const handleSignOut = useCallback(async () => {
-//     try {
-//       await signOut({ callbackUrl: `/${Routes.ROOT}` });
-//       onCloseMenu?.();
-//     } catch (error) {
-//       console.error("Sign out error:", error);
-//     }
-//   }, [onCloseMenu]);
-
-//   // Memoized button configurations
-//   const buttons = useMemo<ButtonConfig[]>(
-//     () => [
-//       {
-//         label: "Login",
-//         path: `/${Routes.AUTH}${Pages.LOGIN}`,
-//         isActive: pathname?.startsWith(`/${Routes.AUTH}${Pages.LOGIN}`) ?? false,
-//         variant: "link",
-//         ariaLabel: "Navigate to login page",
-//       },
-//       {
-//         label: "Sign Up",
-//         path: `/${Routes.AUTH}${Pages.Register}`,
-//         isActive: pathname?.startsWith(`/${Routes.AUTH}${Pages.Register}`) ?? false,
-//         variant: "default",
-//         ariaLabel: "Navigate to sign up page",
-//       },
-//     ],
-//     [pathname]
-//   );
-
-//   // Animation variants for buttons
-//   const buttonVariants = {
-//     hidden: { opacity: 0, scale: 0.9 },
-//     visible: { opacity: 1, scale: 1, transition: { duration: 0.3, ease: "easeOut" } },
-//     hover: { scale: 1.05, transition: { duration: 0.2 } },
-//     tap: { scale: 0.95 },
-//   };
-
-//   // Error state
-//   if (!pathname) {
-//     return (
-//       <motion.div
-//         initial={{ opacity: 0 }}
-//         animate={{ opacity: 1 }}
-//         className="text-rose-500 dark:text-rose-400 font-semibold text-sm p-4 rounded-xl bg-rose-50/50 dark:bg-rose-900/20 backdrop-blur-md"
-//         role="alert"
-//         aria-live="assertive"
-//       >
-//         Error: Unable to determine current path
-//       </motion.div>
-//     );
-//   }
-
-//   // Loading state
-//   if (status === "loading" || !mounted) {
-//     return (
-//       <motion.div
-//         initial={{ opacity: 0 }}
-//         animate={{ opacity: 1 }}
-//         dir="ltr"
-//         className="flex items-center justify-center gap-4 p-4 sm:gap-6 md:gap-8"
-//       >
-//         <div className="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2 rounded-md">
-//           <Loader className="w-4 h-4 animate-spin" aria-hidden="true" />
-//           <span>Loading...</span>
-//         </div>
-//       </motion.div>
-//     );
-//   }
-
-//   // Authenticated state
-//   if (session?.user) {
-//     return (
-//       <motion.div
-//         initial={{ opacity: 0 }}
-//         animate={{ opacity: 1 }}
-//         dir="ltr"
-//         className="flex items-center justify-center gap-4 p-4 sm:gap-6 md:gap-8"
-//       >
-//         <motion.div variants={buttonVariants} whileHover="hover" whileTap="tap">
-//           <Button
-//             className={clsx(
-//               "px-4 py-3 rounded-xl bg-gradient-to-r from-blue-500 to-blue-600 text-white",
-//               "dark:from-blue-700 dark:to-blue-800 dark:text-gray-100",
-//               "hover:from-blue-600 hover:to-blue-700",
-//               "dark:hover:from-blue-800 dark:hover:to-blue-900",
-//               "active:from-blue-700 active:to-blue-800",
-//               "dark:active:from-blue-900 dark:active:to-blue-950",
-//               "shadow-md hover:shadow-lg hover:shadow-blue-500/30 dark:hover:shadow-blue-800/30",
-//               "transition-all duration-300 ease-in-out backdrop-blur-md",
-//               "focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:shadow-lg",
-//               "text-base font-semibold"
-//             )}
-//             size="lg"
-//             onClick={handleSignOut}
-//             aria-label="Sign Out"
-//           >
-//             Sign Out
-//           </Button>
-//         </motion.div>
-//       </motion.div>
-//     );
-//   }
-
-//   // Unauthenticated state
-//   return (
-//     <motion.div
-//       initial={{ opacity: 0 }}
-//       animate={{ opacity: 1 }}
-//       dir="ltr"
-//       className="flex items-center justify-center gap-4 p-4 sm:gap-6 md:gap-8"
-//     >
-//       {buttons.map((button, index) => (
-//         <motion.div
-//           key={button.path}
-//           variants={buttonVariants}
-//           initial="hidden"
-//           animate="visible"
-//           whileHover="hover"
-//           whileTap="tap"
-//           transition={{ delay: index * 0.1 }}
-//         >
-//           <Button
-//             variant={button.variant}
-//             className={clsx(
-//               button.variant === "default" && [
-//                 "px-4 py-3 rounded-xl bg-gradient-to-r from-blue-500 to-blue-600 text-white",
-//                 "dark:from-blue-700 dark:to-blue-800 dark:text-gray-100",
-//                 "hover:from-blue-600 hover:to-blue-700",
-//                 "dark:hover:from-blue-800 dark:hover:to-blue-900",
-//                 "active:from-blue-700 active:to-blue-800",
-//                 "dark:active:from-blue-900 dark:active:to-blue-950",
-//                 "shadow-md hover:shadow-lg hover:shadow-blue-500/30 dark:hover:shadow-blue-800/30",
-//                 "transition-all duration-300 ease-in-out backdrop-blur-md",
-//                 "focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:shadow-lg",
-//                 "text-base font-semibold"
-//               ],
-//               button.variant === "link" && [
-//                 "text-blue-600 dark:text-blue-400",
-//                 "hover:text-blue-700 dark:hover:text-blue-300",
-//                 "transition-colors duration-200"
-//               ]
-//             )}
-//             onClick={() => navigateWithClose(button.path)}
-//             aria-label={button.ariaLabel}
-//           >
-//             {button.label}
-//           </Button>
-//         </motion.div>
-//       ))}
-//     </motion.div>
-//   );
-// }
-
-// export default AuthSection;
 "use client";
 
 import { signOut, useSession } from "next-auth/react";
-import { Button } from "../ui/button";
+import { Button } from "@/components/ui/button";
 import { usePathname, useParams, useRouter } from "next/navigation";
 import { Pages, Routes, Languages } from "@/constants/enums";
-import { motion } from "framer-motion";
+import { motion, easeOut } from "framer-motion";
 import clsx from "clsx";
 import { Loader } from "lucide-react";
 import { useCallback, useMemo } from "react";
 
-// Define interfaces for type safety
 interface AuthSectionProps {
   onCloseMenu?: () => void;
 }
@@ -231,29 +21,22 @@ interface ButtonConfig {
   ariaLabel: string;
 }
 
-/**
- * AuthSection component renders a modern, responsive authentication UI with glassmorphism effects
- * and dynamic animations, designed to integrate seamlessly with a modern website
- * @param {AuthSectionProps} props - Component props
- * @returns {JSX.Element} Styled authentication section
- */
-function AuthSection({ onCloseMenu }: AuthSectionProps): JSX.Element {
+function AuthSection({ onCloseMenu }: AuthSectionProps) {
   const { data: session, status } = useSession();
   const router = useRouter();
   const pathname = usePathname();
   const params = useParams();
   const isArabic = params?.locale === Languages.ARABIC;
 
-  // Memoized navigation handler
   const navigateWithClose = useCallback(
     (path: string) => {
       router.push(path);
-      onCloseMenu?.();
+      if (typeof window !== "undefined" && window.innerWidth < 1024) {
+        onCloseMenu?.(); // ✅ يُغلق فقط في الشاشات الصغيرة
+      }
     },
     [router, onCloseMenu]
   );
-
-  // Memoized sign out handler
   const handleSignOut = useCallback(async () => {
     try {
       await signOut({ callbackUrl: `/${Routes.ROOT}` });
@@ -263,20 +46,21 @@ function AuthSection({ onCloseMenu }: AuthSectionProps): JSX.Element {
     }
   }, [onCloseMenu]);
 
-  // Memoized button configurations
   const buttons = useMemo<ButtonConfig[]>(
     () => [
       {
         label: "Login",
         path: `/${Routes.AUTH}${Pages.LOGIN}`,
-        isActive: pathname?.startsWith(`/${Routes.AUTH}${Pages.LOGIN}`) ?? false,
+        isActive:
+          pathname?.startsWith(`/${Routes.AUTH}${Pages.LOGIN}`) ?? false,
         variant: "link",
         ariaLabel: "Navigate to login page",
       },
       {
         label: "Sign Up",
         path: `/${Routes.AUTH}${Pages.Register}`,
-        isActive: pathname?.startsWith(`/${Routes.AUTH}${Pages.Register}`) ?? false,
+        isActive:
+          pathname?.startsWith(`/${Routes.AUTH}${Pages.Register}`) ?? false,
         variant: "default",
         ariaLabel: "Navigate to sign up page",
       },
@@ -284,15 +68,17 @@ function AuthSection({ onCloseMenu }: AuthSectionProps): JSX.Element {
     [pathname]
   );
 
-  // Animation variants for buttons
   const buttonVariants = {
     hidden: { opacity: 0, scale: 0.9 },
-    visible: { opacity: 1, scale: 1, transition: { duration: 0.3, ease: "easeOut" } },
+    visible: {
+      opacity: 1,
+      scale: 1,
+      transition: { duration: 0.3, ease: easeOut },
+    },
     hover: { scale: 1.05, transition: { duration: 0.2 } },
     tap: { scale: 0.95 },
   };
 
-  // Error state
   if (!pathname) {
     return (
       <motion.div
@@ -307,24 +93,20 @@ function AuthSection({ onCloseMenu }: AuthSectionProps): JSX.Element {
     );
   }
 
-  // Loading state
   if (status === "loading") {
     return (
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        className="flex items-center justify-center gap-4 p-4"
+        className="flex items-center justify-center gap-2 p-2"
       >
         <Button
-          className={clsx(
-            "px-4 py-4 rounded-xl bg-gradient-to-r from-blue-500 to-blue-600 text-white",
-            "dark:from-blue-700 dark:to-blue-800 dark:text-gray-100",
-            "animate-pulse cursor-not-allowed",
-            "transition-opacity duration-300 ease-in-out",
-            "backdrop-blur-md shadow-md"
-          )}
           size="lg"
           disabled
+          className="text-base font-semibold rounded-xl px-5 py-3 transition-all duration-300 ease-in-out
+          bg-gradient-to-tr from-[#3A29FF] via-[#FF94B4] to-[#FF3232] text-white
+          backdrop-blur-xl bg-opacity-80
+          shadow-lg hover:shadow-xl shadow-[#3A29FF]/30"
           aria-label="Loading authentication status"
         >
           <Loader className="w-5 h-5 animate-spin mr-2" aria-hidden="true" />
@@ -334,28 +116,20 @@ function AuthSection({ onCloseMenu }: AuthSectionProps): JSX.Element {
     );
   }
 
-  // Authenticated state
   if (session?.user) {
     return (
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        className="flex items-center justify-center gap-4 p-4"
+        className="flex items-center justify-center gap-2 p-2"
       >
         <motion.div variants={buttonVariants} whileHover="hover" whileTap="tap">
           <Button
-            className={clsx(
-              "px-4 py-3 rounded-xl bg-gradient-to-r from-blue-500 to-blue-600 text-white",
-              "dark:from-blue-700 dark:to-blue-800 dark:text-gray-100",
-              "hover:from-blue-600 hover:to-blue-700",
-              "dark:hover:from-blue-800 dark:hover:to-blue-900",
-              "active:from-blue-700 active:to-blue-800",
-              "dark:active:from-blue-900 dark:active:to-blue-950",
-              "shadow-md hover:shadow-lg hover:shadow-blue-500/30 dark:hover:shadow-blue-800/30",
-              "transition-all duration-300 ease-in-out backdrop-blur-md",
-              "focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:shadow-lg",
-              "text-base font-semibold"
-            )}
+            className="text-base font-semibold rounded-xl px-5 py-3 transition-all duration-300 ease-in-out
+            bg-gradient-to-tr from-[#3A29FF] via-[#FF94B4] to-[#FF3232] text-white
+            backdrop-blur-xl bg-opacity-80
+            shadow-lg hover:shadow-xl shadow-[#3A29FF]/30
+            focus:outline-none focus:ring-2 focus:ring-[#3A29FF]/50"
             size="lg"
             onClick={handleSignOut}
             aria-label="Sign Out"
@@ -367,13 +141,12 @@ function AuthSection({ onCloseMenu }: AuthSectionProps): JSX.Element {
     );
   }
 
-  // Unauthenticated state
   return (
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       className={clsx(
-        "flex items-center justify-center gap-4 p-4 sm:gap-6 md:gap-8",
+        "flex items-center justify-center gap-4 p-2",
         isArabic ? "flex-row-reverse" : "flex-row"
       )}
       dir={isArabic ? "rtl" : "ltr"}
@@ -387,28 +160,20 @@ function AuthSection({ onCloseMenu }: AuthSectionProps): JSX.Element {
         >
           <Button
             className={clsx(
-              "text-base font-semibold",
+              "text-base font-semibold rounded-xl px-5 py-3 transition-all duration-300 ease-in-out",
               variant === "link"
                 ? clsx(
-                    isActive
-                      ? "text-blue-600 dark:text-blue-300 underline underline-offset-4"
-                      : "text-blue-500 dark:text-blue-400",
-                    "hover:text-blue-700 dark:hover:text-blue-200",
-                    "active:text-blue-800 dark:active:text-blue-100",
-                    "focus:outline-none focus:ring-2 focus:ring-blue-500/50",
-                    "transition-all duration-300 ease-in-out"
+                    "text-[#3A29FF] dark:text-[#FF94B4]",
+                    "hover:underline underline-offset-4",
+                    "focus:outline-none focus:ring-2 focus:ring-[#3A29FF]/50"
                   )
                 : clsx(
-                    "px-4 py-3 rounded-xl bg-gradient-to-r from-blue-500 to-blue-600 text-white",
-                    "dark:from-blue-700 dark:to-blue-800 dark:text-gray-100",
-                    "hover:from-blue-600 hover:to-blue-700",
-                    "dark:hover:from-blue-800 dark:hover:to-blue-900",
-                    "active:from-blue-700 active:to-blue-800",
-                    "dark:active:from-blue-900 dark:active:to-blue-950",
-                    "shadow-md hover:shadow-lg hover:shadow-blue-500/30 dark:hover:shadow-blue-800/30",
-                    "transition-all duration-300 ease-in-out backdrop-blur-md",
-                    "focus:outline-none focus:ring-2 focus:ring-blue-500/50",
-                    isActive && "ring-2 ring-blue-300 dark:ring-blue-500"
+                    "bg-gradient-to-tr from-[#3A29FF] via-[#FF94B4] to-[#FF3232] text-white",
+                    "hover:brightness-110 hover:scale-[1.02]",
+                    "shadow-lg hover:shadow-xl shadow-[#3A29FF]/30",
+                    "backdrop-blur-xl bg-opacity-80",
+                    "focus:outline-none focus:ring-2 focus:ring-[#3A29FF]/50",
+                    isActive && "ring-2 ring-[#FF94B4]"
                   )
             )}
             size="lg"

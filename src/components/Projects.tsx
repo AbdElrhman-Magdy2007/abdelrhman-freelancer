@@ -1,8 +1,7 @@
 "use client";
 
-import React from "react";
-import { useRouter } from "next/navigation";
-import { motion } from "framer-motion";
+import React, { useRef, useState } from "react";
+import { motion, Variants, useInView } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -27,53 +26,70 @@ interface ProjectsData {
   projects: Project[];
 }
 
-const Projects = () => {
-  const router = useRouter();
+// Letter-by-letter animation for the heading
+const letterVariants: Variants = {
+  hidden: { opacity: 0, y: 20, rotateX: -90 },
+  visible: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    rotateX: 0,
+    transition: {
+      delay: i * 0.05,
+      duration: 0.4,
+      ease: "easeOut",
+    },
+  }),
+};
+
+const Projects: React.FC = () => {
   useLanguage();
   const featuredProjects = (projectsData as ProjectsData).projects.filter(
-    (project: Project) => project.featured
+    (project) => project.featured
   );
+  const sectionRef = useRef<HTMLElement>(null);
+  const isInView = useInView(sectionRef, { once: true, amount: 0.2 });
 
   // Animation variants
-  const containerVariants = {
+  const containerVariants: Variants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
-      transition: { staggerChildren: 0.2 },
+      transition: { staggerChildren: 0.15, delayChildren: 0.3 },
     },
   };
 
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
+  const itemVariants: Variants = {
+    hidden: { opacity: 0, y: 30 },
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.5, ease: "easeOut" },
+      transition: { duration: 0.6, ease: "easeOut" },
     },
   };
 
-  const cardVariants = {
-    hidden: { opacity: 0, y: 30, scale: 0.95 },
+  const cardVariants: Variants = {
+    hidden: { opacity: 0, y: 40, scale: 0.95, rotateX: 10 },
     visible: {
       opacity: 1,
       y: 0,
       scale: 1,
+      rotateX: 0,
       transition: {
         type: "spring",
-        stiffness: 120,
+        stiffness: 100,
         damping: 15,
         duration: 0.7,
       },
     },
     hover: {
-      // y: -10,
       scale: 1.03,
-      // boxShadow: "0 20px 40px -10px rgba(45, 212, 191, 0.3)", // Teal-400 shadow
-      // transition: { duration: 0.3, ease: "easeOut" },
+      rotateY: 5,
+      rotateX: -5,
+      transition: { duration: 0.3, ease: "easeOut" },
     },
   };
 
-  const buttonVariants = {
+  const buttonVariants: Variants = {
     hidden: { opacity: 0, y: 20 },
     visible: {
       opacity: 1,
@@ -86,40 +102,29 @@ const Projects = () => {
       },
     },
     hover: {
-      scale: 1.1,
-      // boxShadow: "0 0 15px rgba(45, 212, 191, 0.4)", // Teal-400 shadow
-      // transition: { duration: 0.3 },
+      scale: 1.15,
+      boxShadow: "0 0 20px rgba(58, 41, 255, 0.4)",
+      brightness: 1.1, // إضافة تأثير إضاءة عند الـ hover
+      transition: { duration: 0.3 },
     },
-    tap: {
-      scale: 0.95,
-      transition: { duration: 0.2 },
-    },
+    tap: { scale: 0.9 },
   };
 
-  // Particle trail for button hover
-  const [mousePosition, setMousePosition] = React.useState({ x: 0, y: 0 });
-  const [particles, setParticles] = React.useState<
+  // Particle effect state
+  const [particles, setParticles] = useState<
     { id: number; x: number; y: number }[]
   >([]);
-  const buttonRef = React.useRef<HTMLDivElement>(null);
+  const buttonRef = useRef<HTMLDivElement>(null);
 
   const handleMouseMove = (e: React.MouseEvent) => {
     if (buttonRef.current) {
       const rect = buttonRef.current.getBoundingClientRect();
       const x = e.clientX - rect.left;
       const y = e.clientY - rect.top;
-      setMousePosition({ x, y });
 
-      // Add a new particle
-      const newParticle = {
-        id: Date.now(),
-        x,
-        y,
-      };
+      const newParticle = { id: Date.now(), x, y };
+      setParticles((prev) => [...prev, newParticle].slice(-8));
 
-      setParticles((prev) => [...prev, newParticle]);
-
-      // Remove particle after animation
       setTimeout(() => {
         setParticles((prev) => prev.filter((p) => p.id !== newParticle.id));
       }, 800);
@@ -129,78 +134,84 @@ const Projects = () => {
   return (
     <section
       id="projects"
-      className="py-20 relative overflow-hidden  from-gray-950 via-gray-900 to-teal-950"
+      ref={sectionRef}
+      className="relative overflow-hidden py-24  text-white"
     >
-      <div className="container px-4 mx-auto">
+      <div className="container mx-auto px-4">
         <motion.div
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, amount: 0.1 }}
+          viewport={{ once: true, amount: 0.2 }}
           variants={containerVariants}
         >
-          <motion.div variants={itemVariants} className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-teal-400 to-blue-400 bg-clip-text text-transparent mb-6">
-              Featured Projects
+          <motion.div variants={itemVariants} className="text-center mb-20">
+            <h2 className="text-4xl font-extrabold bg-gradient-to-r from-[#7B61FF] via-[#FF6AC2] to-[#38BDF8] bg-clip-text text-transparent mb-6 tracking-tight">
+              {"Featured Projects".split("").map((char, i) => (
+                <motion.span
+                  key={i}
+                  custom={i}
+                  variants={letterVariants}
+                  initial="hidden"
+                  animate={isInView ? "visible" : "hidden"}
+                >
+                  {char}
+                </motion.span>
+              ))}
             </h2>
-            <p className="text-lg text-gray-300 max-w-2xl mx-auto">
-              {
-                "A showcase of my best work, demonstrating my expertise in building modern web applications."
-              }
+            <p className="text-gray-400 text-lg max-w-2xl mx-auto">
+              Explore a curated selection of modern web apps showcasing
+              performance, design & interactivity.
             </p>
-            <div className="h-1 w-24 bg-gradient-to-r from-teal-400 to-blue-400 mx-auto mt-6 rounded-full" />
+            <div className="h-1 w-24 bg-gradient-to-r from-[#7B61FF] to-[#FF6AC2] mx-auto mt-6 rounded-full" />
           </motion.div>
 
           <motion.div
             variants={containerVariants}
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16"
+            className="grid gap-10 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mb-20"
           >
             {featuredProjects.map((project) => (
               <motion.div
                 key={project.id}
                 variants={cardVariants}
                 whileHover="hover"
-                className="glass-card overflow-hidden rounded-xl border border-teal-500/30 hover:border-teal-400/50 bg-gray-900/10 backdrop-blur-xl transition-all duration-500"
-                role="article"
-                aria-labelledby={`project-title-${project.id}`}
+                className="group relative rounded-2xl border border-white/10 bg-white/5 backdrop-blur-md transition-all duration-500 shadow-lg hover:shadow-2xl"
               >
-                <Card className="border-0 bg-transparent h-full flex flex-col">
-                  <div className="relative overflow-hidden">
-                    <div className="aspect-[4/3] w-full bg-gray-800">
+                <Card className="bg-transparent border-0 h-full flex flex-col">
+                  <div className="relative">
+                    <div className="aspect-[4/3] overflow-hidden">
                       <img
                         src={project.image}
-                        alt={project.title}
-                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 group-hover:rotate-2"
+                        alt={`Screenshot of ${project.title} project`}
                         loading="lazy"
+                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                       />
                     </div>
                     <motion.div
-                      className="absolute inset-0 bg-gradient-to-t from-gray-900/80 via-gray-900/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                      initial={{ opacity: 0 }}
-                      whileHover={{ opacity: 1 }}
+                      className="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"
                     />
                   </div>
-                  <CardContent className="p-6 flex flex-col flex-grow">
-                    <h3
-                      id={`project-title-${project.id}`}
-                      className="text-xl font-bold text-white mb-2 bg-gradient-to-r from-teal-400 to-blue-400 bg-clip-text text-transparent"
-                    >
+
+                  <CardContent className="flex flex-col p-6 flex-grow">
+                    <h3 className="text-xl font-bold mb-2 bg-gradient-to-r from-[#7B61FF] to-[#38BDF8] bg-clip-text text-transparent">
                       {project.title}
                     </h3>
                     <p className="text-gray-300 text-sm mb-4 line-clamp-3 flex-grow">
                       {project.description}
                     </p>
+
                     <div className="flex flex-wrap gap-2 mb-4">
-                      {project.tags.map((tag, index) => (
+                      {project.tags.map((tag, i) => (
                         <Badge
-                          key={index}
+                          key={i}
                           variant="secondary"
-                          className="bg-gradient-to-r from-coral-400 to-pink-400 text-white text-xs font-medium px-2.5 py-1 rounded-full backdrop-blur-md border border-coral-300/30"
+                          className="bg-gradient-to-r from-[#FF6AC2] to-[#7B61FF] text-white text-xs font-medium px-3 py-1 rounded-full backdrop-blur-md"
                         >
                           {tag}
                         </Badge>
                       ))}
                     </div>
-                    <div className="flex gap-3 mt-auto">
+
+                    <div className="flex flex-col gap-3 mt-auto">
                       {project.demoUrl && (
                         <motion.a
                           href={project.demoUrl}
@@ -209,10 +220,9 @@ const Projects = () => {
                           variants={buttonVariants}
                           whileHover="hover"
                           whileTap="tap"
-                          className="flex items-center justify-center px-4 py-2 rounded-full bg-gradient-to-r from-teal-400 to-teal-600 text-white hover:from-teal-500 hover:to-teal-700 transition-all duration-300 border border-teal-400/30 backdrop-blur-md"
-                          aria-label={`View live demo for ${project.title}`}
+                          className="w-full min-w-[120px] flex items-center justify-center gap-2 px-6 py-2 text-base font-medium rounded-full bg-gradient-to-r from-[#7B61FF] to-[#38BDF8] text-white hover:brightness-110 shadow-md transition"
                         >
-                          <ExternalLink className="h-4 w-4 mr-2" />
+                          <ExternalLink className="w-4 h-4" />
                           Demo
                         </motion.a>
                       )}
@@ -222,16 +232,11 @@ const Projects = () => {
                           target="_blank"
                           rel="noopener noreferrer"
                           variants={buttonVariants}
-                          whileHover={{
-                            scale: 1.1,
-                            boxShadow: "0 0 15px rgba(251, 113, 133, 0.4)", // Coral-400 shadow
-                            transition: { duration: 0.3 },
-                          }}
+                          whileHover="hover"
                           whileTap="tap"
-                          className="flex items-center justify-center px-4 py-2 rounded-full bg-gradient-to-r from-coral-400 to-coral-600 text-white hover:from-coral-500 hover:to-coral-700 transition-all duration-300 border border-coral-400/30 backdrop-blur-md"
-                          aria-label={`View GitHub repository for ${project.title}`}
+                          className="w-full min-w-[120px] flex items-center justify-center gap-2 px-6 py-2 text-base font-medium rounded-full bg-gradient-to-r from-[#FF6AC2] to-[#FF3B80] text-white hover:brightness-110 shadow-md transition"
                         >
-                          <Github className="h-4 w-4 mr-2" />
+                          <Github className="w-4 h-4" />
                           GitHub
                         </motion.a>
                       )}
@@ -243,65 +248,29 @@ const Projects = () => {
           </motion.div>
 
           <motion.div variants={itemVariants} className="text-center">
-            <motion.div
-              ref={buttonRef}
-              variants={buttonVariants}
-              whileHover="hover"
-              whileTap="tap"
-              onMouseMove={handleMouseMove}
-              className="inline-block relative"
-            >
+            <div className="relative" ref={buttonRef} onMouseMove={handleMouseMove}>
+              {particles.map((particle) => (
+                <motion.div
+                  key={particle.id}
+                  className="absolute w-2 h-2 bg-[#7B61FF] rounded-full"
+                  style={{ left: particle.x, top: particle.y }}
+                  initial={{ opacity: 1, scale: 1 }}
+                  animate={{ opacity: 0, scale: 0.5 }}
+                  transition={{ duration: 0.8 }}
+                />
+              ))}
               <Link href="/projects">
                 <Button
                   variant="outline"
-                  className="relative overflow-hidden rounded-full px-8 py-4 text-lg font-semibold bg-gradient-to-r from-teal-400/20 to-blue-400/20 hover:from-teal-400/30 hover:to-blue-400/30 border border-teal-400/50 backdrop-blur-md text-white shadow-lg hover:shadow-xl transition-all duration-500"
+                  className="w-full max-w-md px-10 py-4 text-lg font-semibold rounded-full bg-gradient-to-r from-[#7B61FF]/20 to-[#38BDF8]/20 border border-white/10 text-white backdrop-blur-md hover:brightness-110 transition duration-300 shadow-md"
                 >
-                  {"View All Projects"}
-                  <span className="absolute inset-0 overflow-hidden opacity-0 group-hover:opacity-100 transition-opacity duration-600">
-                    {[...Array(10)].map((_, i) => (
-                      <span
-                        key={i}
-                        className="particle absolute w-3 h-3 rounded-full bg-gradient-to-r from-teal-400 to-coral-400"
-                        style={{
-                          top: `${Math.random() * 100}%`,
-                          left: `${Math.random() * 100}%`,
-                          ["--x" as string]: `${Math.random() * 100 - 50}px`,
-                          ["--y" as string]: `${Math.random() * 100 - 50}px`,
-                          animationDelay: `${i * 0.06}s`,
-                          animationDuration: `${0.7 + Math.random() * 0.5}s`,
-                        }}
-                      />
-                    ))}
-                  </span>
+                  View All Projects
                 </Button>
               </Link>
-              {particles.map((particle) => (
-                <motion.span
-                  key={particle.id}
-                  className="absolute w-2 h-2 rounded-full bg-gradient-to-r from-teal-400 to-coral-400"
-                  initial={{
-                    opacity: 0.8,
-                    scale: 1,
-                    x: particle.x,
-                    y: particle.y,
-                  }}
-                  animate={{
-                    opacity: 0,
-                    scale: 0,
-                    x: particle.x + (Math.random() * 60 - 30),
-                    y: particle.y + (Math.random() * 60 - 30),
-                  }}
-                  transition={{ duration: 0.8, ease: "easeOut" }}
-                />
-              ))}
-            </motion.div>
+            </div>
           </motion.div>
         </motion.div>
-      </div>
-
-      {/* Background elements */}
-      <div className="absolute top-1/2 left-0 w-40 h-40 bg-teal-400/10 rounded-full filter blur-3xl opacity-30" />
-      <div className="absolute bottom-1/4 right-0 w-60 h-60 bg-coral-400/10 rounded-full filter blur-3xl opacity-30" />
+      </div> 
     </section>
   );
 };

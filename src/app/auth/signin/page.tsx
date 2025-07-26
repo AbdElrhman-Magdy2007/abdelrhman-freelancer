@@ -1,31 +1,36 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
-// import Header from '@/components/Header';
 import { buttonVariants } from '@/components/ui/button';
 import { Pages, Routes } from '@/constants/enums';
 import Link from 'next/link';
 import Form from './_components/Form';
 
-// Fallback component in case Form fails to load
-const FallbackForm: React.FC = () => (
+const FallbackForm = () => (
   <div className="text-center text-red-500 dark:text-red-400 p-4">
-    Error: Form component failed to load. Please check the Form component implementation.
+    ⚠️ Error loading form. Please try again later.
   </div>
 );
 
-// Particle background component
-const ParticleBackground: React.FC = () => {
-  const particles = Array.from({ length: 15 }).map((_, i) => ({
-    id: i,
-    x: Math.random() * 100,
-    y: Math.random() * 100,
-    size: Math.random() * 6 + 4,
-    duration: Math.random() * 6 + 6,
-    delay: Math.random() * 4,
-    opacity: Math.random() * 0.3 + 0.3,
-  }));
+// ألوان هادئة ومريحة
+const COLORS = ['#5D5FEF', '#EFA6BE', '#F96A6A'];
+
+const ParticleBackground = () => {
+  const particles = useMemo(
+    () =>
+      Array.from({ length: 15 }).map((_, i) => ({
+        id: i,
+        x: Math.random() * 100,
+        y: Math.random() * 100,
+        size: Math.random() * 6 + 4,
+        duration: Math.random() * 6 + 6,
+        delay: Math.random() * 4,
+        opacity: Math.random() * 0.3 + 0.3,
+        color: COLORS[i % COLORS.length],
+      })),
+    []
+  );
 
   const particleVariants = {
     animate: (i: number) => ({
@@ -55,53 +60,65 @@ const ParticleBackground: React.FC = () => {
 
   return (
     <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
-      {particles.map((particle) => (
+      {/* الجزيئات الصغيرة المتحركة */}
+      {particles.map((p) => (
         <motion.div
-          key={particle.id}
-          className="particle animate-glow"
+          key={p.id}
+          className="absolute rounded-full blur-sm"
           style={{
-            width: particle.size,
-            height: particle.size,
-            left: `${particle.x}%`,
-            top: `${particle.y}%`,
-            background: 'linear-gradient(135deg, hsl(215 91% 70% / 0.5), hsl(271 81% 75% / 0.5))',
+            width: p.size,
+            height: p.size,
+            left: `${p.x}%`,
+            top: `${p.y}%`,
+            background: p.color,
           }}
           variants={particleVariants}
           animate={['animate', 'pulse']}
-          custom={particle.id}
+          custom={p.id}
         />
       ))}
-      {/* Pulsating Gradient Wave */}
+
+      {/* دوائر نابضة توسعية بتصميم عصري */}
+      {Array.from({ length: 3 }).map((_, i) => (
+        <motion.div
+          key={`pulse-circle-${i}`}
+          className="absolute rounded-full border"
+          style={{
+            width: 200 + i * 60,
+            height: 200 + i * 60,
+            top: `${20 + i * 20}%`,
+            left: `${30 + i * 20}%`,
+            transform: 'translate(-50%, -50%)',
+            borderColor: `${COLORS[i % COLORS.length]}33`,
+          }}
+          animate={{
+            scale: [1, 1.5, 1],
+            opacity: [0.3, 0.15, 0.3],
+          }}
+          transition={{
+            duration: 5 + i,
+            repeat: Infinity,
+            ease: 'easeInOut',
+          }}
+        />
+      ))}
+
+      {/* لمعة خلفية متدرجة */}
       <motion.div
         className="absolute inset-0"
         style={{
-          background: 'linear-gradient(45deg, transparent, hsl(215 91% 70% / 0.2), transparent)',
+          background: `linear-gradient(60deg, transparent, ${COLORS[0]}22, transparent)`,
         }}
         animate={{
-          opacity: [0.1, 0.2, 0.1],
-          x: [-30, 30, -30],
+          opacity: [0.05, 0.15, 0.05],
+          x: [-40, 40, -40],
         }}
         transition={{
-          duration: 10,
+          duration: 12,
           repeat: Infinity,
           ease: 'easeInOut',
         }}
       />
-      {/* Static Sparkle Bursts */}
-      {Array.from({ length: 3 }).map((_, i) => (
-        <div
-          key={`sparkle-${i}`}
-          className="sparkle"
-          style={{
-            width: `${Math.random() * 3 + 3}px`,
-            height: `${Math.random() * 3 + 3}px`,
-            top: `${Math.random() * 80 + 10}%`,
-            left: `${Math.random() * 80 + 10}%`,
-            animation: `sparkle ${Math.random() * 0.5 + 1.2}s ease-in-out infinite`,
-            animationDelay: `${Math.random() * 2}s`,
-          }}
-        />
-      ))}
     </div>
   );
 };
@@ -110,97 +127,104 @@ export default function SignInPage() {
   const [sparkles, setSparkles] = useState<{ id: number; x: number; y: number }[]>([]);
 
   const containerVariants = {
-    hidden: { opacity: 0, y: 50, scale: 0.9 },
+    hidden: { opacity: 0, y: 50, scale: 0.95 },
     visible: {
       opacity: 1,
       y: 0,
       scale: 1,
       transition: {
-        duration: 0.8,
+        duration: 0.7,
         ease: 'easeOut',
         type: 'spring',
-        stiffness: 80,
-        staggerChildren: 0.2,
+        stiffness: 70,
+        staggerChildren: 0.15,
       },
     },
   };
 
   const childVariants = {
-    hidden: { opacity: 0, y: 30, scale: 0.9 },
+    hidden: { opacity: 0, y: 30 },
     visible: {
       opacity: 1,
       y: 0,
-      scale: 1,
-      transition: { duration: 0.6, ease: 'easeOut', type: 'spring', stiffness: 90 },
+      transition: { duration: 0.6, ease: 'easeOut' },
     },
   };
+const COLORS = ['#00FFFF', '#FF00FF', '#FF5733']; // سماوي - فوشيا - برتقالي قوي
 
   const createSparkle = (x: number, y: number) => {
     const id = Date.now();
     setSparkles((prev) => [...prev, { id, x: x + Math.random() * 8 - 4, y: y + Math.random() * 8 - 4 }]);
-    setTimeout(() => setSparkles((prev) => prev.filter((s) => s.id !== id)), 600);
+    setTimeout(() => setSparkles((prev) => prev.filter((s) => s.id !== id)), 500);
   };
 
   return (
-    <main className="relative flex items-center justify-center min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 overflow-hidden dark">
+    <main className="relative flex items-center justify-center min-h-screen bg-black overflow-hidden px-4">
       <ParticleBackground />
-      {/* <Header /> */}
+
       <motion.div
-        className="w-full max-w-md sm:max-w-lg p-6 sm:p-8 glass-card border-gradient hover:scale-105 transition-transform duration-300 animate-glow z-10"
+        className="w-full max-w-md p-6 sm:p-8 border border-white/10 bg-white/10 backdrop-blur-xl rounded-2xl shadow-2xl transition-transform duration-300 hover:scale-[1.02] z-10"
         variants={containerVariants}
         initial="hidden"
         animate="visible"
-        role="region"
-        aria-labelledby="signin-title"
-        dir="ltr"
       >
         <motion.h2
-          id="signin-title"
-          className="text-3xl sm:text-4xl font-heading font-bold mb-8 text-center text-blue-400 animate-typewriter"
+          className="text-3xl sm:text-4xl font-bold text-center text-[#5D5FEF] mb-6"
           variants={childVariants}
         >
           Sign In
         </motion.h2>
-        <motion.div variants={childVariants} className="min-h-[200px]">
+
+        <motion.div variants={childVariants}>
           {Form ? <Form /> : <FallbackForm />}
         </motion.div>
+
         <motion.p
-          className="text-center text-slate-300 text-sm sm:text-base mt-8"
+          className="text-center text-slate-300 text-sm sm:text-base mt-6"
           variants={childVariants}
         >
           Don’t have an account?{' '}
-          <span className="sparkle-container relative inline-block">
+          <span className="relative inline-block">
             <Link
               href={`/${Routes.AUTH}/${Pages.Register}`}
-              className={`${buttonVariants({
-                variant: 'link',
-                size: 'sm',
-              })} !text-purple-400 hover:underline animate-reveal-text delay-200 relative group`}
+              className={`${buttonVariants({ variant: 'link', size: 'sm' })} !text-[#EFA6BE] hover:underline transition-all`}
               onMouseEnter={(e) => createSparkle(e.clientX, e.clientY)}
               onClick={(e) => createSparkle(e.clientX, e.clientY)}
             >
-              <span className="relative z-10">Create an Account</span>
-              <span className="absolute inset-0 bg-gradient-to-r from-blue-400/50 to-purple-400/50 opacity-0 group-hover:opacity-50 transition-opacity duration-600 rounded-full" />
+              Create an Account
             </Link>
           </span>
         </motion.p>
       </motion.div>
-      {sparkles.map((sparkle) => (
+
+      {/* Sparkle Effects */}
+    <div className="absolute inset-0 overflow-hidden z-0 pointer-events-none">
+      {/* دوائر نابضة بحدود سميكة ووهج واضح */}
+      {Array.from({ length: 3 }).map((_, i) => (
         <motion.div
-          key={sparkle.id}
-          className="sparkle absolute rounded-full"
+          key={`pulse-circle-${i}`}
+          className="absolute rounded-full border-[4px] md:border-[6px] shadow-lg shadow-white/10 transition-all duration-1000"
           style={{
-            left: sparkle.x,
-            top: sparkle.y,
-            width: 8,
-            height: 8,
-            background: 'linear-gradient(135deg, hsl(215 91% 70% / 0.8), hsl(271 81% 75% / 0.8))',
+            width: 240 + i * 100,
+            height: 240 + i * 100,
+            top: `${30 + i * 12}%`,
+            left: `${35 + i * 15}%`,
+            transform: 'translate(-50%, -50%)',
+            borderColor: COLORS[i % COLORS.length],
+            boxShadow: `0 0 40px ${COLORS[i % COLORS.length]}55`,
           }}
-          initial={{ scale: 0, opacity: 1, rotate: 0 }}
-          animate={{ scale: 2, opacity: 0, rotate: 180 }}
-          transition={{ duration: 0.6, ease: 'easeOut' }}
+          animate={{
+            scale: [1, 1.5, 1],
+            opacity: [0.35, 0.15, 0.35],
+          }}
+          transition={{
+            duration: 5 + i * 2,
+            repeat: Infinity,
+            ease: 'easeInOut',
+          }}
         />
       ))}
+    </div>
     </main>
   );
 }

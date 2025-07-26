@@ -2,8 +2,6 @@
 
 import React, { useState, useEffect, useMemo, useCallback, useRef, createContext, useContext, useTransition } from 'react';
 import { motion, AnimatePresence, Variants } from 'framer-motion';
-import { Card, CardContent } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
 import { ExternalLink, Github, Search, X, AlertCircle, RefreshCw } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { toast } from '@/components/ui/use-toast';
@@ -12,6 +10,8 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/comp
 import { getProductsByCategory } from '../server/db/products';
 import { debounce } from 'lodash';
 import { v4 as uuidv4 } from 'uuid';
+import Image from 'next/image';
+import 'tailwindcss/tailwind.css';
 
 // Define data types
 interface Project {
@@ -28,11 +28,96 @@ interface Project {
   category: string;
   projectType: 'Full-Stack' | 'Front-End' | 'Back-End';
   productTechs?: { name: string }[];
-  productAddons?: { name: string }[];
   createdAt: string;
   updatedAt: string;
 }
 
+interface CategoryWithProducts {
+  name: string;
+  icon: string;
+  projects?: Project[];
+}
+
+// Context for state management
+interface ProjectsContextType {
+  selectedCategory: string;
+  setSelectedCategory: (category: string) => void;
+  searchQuery: string;
+  setSearchQuery: (query: string) => void;
+}
+
+const ProjectsContext = createContext<ProjectsContextType | undefined>(undefined);
+
+const useProjects = () => {
+  const context = useContext(ProjectsContext);
+  if (!context) {
+    throw new Error('useProjects must be used within a ProjectsProvider');
+  }
+  return context;
+};
+
+// Animation variants
+const containerVariants: Variants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.15, delayChildren: 0.3 },
+  },
+};
+
+const itemVariants: Variants = {
+  hidden: { opacity: 0, y: 30 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.6, ease: 'easeOut' },
+  },
+};
+
+const cardVariants: Variants = {
+  hidden: { opacity: 0, y: 40, scale: 0.95, rotateX: 10 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    rotateX: 0,
+    transition: {
+      type: 'spring',
+      stiffness: 100,
+      damping: 15,
+      duration: 0.7,
+    },
+  },
+  hover: {
+    scale: 1.03,
+    rotateY: 5,
+    rotateX: -5,
+    transition: { duration: 0.3, ease: 'easeOut' },
+  },
+};
+
+const buttonVariants: Variants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      type: 'spring',
+      stiffness: 120,
+      damping: 12,
+      duration: 0.6,
+    },
+  },
+  hover: {
+    scale: 1.15,
+    boxShadow: '0 0 20px rgba(58, 41, 255, 0.4)',
+    filter: 'brightness(1.1)',
+    transition: { duration: 0.3 },
+  },
+  tap: { scale: 0.9 },
+};
+
+// Constants
 const LOG_PREFIX = '[Projects]';
 const ENABLE_DETAILED_LOGGING = true;
 const DEFAULT_IMAGE = 'https://via.placeholder.com/600x400?text=Project+Image';
@@ -66,104 +151,8 @@ const logProduct = (projects: Project[], action: 'added' | 'updated' | 'removed'
   console.groupEnd();
 };
 
-interface CategoryWithProducts {
-  name: string;
-  icon: string;
-  projects?: Project[];
-}
-
-// Context for state management
-interface ProjectsContextType {
-  selectedCategory: string;
-  setSelectedCategory: (category: string) => void;
-  searchQuery: string;
-  setSearchQuery: (query: string) => void;
-}
-
-const ProjectsContext = createContext<ProjectsContextType | undefined>(undefined);
-
-const useProjects = () => {
-  const context = useContext(ProjectsContext);
-  if (!context) {
-    throw new Error('useProjects must be used within a ProjectsProvider');
-  }
-  return context;
-};
-
-// Animation variants
-const containerVariants: Variants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: { staggerChildren: 0.1, delayChildren: 0.3 },
-  },
-};
-
-const itemVariants: Variants = {
-  hidden: { opacity: 0, y: 50 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { type: 'spring', stiffness: 120, damping: 20 },
-  },
-};
-
-const cardVariants: Variants = {
-  hidden: { opacity: 0, y: 100, scale: 0.9, rotateX: 20 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    scale: 1,
-    rotateX: 0,
-    transition: { type: 'spring', stiffness: 150, damping: 20, duration: 0.7 },
-  },
-  exit: {
-    opacity: 0,
-    y: 100,
-    scale: 0.9,
-    transition: { duration: 0.3, ease: 'easeIn' },
-  },
-  hover: {
-    y: -15,
-    scale: 1.05,
-    boxShadow: '0 20px 40px -10px rgba(45, 212, 191, 0.5)', // Teal-400 shadow
-    transition: { duration: 0.4, ease: 'easeOut' },
-  },
-  new: {
-    opacity: [0, 1],
-    scale: [0.9, 1.05, 1],
-    transition: { duration: 0.8, times: [0, 0.7, 1], ease: 'easeInOut' },
-  },
-};
-
-const addonVariants: Variants = {
-  hidden: { opacity: 0, x: -30 },
-  visible: (i: number) => ({
-    opacity: 1,
-    x: 0,
-    transition: { delay: i * 0.15, type: 'spring', stiffness: 180, damping: 15 },
-  }),
-  hover: {
-    scale: 1.15,
-    boxShadow: '0 0 12px rgba(251, 113, 133, 0.5)', // Coral-400 shadow
-    transition: { duration: 0.3 },
-  },
-};
-
-const buttonVariants: Variants = {
-  hover: {
-    scale: 1.08,
-    boxShadow: '0 0 20px rgba(45, 212, 191, 0.4)', // Teal-400 shadow for Live Demo
-    transition: { duration: 0.3 },
-  },
-  valid: {
-    scale: [1, 1.05, 1],
-    transition: { repeat: Infinity, duration: 2.5, ease: 'easeInOut' },
-  },
-};
-
 // Project Card Component
-const ProjectCard: React.FC<{ project: Project }> = ({ project }) => {
+const ProjectCard: React.FC<{ project: Project }> = React.memo(({ project }) => {
   const isRecent = new Date(project.createdAt).getTime() > Date.now() - 5 * 60 * 1000;
   const isValidDemoUrl = project.demoUrl && !project.demoUrl.includes('/admin/') && project.demoUrl !== 'https://full-stack-portfolio-a333-jq4tls75b.vercel.app/admin/menu-items/new';
   const isValidGithubUrl = project.githubUrl && !project.githubUrl.includes('/admin/');
@@ -172,147 +161,124 @@ const ProjectCard: React.FC<{ project: Project }> = ({ project }) => {
   return (
     <motion.div
       variants={cardVariants}
-      initial={isRecent ? 'new' : 'hidden'}
+      initial={isRecent ? 'hidden' : 'hidden'}
       animate="visible"
-      exit="exit"
       whileHover="hover"
-      className="group glass-card overflow-hidden rounded-xl border border-teal-500/30 hover:border-teal-400/50 bg-gray-900/10 backdrop-blur-xl shadow-lg transition-all duration-500"
+      className="group relative rounded-2xl border border-white/10 bg-white/5 backdrop-blur-md transition-all duration-500 shadow-lg hover:shadow-2xl"
       role="article"
       aria-labelledby={`project-title-${project.id}`}
     >
-      <Card className="border-0 bg-transparent h-full flex flex-col">
-        {/* Image */}
-        <div className="relative overflow-hidden">
-          <div className="aspect-[4/3] w-full bg-gray-950">
-            <img
-              src={imageSrc}
-              alt={project.title || 'Project image'}
-              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 group-hover:rotate-2"
-              loading={project.featured ? 'eager' : 'lazy'}
-              fetchPriority={project.featured ? 'high' : 'auto'}
-            />
-          </div>
-          <motion.div
-            className="absolute inset-0 bg-gradient-to-t from-gray-900/80 via-gray-900/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end"
-            initial={{ opacity: 0 }}
-            whileHover={{ opacity: 1 }}
-          >
-            <div className="p-6 w-full flex justify-between items-center">
-              {project.featured && (
-                <Badge className="bg-gradient-to-r from-amber-300 to-yellow-400 text-gray-900 font-medium px-3 py-1">
-                  Featured
-                </Badge>
-              )}
-            </div>
-          </motion.div>
+      <div className="relative">
+        <div className="aspect-[4/3] overflow-hidden">
+          <Image
+            src={imageSrc}
+            alt={`Screenshot of ${project.title} project`}
+            width={600}
+            height={400}
+            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+            loading={project.featured ? 'eager' : 'lazy'}
+            priority={project.featured}
+          />
         </div>
-        <CardContent className="p-6 flex flex-col flex-grow">
-          <h3
-            id={`project-title-${project.id}`}
-            className="text-xl font-bold text-white mb-2 tracking-tight bg-gradient-to-r from-teal-400 to-blue-400 bg-clip-text text-transparent"
-          >
-            {project.title}
-          </h3>
-          <p className="text-gray-300 text-sm mb-4 line-clamp-3 leading-relaxed flex-grow">
-            {project.description}
-          </p>
-          {/* Technologies and Addons */}
-          <div className="flex flex-col gap-3 mb-4">
-            {project.techs.length > 0 && (
-              <div className="flex flex-wrap gap-2">
-                {project.techs.map((tech) => (
-                  <Badge
-                    key={`${project.id}-tech-${tech}`}
-                    variant="secondary"
-                    className="bg-teal-500/20 text-teal-300 hover:bg-teal-500/30 transition-colors text-xs font-medium px-2.5 py-1 rounded-full"
-                  >
-                    {tech}
-                  </Badge>
-                ))}
-              </div>
-            )}
-            {project.addons.length > 0 && (
-              <div className="flex flex-wrap gap-2">
-                {project.addons.map((addon, index) => (
-                  <motion.div
-                    key={`${project.id}-addon-${addon}`}
-                    custom={index}
-                    variants={addonVariants}
-                    initial="hidden"
-                    animate="visible"
-                    whileHover="hover"
-                  >
-                    <Badge
-                      variant="secondary"
-                      className="bg-gradient-to-r from-coral-400 to-pink-400 text-white hover:from-coral-500 hover:to-pink-500 text-xs font-medium px-2.5 py-1 rounded-full backdrop-blur-md border border-coral-300/30"
-                    >
-                      {addon}
-                    </Badge>
-                  </motion.div>
-                ))}
-              </div>
-            )}
-          </div>
-          {/* Links */}
-          <div className="mt-auto flex flex-col sm:flex-row gap-3">
+        <motion.div
+          className="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+        />
+        {project.featured && (
+          <span className="absolute top-2 right-2 bg-blue-500 text-white text-xs font-semibold px-2 py-1 rounded-full">
+            Featured
+          </span>
+        )}
+      </div>
+      <div className="flex flex-col p-6 flex-grow">
+        <h3
+          id={`project-title-${project.id}`}
+          className="text-xl font-bold mb-2 bg-gradient-to-r from-[#7B61FF] to-[#38BDF8] bg-clip-text text-transparent"
+        >
+          {project.title}
+        </h3>
+        <p className="text-gray-300 text-sm mb-4 line-clamp-3 flex-grow">
+          {project.description}
+        </p>
+        <div className="flex flex-wrap gap-2 mb-4">
+          {project.techs.map((tech, i) => (
+            <span
+              key={`${project.id}-tech-${i}`}
+              className="bg-gradient-to-r from-[#FF6AC2] to-[#7B61FF] text-white text-xs font-medium px-3 py-1 rounded-full backdrop-blur-md"
+            >
+              {tech}
+            </span>
+          ))}
+          {project.addons.map((addon, i) => (
+            <motion.span
+              key={`${project.id}-addon-${i}`}
+              variants={buttonVariants}
+              initial="hidden"
+              animate="visible"
+              whileHover="hover"
+              whileTap="tap"
+              className="bg-gradient-to-r from-[#FF6AC2] to-[#7B61FF] text-white text-xs font-medium px-3 py-1 rounded-full backdrop-blur-md"
+            >
+              {addon}
+            </motion.span>
+          ))}
+        </div>
+        <div className="flex flex-col gap-3 mt-auto">
+          {isValidDemoUrl && (
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger asChild>
                   <motion.a
-                    href={project.demoUrl || '#'}
+                    href={project.demoUrl}
                     target="_blank"
                     rel="noopener noreferrer"
                     variants={buttonVariants}
                     whileHover="hover"
-                    animate={isValidDemoUrl ? 'valid' : undefined}
-                    className={`flex-1 flex items-center justify-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-teal-400 to-teal-600 text-white hover:from-teal-500 hover:to-teal-700 transition-all duration-300 border border-teal-400/30 backdrop-blur-md ${
-                      !isValidDemoUrl ? 'opacity-50 cursor-not-allowed' : ''
-                    }`}
+                    whileTap="tap"
+                    className="w-full min-w-[120px] flex items-center justify-center gap-2 px-6 py-2 text-base font-medium rounded-full bg-gradient-to-r from-[#7B61FF] to-[#38BDF8] text-white hover:brightness-110 shadow-md transition"
                     aria-label={`Demo button for ${project.title}`}
                   >
-                    <ExternalLink className="h-4 w-4" />
-                    <span>Live Demo</span>
-                    {!isValidDemoUrl && <AlertCircle className="h-4 w-4 text-amber-300" />}
+                    <ExternalLink className="w-4 h-4" />
+                    Demo
                   </motion.a>
                 </TooltipTrigger>
                 <TooltipContent>
-                  <p>{isValidDemoUrl ? 'Visit the live site' : 'Demo link under development'}</p>
-                </TooltipContent>
-              </Tooltip>
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <motion.a
-                    href={project.githubUrl || '#'}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    variants={buttonVariants}
-                    whileHover={{
-                      scale: 1.08,
-                      boxShadow: '0 0 20px rgba(251, 113, 133, 0.4)', // Coral-400 shadow for GitHub
-                      transition: { duration: 0.3 },
-                    }}
-                    animate={isValidGithubUrl ? 'valid' : undefined}
-                    className={`flex-1 flex items-center justify-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-coral-400 to-coral-600 text-white hover:from-coral-500 hover:to-coral-700 transition-all duration-300 border border-coral-400/30 backdrop-blur-md ${
-                      !isValidGithubUrl ? 'opacity-50 cursor-not-allowed' : ''
-                    }`}
-                    aria-label={`GitHub button for ${project.title}`}
-                  >
-                    <Github className="h-4 w-4" />
-                    <span>GitHub</span>
-                    {!isValidGithubUrl && <AlertCircle className="h-4 w-4 text-amber-300" />}
-                  </motion.a>
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p>{isValidGithubUrl ? 'View source code on GitHub' : 'GitHub link under development'}</p>
+                  <p>Visit the live site</p>
                 </TooltipContent>
               </Tooltip>
             </TooltipProvider>
-          </div>
-        </CardContent>
-      </Card>
+          )}
+          {isValidGithubUrl && (
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <motion.a
+                    href={project.githubUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    variants={buttonVariants}
+                    whileHover="hover"
+                    whileTap="tap"
+                    className="w-full min-w-[120px] flex items-center justify-center gap-2 px-6 py-2 text-base font-medium rounded-full bg-gradient-to-r from-[#FF6AC2] to-[#FF3B80] text-white hover:brightness-110 shadow-md transition"
+                    aria-label={`GitHub button for ${project.title}`}
+                  >
+                    <Github className="w-4 h-4" />
+                    GitHub
+                  </motion.a>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>View source code on GitHub</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+          )}
+          {!isValidDemoUrl && !isValidGithubUrl && (
+            <p className="text-gray-400 text-sm text-center">Links under development</p>
+          )}
+        </div>
+      </div>
     </motion.div>
   );
-};
+});
 
 // Category Button Component
 const CategoryButton: React.FC<{
@@ -340,14 +306,11 @@ const CategoryButton: React.FC<{
       ref={buttonRef}
       onClick={() => onSelect(category.name)}
       onKeyDown={handleKeyDown}
-      className={`category-button px-6 py-3 rounded-full text-sm font-medium transition-all duration-300 flex items-center gap-2 focus:outline-none focus:ring-2 focus:ring-teal-400/50 shadow-md ${
-        isSelected
-          ? 'bg-gradient-to-r from-teal-400 to-blue-500 text-white'
-          : 'bg-gray-800/20 hover:bg-gray-800/40 text-gray-300'
+      className={`category-button px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 flex items-center gap-2 focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+        isSelected ? 'bg-blue-500 text-white' : 'bg-sky-700 dark:bg-gray-700 text-gray-900 dark:text-gray-200'
       }`}
-      whileHover={{ scale: 1.1, boxShadow: '0 0 15px rgba(45, 212, 191, 0.4)' }}
+      whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.95 }}
-      whileFocus={{ scale: 1.05 }}
       aria-pressed={isSelected}
       aria-label={`Filter projects by ${category.name}`}
     >
@@ -359,24 +322,18 @@ const CategoryButton: React.FC<{
 
 // Loading Skeleton Component
 const ProjectCardSkeleton: React.FC = () => (
-  <div className="glass-card overflow-hidden rounded-xl border border-teal-500/30 bg-gray-900/10 backdrop-blur-xl shadow-lg">
-    <Skeleton className="aspect-[4/3] w-full bg-gray-800/50" />
+  <div className="overflow-hidden rounded-2xl bg-white/5 border border-white/10 shadow-lg">
+    <Skeleton className="h-48 w-full bg-gray-200/20" />
     <div className="p-6">
-      <Skeleton className="h-6 w-3/4 bg-gray-800/50 mb-2" />
-      <Skeleton className="h-4 w-full bg-gray-800/50 mb-4" />
-      <div className="flex flex-col gap-3 mb-4">
-        <div className="flex flex-wrap gap-2">
-          <Skeleton className="h-4 w-16 bg-teal-500/30 rounded-full" />
-          <Skeleton className="h-4 w-16 bg-teal-500/30 rounded-full" />
-        </div>
-        <div className="flex flex-wrap gap-2">
-          <Skeleton className="h-4 w-16 bg-coral-400/30 rounded-full" />
-          <Skeleton className="h-4 w-16 bg-coral-400/30 rounded-full" />
-        </div>
+      <Skeleton className="h-6 w-3/4 bg-gray-200/20 mb-2" />
+      <Skeleton className="h-4 w-full bg-gray-200/20 mb-4" />
+      <div className="flex flex-wrap gap-2 mb-4">
+        <Skeleton className="h-4 w-16 bg-gray-200/20 rounded-full" />
+        <Skeleton className="h-4 w-16 bg-gray-200/20 rounded-full" />
       </div>
-      <div className="flex flex-col sm:flex-row gap-3">
-        <Skeleton className="h-8 flex-1 bg-teal-500/30 rounded-full" />
-        <Skeleton className="h-8 flex-1 bg-coral-400/30 rounded-full" />
+      <div className="flex flex-col gap-3">
+        <Skeleton className="h-8 w-full bg-gray-200/20 rounded-full" />
+        <Skeleton className="h-8 w-full bg-gray-200/20 rounded-full" />
       </div>
     </div>
   </div>
@@ -399,16 +356,16 @@ const ProjectsShowcase: React.FC = () => {
   const scrollPositionRef = useRef<number>(0);
 
   // Preserve scroll position
-  const saveScrollPosition = () => {
+  const saveScrollPosition = useCallback(() => {
     scrollPositionRef.current = window.scrollY;
-  };
+  }, []);
 
-  const restoreScrollPosition = () => {
+  const restoreScrollPosition = useCallback(() => {
     window.scrollTo({ top: scrollPositionRef.current, behavior: 'smooth' });
-  };
+  }, []);
 
   // Compare projects to avoid unnecessary updates
-  const areProjectsEqual = (newProjects: Project[], oldProjects: Project[]): boolean => {
+  const areProjectsEqual = useCallback((newProjects: Project[], oldProjects: Project[]): boolean => {
     if (newProjects.length !== oldProjects.length) return false;
     return newProjects.every((newProj, i) => {
       const oldProj = oldProjects[i];
@@ -425,7 +382,7 @@ const ProjectsShowcase: React.FC = () => {
         newProj.category === oldProj.category
       );
     });
-  };
+  }, []);
 
   // Debounced state update
   const updateProjectsData = useMemo(
@@ -441,7 +398,7 @@ const ProjectsShowcase: React.FC = () => {
           }
         });
       }, 500),
-    [projectsData]
+    [projectsData, areProjectsEqual, restoreScrollPosition]
   );
 
   // Fetch categories and projects
@@ -504,7 +461,7 @@ const ProjectsShowcase: React.FC = () => {
             title: 'New Projects Added',
             description: `${addedProjects.length} new project(s) added.`,
             duration: 3000,
-            className: 'bg-gradient-to-r from-teal-400 to-blue-500 text-white',
+            className: 'bg-blue-500 text-white',
           });
         }
         if (removedProjects.length > 0) {
@@ -513,7 +470,7 @@ const ProjectsShowcase: React.FC = () => {
             title: 'Projects Removed',
             description: `${removedProjects.length} project(s) removed.`,
             duration: 3000,
-            className: 'bg-gradient-to-r from-teal-400 to-blue-500 text-white',
+            className: 'bg-blue-500 text-white',
           });
         }
 
@@ -577,49 +534,47 @@ const ProjectsShowcase: React.FC = () => {
     };
   }, [fetchCategories]);
 
-  // Debounced search
-  const debouncedSearch = useMemo(
+  // Debounced input handler for search box
+  const debouncedSetSearchQuery = useMemo(
     () => debounce((query: string) => {
-      startTransition(() => setSearchQuery(query));
-    }, 300),
+      setSearchQuery(query);
+    }, 250),
     []
   );
 
   // Clear search query
-  const clearSearch = () => {
+  const clearSearch = useCallback(() => {
     setSearchQuery('');
     if (searchInputRef.current) {
       searchInputRef.current.value = '';
       searchInputRef.current.focus();
     }
-  };
-
-  // Retry fetching data
-  const handleRetry = () => {
-    setIsLoading(true);
-    setError(null);
-    fetchCategories();
-  };
+  }, []);
 
   // Filter projects
   const filteredProjects = useMemo(() => {
     let projects = projectsData;
     if (selectedCategory !== 'All') {
-      projects = projects.filter((project) => project.category === selectedCategory);
+      projects = projects.filter(project => project.category === selectedCategory);
     }
-    if (searchQuery) {
-      const lowercaseQuery = searchQuery.toLowerCase();
-      projects = projects.filter(
-        (project) =>
-          project.title.toLowerCase().includes(lowercaseQuery) ||
-          project.description.toLowerCase().includes(lowercaseQuery) ||
-          project.techs.some((tech) => tech.toLowerCase().includes(lowercaseQuery)) ||
-          project.addons.some((addon) => addon.toLowerCase().includes(lowercaseQuery)) ||
-          project.projectType.toLowerCase().includes(lowercaseQuery)
+    if (!searchQuery.trim()) return projects;
+    const keywords = searchQuery.toLowerCase().split(/\s+/).filter(Boolean);
+    return projects.filter(project => {
+      const haystack = [
+        project.title,
+        project.description,
+        project.category,
+        project.projectType,
+        ...(project.techs || []),
+        ...(project.addons || [])
+      ].join(' ').toLowerCase();
+      return keywords.every(kw =>
+        haystack.includes(kw) ||
+        haystack.split(' ').some(word => word.startsWith(kw) || word.includes(kw))
       );
-    }
-    return projects;
-  }, [selectedCategory, searchQuery, projectsData]);
+    });
+  }, [projectsData, selectedCategory, searchQuery]);
+
   // Keyboard navigation for search focus
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -634,8 +589,8 @@ const ProjectsShowcase: React.FC = () => {
 
   if (isLoading || isPending) {
     return (
-      <div className="flex items-center justify-center min-h-screen bg-gray-950">
-        <div className="projects-grid w-full max-w-7xl px-6">
+      <div className="flex items-center justify-center min-h-screen bg-black">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl w-full px-4">
           {[...Array(6)].map((_, i) => (
             <ProjectCardSkeleton key={i} />
           ))}
@@ -646,34 +601,8 @@ const ProjectsShowcase: React.FC = () => {
 
   return (
     <ProjectsContext.Provider value={{ selectedCategory, setSelectedCategory, searchQuery, setSearchQuery }}>
-      <section className="py-24 relative bg-gradient-to-br from-gray-950 via-gray-900 to-teal-950 overflow-hidden">
-        {/* Animated Background Particles */}
-        <div className="particle-wave">
-          {[...Array(30)].map((_, i) => (
-            <motion.div
-              key={i}
-              className="particle w-2 h-2 bg-teal-400/50 rounded-full"
-              initial={{
-                x: Math.random() * window.innerWidth,
-                y: Math.random() * window.innerHeight,
-                scale: Math.random() * 0.5 + 0.3,
-              }}
-              animate={{
-                y: [0, -1200],
-                opacity: [0.2, 0.6, 0],
-                scale: [0.3, 0.8, 0.3],
-              }}
-              transition={{
-                duration: Math.random() * 12 + 6,
-                repeat: Infinity,
-                ease: 'easeOut',
-                delay: Math.random() * 6,
-              }}
-            />
-          ))}
-        </div>
-
-        <div className="container px-6 mx-auto relative z-10">
+      <section className="py-16 bg-black">
+        <div className="container mx-auto px-4">
           <motion.div
             initial="hidden"
             whileInView="visible"
@@ -682,37 +611,31 @@ const ProjectsShowcase: React.FC = () => {
             aria-live="polite"
             aria-atomic="true"
           >
-            <motion.div variants={itemVariants} className="text-center mb-16">
-              <h2 className="text-4xl md:text-5xl font-extrabold bg-gradient-to-r from-teal-400 to-blue-400 bg-clip-text text-transparent mb-4 tracking-tight animate-reveal-text">
+            <motion.div variants={itemVariants} className="text-center mb-12 mt-10">
+              <h2 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-[#7B61FF] via-[#FF6AC2] to-[#38BDF8] bg-clip-text text-transparent mb-4">
                 Our Creative Projects
               </h2>
-              <p className="text-lg text-gray-300 max-w-3xl mx-auto leading-relaxed animate-reveal-text delay-200">
-                Discover our portfolio of innovative web solutions, showcasing cutting-edge technology and creative design.
+              <p className="text-lg text-gray-400 max-w-2xl mx-auto">
+                Explore our portfolio of innovative web solutions, showcasing modern technology and creative design.
               </p>
-              <motion.div
-                className="h-1 w-48 bg-gradient-to-r from-teal-400 to-blue-400 mx-auto mt-6 rounded-full"
-                initial={{ width: 0 }}
-                animate={{ width: 192 }}
-                transition={{ duration: 1.2, ease: 'easeOut' }}
-              />
+              <div className="h-1 w-24 bg-gradient-to-r from-[#7B61FF] to-[#FF6AC2] mx-auto mt-6 rounded-full" />
             </motion.div>
 
-            {/* Search and Category Filter */}
             <motion.div variants={itemVariants} className="mb-12">
               <div className="relative max-w-md mx-auto mb-8">
                 <Input
                   ref={searchInputRef}
                   type="text"
                   placeholder="Search projects by name, tech, or type (press /)"
-                  onChange={(e) => debouncedSearch(e.target.value)}
-                  className="search-input pl-12 pr-12 py-3 w-full bg-gray-800/20 border-teal-500/50 focus:border-teal-400 rounded-lg text-gray-300 placeholder-gray-400"
+                  onChange={(e) => debouncedSetSearchQuery(e.target.value)}
+                  className="pl-10 pr-10 py-2 w-full bg-white/5 border-white/10 rounded-lg text-gray-300 placeholder-gray-400"
                   aria-label="Search projects"
                 />
-                <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
                 {searchQuery && (
                   <button
                     onClick={clearSearch}
-                    className="absolute right-4 top-1/2 -translate-y-1/2 p-1 text-gray-400 hover:text-white transition-colors"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-white"
                     aria-label="Clear search"
                   >
                     <X className="h-5 w-5" />
@@ -733,32 +656,28 @@ const ProjectsShowcase: React.FC = () => {
               </div>
             </motion.div>
 
-            {/* Error State */}
             {error && (
               <motion.div
                 variants={itemVariants}
-                className="text-center text-white py-12 bg-red-500/30 rounded-lg p 6mb-8">
-                <p className="text-xl font-semibold">{error}</p>
-                <p className="text-sm text-gray-300 mt-3">
-                  Please try again or contact support.
-                </p>
+                className="text-center py-8 bg-red-500/30 rounded-lg mb-8"
+              >
+                <p className="text-lg font-semibold text-white">{error}</p>
                 <motion.button
-                  onClick={handleRetry}
-                  className="mt-6 flex items-center justify-center gap-2 px-6 py-2 rounded-full bg-gradient-to-r from-teal-400 to-blue-500 text-white hover:from-teal-500 hover:to-blue-600 transition-all duration-300"
+                  onClick={() => fetchCategories()}
+                  className="mt-4 px-4 py-2 rounded-full bg-gradient-to-r from-[#7B61FF] to-[#38BDF8] text-white hover:brightness-110"
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   aria-label="Reload projects"
                 >
-                  <RefreshCw className="h-4 w-4" />
+                  <RefreshCw className="h-4 w-4 inline mr-2" />
                   Retry
                 </motion.button>
               </motion.div>
             )}
 
-            {/* Projects Grid */}
             <motion.div
               variants={containerVariants}
-              className="projects-grid w-full max-w-7xl mx-auto"
+              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 max-w-7xl mx-auto"
             >
               <AnimatePresence mode="sync">
                 {filteredProjects.length > 0 ? (
@@ -768,12 +687,14 @@ const ProjectsShowcase: React.FC = () => {
                 ) : (
                   <motion.div
                     variants={itemVariants}
-                    className="col-span-full text-center text-white py-12"
+                    className="col-span-full text-center py-12"
                     key="no-projects"
                   >
-                    <p className="text-xl font-semibold">No projects found</p>
-                    <p className="text-sm text-gray-300 mt-3">
-                      Try another category or search term, or contact us to add new projects.
+                    <p className="text-lg font-semibold text-white">
+                      No projects found
+                    </p>
+                    <p className="text-sm text-gray-400 mt-2">
+                      Try another category or search term.
                     </p>
                   </motion.div>
                 )}

@@ -1,48 +1,48 @@
-import * as React from "react"
-import * as AvatarPrimitive from "@radix-ui/react-avatar"
+import * s Rect from "rect"
+import * s vtrPrimitive from "@rdix-ui/rect-vtr"
 
 import { cn } from "@/lib/utils"
 
-const Avatar = React.forwardRef<
-  React.ElementRef<typeof AvatarPrimitive.Root>,
-  React.ComponentPropsWithoutRef<typeof AvatarPrimitive.Root>
->(({ className, ...props }, ref) => (
-  <AvatarPrimitive.Root
+const vtr = Rect.forwrdRef<
+  Rect.ElementRef<typeof vtrPrimitive.Root>,
+  Rect.ComponentPropsWithoutRef<typeof vtrPrimitive.Root>
+>(({ clssNme, ...props }, ref) => (
+  <vtrPrimitive.Root
     ref={ref}
-    className={cn(
-      "relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full",
-      className
+    clssNme={cn(
+      "reltive flex h-10 w-10 shrink-0 overflow-hidden rounded-full",
+      clssNme
     )}
     {...props}
   />
 ))
-Avatar.displayName = AvatarPrimitive.Root.displayName
+vtr.displyNme = vtrPrimitive.Root.displyNme
 
-const AvatarImage = React.forwardRef<
-  React.ElementRef<typeof AvatarPrimitive.Image>,
-  React.ComponentPropsWithoutRef<typeof AvatarPrimitive.Image>
->(({ className, ...props }, ref) => (
-  <AvatarPrimitive.Image
+const vtrImge = Rect.forwrdRef<
+  Rect.ElementRef<typeof vtrPrimitive.Imge>,
+  Rect.ComponentPropsWithoutRef<typeof vtrPrimitive.Imge>
+>(({ clssNme, ...props }, ref) => (
+  <vtrPrimitive.Imge
     ref={ref}
-    className={cn("aspect-square h-full w-full", className)}
+    clssNme={cn("spect-squre h-full w-full", clssNme)}
     {...props}
   />
 ))
-AvatarImage.displayName = AvatarPrimitive.Image.displayName
+vtrImge.displyNme = vtrPrimitive.Imge.displyNme
 
-const AvatarFallback = React.forwardRef<
-  React.ElementRef<typeof AvatarPrimitive.Fallback>,
-  React.ComponentPropsWithoutRef<typeof AvatarPrimitive.Fallback>
->(({ className, ...props }, ref) => (
-  <AvatarPrimitive.Fallback
+const vtrFllbck = Rect.forwrdRef<
+  Rect.ElementRef<typeof vtrPrimitive.Fllbck>,
+  Rect.ComponentPropsWithoutRef<typeof vtrPrimitive.Fllbck>
+>(({ clssNme, ...props }, ref) => (
+  <vtrPrimitive.Fllbck
     ref={ref}
-    className={cn(
+    clssNme={cn(
       "flex h-full w-full items-center justify-center rounded-full bg-muted",
-      className
+      clssNme
     )}
     {...props}
   />
 ))
-AvatarFallback.displayName = AvatarPrimitive.Fallback.displayName
+vtrFllbck.displyNme = vtrPrimitive.Fllbck.displyNme
 
-export { Avatar, AvatarImage, AvatarFallback }
+export { vtr, vtrImge, vtrFllbck }

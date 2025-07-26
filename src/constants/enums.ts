@@ -25,7 +25,7 @@ export enum LanguageType {
 export enum Routes {
   ROOT = "", // Home page
   MENU = "menu",
-  ABOUT = "about",
+  Expertise = "Expertise",
   CONTACT = "contact",
   AUTH = "auth",
   CART = "cart",

@@ -1,163 +1,33 @@
-// import type { Config } from "tailwindcss";
-
-// const config: Config = {
-//   darkMode: "class",
+// /** @type {import('tailwindcss').Config} */
+// module.exports = {
 //   content: [
-//     "./src/**/*.{js,ts,jsx,tsx,mdx}",
-//     "./my-app/src/**/*.{js,ts,jsx,tsx,mdx}",
-//     "./components/**/*.{js,ts,jsx,tsx,mdx}",
-//     "./app/**/*.{js,ts,jsx,tsx,mdx}", // Added to include app/ directory
+//     './src/**/*.{js,ts,jsx,tsx}',
 //   ],
-//   prefix: "",
 //   theme: {
-//     container: {
-//       center: true,
-//       padding: '2rem',
-//       screens: {
-//         '2xl': '1400px',
-//       },
-//     },
 //     extend: {
-//       fontFamily: {
-//         sans: ['var(--font-inter)'],
-//         heading: ['var(--font-poppins)'],
-//         arabic: ['Noto Sans Arabic', 'sans-serif'],
-//       },
 //       colors: {
-//         // Custom colors from first theme.extend
-//         primary: '#3b82f6',
-//         secondary: '#ec4899',
-//         'blue-900': '#1e3a8a',
-//         'indigo-800': '#3730a3',
-//         'purple-900': '#4c1d95',
-//         'emerald-900': '#064e3b',
-//         'teal-800': '#115e59',
-//         'cyan-900': '#164e63',
-//         'rose-900': '#4a044e',
-//         'red-800': '#991b1b',
-//         'amber-900': '#78350f',
-//         // Colors from second theme.extend
-//         border: 'hsl(var(--border))',
-//         input: 'hsl(var(--input))',
-//         ring: 'hsl(var(--ring))',
-//         background: 'hsl(var(--background))',
-//         foreground: 'hsl(var(--foreground))',
 //         primary: {
-//           DEFAULT: 'hsl(var(--primary))',
-//           foreground: 'hsl(var(--primary-foreground))',
+//           500: '#4B5EAA', // Muted navy
+//           '500/40': 'rgba(75, 94, 170, 0.4)',
+//           '500/20': 'rgba(75, 94, 170, 0.2)',
+//           '500/15': 'rgba(75, 94, 170, 0.15)',
 //         },
 //         secondary: {
-//           DEFAULT: 'hsl(var(--secondary))',
-//           foreground: 'hsl(var(--secondary-foreground))',
-//         },
-//         destructive: {
-//           DEFAULT: 'hsl(var(--destructive))',
-//           foreground: 'hsl(var(--destructive-foreground))',
-//         },
-//         muted: {
-//           DEFAULT: 'hsl(var(--muted))',
-//           foreground: 'hsl(var(--muted-foreground))',
+//           500: '#FF94B4', // Soft pink
+//           300: '#FFB2C8', // Lighter pink for hover
+//           '500/20': 'rgba(255, 178, 200, 0.2)',
+//           '500/15': 'rgba(255, 178, 200, 0.15)',
 //         },
 //         accent: {
-//           DEFAULT: 'hsl(var(--accent))',
-//           foreground: 'hsl(var(--accent-foreground))',
+//           500: '#E63946', // Muted red
+//           '500/80': 'rgba(230, 57, 70, 0.8)',
+//           '500/20': 'rgba(230, 57, 70, 0.2)',
 //         },
-//         popover: {
-//           DEFAULT: 'hsl(var(--popover))',
-//           foreground: 'hsl(var(--popover-foreground))',
-//         },
-//         card: {
-//           DEFAULT: 'hsl(var(--card))',
-//           foreground: 'hsl(var(--card-foreground))',
-//         },
-//         slate: {
-//           50: '#F8FAFC',
-//           100: '#F1F5F9',
-//           200: '#E2E8F0',
-//           300: '#CBD5E1',
-//           400: '#94A3B8',
-//           500: '#64748B',
-//           600: '#475569',
-//           700: '#334155',
-//           800: '#1E293B',
-//           900: '#0F172A',
-//         },
-//         blue: {
-//           500: '#3B82F6',
-//           600: '#2563EB',
-//         },
-//         emerald: {
-//           500: '#10B981',
-//           600: '#059669',
-//         },
-//         red: {
-//           500: '#EF4444',
-//           600: '#DC2626',
-//         },
-//       },
-//       borderRadius: {
-//         lg: 'var(--radius)',
-//         md: 'calc(var(--radius) - 2px)',
-//         sm: 'calc(var(--radius) - 4px)',
-//       },
-//       keyframes: {
-//         "accordion-down": {
-//           from: { height: '0' },
-//           to: { height: 'var(--radix-accordion-content-height)' },
-//         },
-//         "accordion-up": {
-//           from: { height: 'var(--radix-accordion-content-height)' },
-//           to: { height: '0' },
-//         },
-//         "fade-in": {
-//           "0%": { opacity: "0", transform: "translateY(10px)" },
-//           "100%": { opacity: "1", transform: "translateY(0)" },
-//         },
-//         "slide-in": {
-//           "0%": { opacity: "0", transform: "translateY(-20px)" },
-//           "100%": { opacity: "1", transform: "translateY(0)" },
-//         },
-//         "slide-in-right": {
-//           "0%": { transform: "translateX(100%)" },
-//           "100%": { transform: "translateX(0)" },
-//         },
-//         "scale-in": {
-//           "0%": { opacity: "0", transform: "scale(0.95)" },
-//           "100%": { opacity: "1", transform: "scale(1)" },
-//         },
-//         "pulse": {
-//           "0%, 100%": { opacity: "1" },
-//           "50%": { opacity: "0.8" },
-//         },
-//         "float": {
-//           "0%, 100%": { transform: "translateY(0)" },
-//           "50%": { transform: "translateY(-10px)" },
-//         },
-//         "glow": {
-//           "0%, 100%": { filter: "drop-shadow(0 0 2px rgba(99, 102, 241, 0.8))" },
-//           "50%": { filter: "drop-shadow(0 0 5px rgba(99, 102, 241, 1))" },
-//         },
-//       },
-//       animation: {
-//         "accordion-down": "accordion-down 0.2s ease-out",
-//         "accordion-up": "accordion-up 0.2s ease-out",
-//         "fade-in": "fade-in 0.7s ease-out",
-//         "slide-in": "slide-in 0.5s ease-out",
-//         "slide-in-right": "slide-in-right 0.3s ease-out",
-//         "scale-in": "scale-in 0.4s ease-out",
-//         "pulse": "pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite",
-//         "float": "float 3s ease-in-out infinite",
-//         "glow": "glow 2s ease-in-out infinite",
 //       },
 //     },
 //   },
-//   plugins: [require("tailwindcss-animate")],
+//   plugins: [],
 // };
-
-// export default config;
-
-
-
 
 import type { Config } from "tailwindcss";
 

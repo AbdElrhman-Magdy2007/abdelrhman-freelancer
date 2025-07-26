@@ -1,66 +1,97 @@
-'use client';
+"use client";
 
-import React, { useState, useEffect, useCallback, useMemo } from 'react';
-import { motion } from 'framer-motion';
-import { Button } from '@/components/ui/button';
-import clsx from 'clsx';
-import { User } from 'lucide-react';
-import Logo from './header/Logo';
-import NavLinks from './header/NavLinks';
-import AuthSection from './header/AuthSection';
-// import ThemeToggle from './header/ThemeToggle';
-import MobileMenu from './header/MobileMenu';
-import MobileMenuButton from './header/MobileMenuButton';
-import { useAuth } from './header/useAuth';
+import React, {
+  useState,
+  useEffect,
+  useCallback,
+  useMemo,
+  useRef,
+} from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import clsx from "clsx";
+import { User, Menu, X } from "lucide-react";
+import { useSession } from "next-auth/react";
 
-/**
- * Header component renders a fully responsive, animated navigation bar optimized for all screen sizes.
- * Tablets (up to 1024px) use the mobile layout, with accessibility and smooth animations.
- * @returns {JSX.Element} Responsive header with navigation and authentication controls
- */
+import Logo from "./header/Logo";
+import NavLinks from "./header/NavLinks";
+import AuthSection from "./header/AuthSection";
+
+interface NavItem {
+  name: string;
+  href: string;
+  icon?: React.ReactNode;
+}
+
 const Header: React.FC = React.memo(() => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const { isLoggedIn: isAuthenticated, user, logout } = useAuth();
+  const menuRef = useRef<HTMLDivElement>(null);
+  const { data: session } = useSession();
 
+  // Scroll effect
   const handleScroll = useCallback(() => {
-    setIsScrolled(window.scrollY > 10);
+    setIsScrolled(window.scrollY > 20);
   }, []);
 
   useEffect(() => {
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, [handleScroll]);
 
-  const toggleMobileMenu = useCallback(() => {
-    setIsMobileMenuOpen((prev) => !prev);
-  }, []);
+  // Toggle mobile menu
+  const toggleMobileMenu = () => setIsMobileMenuOpen((prev) => !prev);
 
-  const navItems = useMemo(
-    () => [
-      { name: 'Home', href: '/' },
-      { name: 'About', href: '/#about' },
-      { name: 'Services', href: '/#services' },
-      { name: 'Projects', href: '/projects' },
-      { name: 'Contact', href: '/#contact' },
-      {
-        name: 'Profile',
-        href: '/profile',
-        icon: <User className="w-3 h-3 sm:w-4 sm:h-4 inline-block mr-1" />,
-      },
-    ],
-    [],
-  );
+  // Close menu on outside click
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+        setIsMobileMenuOpen(false);
+      }
+    };
 
-  const navVariants = {
-    hidden: { opacity: 0, y: -20 },
+    if (isMobileMenuOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isMobileMenuOpen]);
+
+  // Navigation links
+  const navItems: NavItem[] = useMemo(() => {
+    const items: NavItem[] = [
+      { name: "Home", href: "/" },
+      { name: "Expertise", href: "/#Expertise" },
+      { name: "Skills", href: "/#skills" },
+      { name: "Code", href: "/#Code" },
+      { name: "Projects", href: "/projects" },
+      { name: "Contact", href: "/#contact" },
+    ];
+
+    if (session?.user) {
+      items.push({
+        name: "Profile",
+        href: "/profile",
+        icon: <User className="w-4 h-4 mr-1 inline-block" />,
+      });
+    }
+
+    return items;
+  }, [session]);
+
+  const headerVariants = {
+    hidden: { opacity: 0, y: -30 },
     visible: {
       opacity: 1,
       y: 0,
       transition: {
-        staggerChildren: 0.08,
-        delayChildren: 0.2,
-        ease: 'easeOut',
+        duration: 0.6,
+        ease: "easeOut",
+        delayChildren: 0.25,
+        staggerChildren: 0.1,
       },
     },
   };
@@ -70,81 +101,109 @@ const Header: React.FC = React.memo(() => {
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.3, ease: 'easeOut' },
+      transition: {
+        type: "spring",
+        stiffness: 120,
+        damping: 12,
+      },
     },
+  };
+
+  const mobileMenuVariants = {
+    hidden: { opacity: 0, y: -20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.3 },
+    },
+    exit: { opacity: 0, y: -20, transition: { duration: 0.2 } },
   };
 
   return (
     <motion.header
+      variants={headerVariants}
       initial="hidden"
       animate="visible"
-      variants={navVariants}
       className={clsx(
-        'fixed top-0 left-0 right-0 z-50 transition-all duration-500',
+        "fixed top-0 left-0 right-0 z-50 transition-all duration-500",
         isScrolled
-          ? 'py-2 backdrop-blur-xl bg-gradient-to-r from-background/90 to-background/70 shadow-lg'
-          : 'py-4 bg-transparent',
+          ? "bg-white/5 backdrop-blur-2xl py-2 shadow-md border-b border-white/10"
+          : "bg-transparent py-4"
       )}
-      role="banner"
-      aria-label="Main Navigation"
     >
-      <div className="container max-w-screen-xl mx-auto px-2 sm:px-4 flex items-center justify-between">
+      <div className="container mx-auto max-w-screen-2xl px-6 flex items-center justify-between">
         {/* Logo */}
-        <motion.div variants={childVariants}>
-          <Logo  />
+        <motion.div variants={childVariants} whileHover={{ scale: 1.03 }}>
+          <Logo />
         </motion.div>
 
         {/* Desktop Navigation */}
         <motion.nav
           variants={childVariants}
-          className="hidden lg:flex items-center space-x-4 lg:space-x-6"
-          aria-label="Desktop Navigation"
+          className="hidden lg:flex items-center space-x-8"
         >
-          <NavLinks navItems={navItems} />
-          <div className="flex items-center space-x-2 lg:space-x-3">
-            {/* <motion.div variants={childVariants}>
-              <ThemeToggle />
-            </motion.div> */}
-            <motion.div variants={childVariants}>
-              <AuthSection
-                isAuthenticated={isAuthenticated}
-                user={user}
-                logout={logout}
-                className="bg-gradient-to-r from-primary/20 to-primary/10 hover:from-primary/30 hover:to-primary/15 transition-all duration-300 rounded-lg shadow-sm hover:shadow-glow px-2 py-1 lg:px-3 lg:py-1.5 text-xs lg:text-sm"
-              />
-            </motion.div>
-          </div>
+          <NavLinks navItems={navItems} toggleMobileMenu={toggleMobileMenu} />
+          <motion.div whileHover={{ scale: 1.05 }}>
+            <AuthSection
+              variant="default"
+              theme="purple"
+              glow="soft"
+              showIcons
+              enableRipple
+              onCloseMenu={toggleMobileMenu}
+            />
+          </motion.div>
         </motion.nav>
 
-        {/* Mobile Controls */}
-        <motion.div
-          variants={childVariants}
-          className="lg:hidden flex items-center space-x-1 sm:space-x-2"
-        >
-          {/* <ThemeToggle isMobile /> */}
-          <MobileMenuButton
-            isMobileMenuOpen={isMobileMenuOpen}
-            toggleMobileMenu={toggleMobileMenu}
-            aria-controls="mobile-menu"
-            aria-expanded={isMobileMenuOpen}
-           
-          />
+        {/* Mobile Button */}
+        <motion.div variants={childVariants} className="lg:hidden">
+          <button
+            onClick={toggleMobileMenu}
+            aria-label="Toggle Menu"
+            className="p-2 rounded-xl bg-white/10 hover:bg-white/20 text-white transition-all duration-300 backdrop-blur-md"
+          >
+            {isMobileMenuOpen ? (
+              <X className="w-6 h-6" />
+            ) : (
+              <Menu className="w-6 h-6" />
+            )}
+          </button>
         </motion.div>
-
-        {/* Mobile Menu */}
-        <MobileMenu
-          isMobileMenuOpen={isMobileMenuOpen}
-          toggleMobileMenu={toggleMobileMenu}
-          navItems={navItems}
-          isAuthenticated={isAuthenticated}
-          user={user}
-          logout={logout}
-        />
       </div>
+
+      {/* Mobile Menu */}
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <motion.div
+            ref={menuRef}
+            className="absolute top-full inset-x-0 w-[95%] max-w-md mx-auto mt-2 p-6 rounded-2xl bg-background/90 border border-white/10 shadow-lg backdrop-blur-2xl flex flex-col gap-6"
+            variants={mobileMenuVariants}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
+          >
+            <NavLinks
+              navItems={navItems}
+              isMobile
+              toggleMobileMenu={toggleMobileMenu}
+            />
+            <div className="pt-4 border-t border-white/10">
+              <AuthSection
+                variant="compact"
+                theme="purple"
+                glow="soft"
+                enableRipple
+                showIcons
+                buttonSize="md"
+              />
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </motion.header>
   );
 });
 
-Header.displayName = 'Header';
+Header.displayName = "Header";
 
 export default Header;

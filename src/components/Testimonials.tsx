@@ -39,7 +39,7 @@
 //           <motion.div variants={itemVariants} className="text-center mb-16">
 //             <h2 className="text-3xl md:text-4xl font-bold mb-6">Client Testimonials</h2>
 //             <p className="text-lg text-gray-300 max-w-2xl mx-auto">
-//               Don't just take my word for it. Here's what my clients have to say about working with me.
+//               Don't just take my word for it. Here's what my clients have to say About working with me.
 //             </p>
 //             <div className="h-1 w-24 bg-secondary mx-auto mt-6"></div>
 //           </motion.div>

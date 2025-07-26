@@ -1,13 +1,16 @@
 'use client';
 
-import React, { useCallback, useMemo } from 'react';
+import React, {
+  useCallback,
+  useMemo,
+  useEffect,
+  useState,
+} from 'react';
 import NextLink from 'next/link';
 import { usePathname } from 'next/navigation';
 import { motion } from 'framer-motion';
 import clsx from 'clsx';
-import { useLanguage } from '../LanguageProvider';
 
-// Define interfaces for type safety
 interface NavItem {
   name: string;
   href: string;
@@ -20,109 +23,111 @@ interface NavLinksProps {
   toggleMobileMenu?: () => void;
 }
 
-/**
- * NavLinks component renders a compact navigation links section with enhanced RTL support,
- * reduced spacing, advanced animations, dynamic gradients, and accessibility features.
- * Optimized for mobile and desktop with tighter layout.
- * @param {NavLinksProps} props - Component props
- * @returns {JSX.Element} Animated navigation links with active state, RTL support, and accessibility
- */
 const NavLinks: React.FC<NavLinksProps> = React.memo(
   ({ navItems, isMobile = false, toggleMobileMenu }) => {
-    const { dir } = useLanguage();
     const pathname = usePathname();
+    const [activeHash, setActiveHash] = useState<string>('');
 
-    // Get current hash from window.location (for client-side hash links)
-    const currentHash = typeof window !== 'undefined' ? window.location.hash : '';
+    const hashLinks = useMemo(
+      () => navItems.filter((item) => item.href.startsWith('/#') || item.href === '/'),
+      [navItems]
+    );
 
-    // Normalize path by removing trailing slashes and locale prefixes
+    useEffect(() => {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              const id = entry.target.id;
+              if (id === 'home') {
+                setActiveHash('');
+              } else {
+                setActiveHash(`#${id}`);
+              }
+            }
+          });
+        },
+        { threshold: 0.6 }
+      );
+
+      hashLinks.forEach((item) => {
+        const id = item.href === '/' ? 'home' : item.href.replace('/#', '');
+        const el = document.getElementById(id);
+        if (el) observer.observe(el);
+      });
+
+      return () => {
+        hashLinks.forEach((item) => {
+          const id = item.href === '/' ? 'home' : item.href.replace('/#', '');
+          const el = document.getElementById(id);
+          if (el) observer.unobserve(el);
+        });
+      };
+    }, [hashLinks]);
+
     const normalizePath = useCallback((path: string) => {
       const [basePath, hash] = path.split('#');
-      let normalized = basePath.replace(/^\/+|\/+$/g, '');
-      const localeRegex = /^(ar|en)\//;
-      normalized = normalized.replace(localeRegex, '');
+      const normalized = basePath.replace(/^\/+/g, '').replace(/\/+$/g, '');
       const cleanPath = normalized === '' ? '/' : `/${normalized}`;
       return hash ? `${cleanPath}#${hash}` : cleanPath;
     }, []);
 
-    // Check if the link is active
     const isLinkActive = useCallback(
       (href: string) => {
         const normalizedHref = normalizePath(href);
-        const normalizedPathname = normalizePath(pathname || '/');
-        const [hrefPath, hrefHash] = normalizedHref.split('#');
-        const [path, pathHash] = normalizedPathname.split('#');
+        const [_, hash] = normalizedHref.split('#');
+        const isHashLink = !!hash;
 
-        if (hrefPath === path) {
-          if (hrefPath === '/') {
-            if (hrefHash) {
-              return hrefHash === currentHash.replace('#', '');
-            }
-            return !currentHash || currentHash === '#';
-          }
-          return !hrefHash || hrefHash === pathHash;
+        if (isHashLink) {
+          return `#${hash}` === activeHash;
+        } else {
+          const normalizedPathname = normalizePath(pathname || '/');
+          return normalizedHref === normalizedPathname && activeHash === '';
         }
-        return path.startsWith(hrefPath + '/') && hrefPath !== '/';
       },
-      [pathname, currentHash, normalizePath],
+      [pathname, activeHash, normalizePath]
     );
 
-    // Memoize active states to avoid recomputation
     const activeStates = useMemo(
       () => navItems.map((item) => isLinkActive(item.href)),
-      [navItems, isLinkActive],
+      [navItems, isLinkActive]
     );
 
-    // Handle click to close mobile menu if applicable
-    const handleClick = useCallback(() => {
-      if (isMobile && toggleMobileMenu) {
-        toggleMobileMenu();
-      }
-    }, [isMobile, toggleMobileMenu]);
+    // --- Handle Click ---
+    const handleClick = useCallback(
+      (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+        if (isMobile && toggleMobileMenu) toggleMobileMenu();
 
-    // Animation variants for links
-    const linkVariants = {
-      hidden: { opacity: 0, y: 8 }, // Reduced y for tighter layout
-      visible: (i: number) => ({
-        opacity: 1,
-        y: 0,
-        scale: 1,
-        transition: {
-          delay: i * 0.04, // Faster delay for compact animation
-          duration: 0.3,
-          ease: 'easeOut',
-        },
-      }),
-      hover: {
-        scale: 1.08,
-        transition: { duration: 0.2, ease: 'easeInOut' },
+        if (href === '/') {
+          e.preventDefault();
+          window.location.href = '/'; // إعادة تحميل الصفحة الرئيسية مباشرة
+          return;
+        }
+
+        if (href.startsWith('/#')) {
+          e.preventDefault();
+          const id = href.replace('/#', '');
+          const element = document.getElementById(id);
+          if (element) {
+            window.history.pushState(null, '', `/#${id}`);
+            element.scrollIntoView({ behavior: 'smooth' });
+            setActiveHash(`#${id}`);
+          }
+        }
       },
-    };
-
-    // Common styles for links
-    const baseLinkStyles = clsx(
-      isMobile
-        ? 'text-base sm:text-lg md:text-xl' // Match MobileMenu sizes
-        : 'text-sm sm:text-base md:text-lg',
-      'font-poppins font-medium',
-      'transition-all duration-300 ease-in-out',
-      isMobile
-        ? 'block w-full text-center py-2 px-4 sm:py-3 sm:px-5 rounded-xl' // Reduced padding
-        : 'inline-block rounded-lg px-1.5 py-1 sm:px-2 sm:py-1.5', // Reduced padding
-      'focus:outline-none focus:ring-4 focus:ring-primary/40 focus:ring-offset-1',
+      [isMobile, toggleMobileMenu]
     );
 
     return (
       <nav
         className={clsx(
-          'flex',
+          'flex items-center justify-center',
           isMobile
-            ? 'flex-col space-y-4 sm:space-y-5 md:space-y-6 items-center' // Reduced vertical spacing
-            : 'items-center space-x-2 sm:space-x-3 md:space-x-4', // Reduced horizontal spacing
+            ? 'flex-col gap-4'
+            : 'gap-6 bg-white/5 backdrop-blur-md rounded-full px-6 py-2'
         )}
         role="navigation"
-        aria-label={('navigationLinks')}
-        dir={dir}
+        aria-label="Main Navigation"
       >
         {navItems.length > 0 ? (
           navItems.map((item, index) => {
@@ -131,72 +136,51 @@ const NavLinks: React.FC<NavLinksProps> = React.memo(
             return (
               <motion.div
                 key={item.name}
-                custom={index}
-                initial="hidden"
-                animate="visible"
-                whileHover="hover"
-                variants={linkVariants}
-                className={clsx('relative', item.href === '/profile' && 'group-hover:shadow-glow')}
+                initial={{ opacity: 0, y: 6 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{
+                  delay: index * 0.05,
+                  duration: 0.3,
+                  ease: 'easeOut',
+                }}
               >
                 <NextLink
                   href={item.href}
-                  onClick={handleClick}
+                  scroll={false}
+                  onClick={(e) => handleClick(e, item.href)}
                   className={clsx(
-                    baseLinkStyles,
+                    'relative inline-block px-3 py-1 text-sm sm:text-base font-medium transition-all duration-300 rounded-md',
                     isActive
-                      ? 'text-primary bg-gradient-to-r from-primary/20 to-primary/10 shadow-glow'
-                      : 'text-foreground/80 hover:text-primary hover:bg-primary/10',
-
-                    item.href === '/profile' && 'hover:bg-blue-500/15 hover:text-blue-500',
+                      ? 'text-white font-semibold'
+                      : 'text-slate-300 hover:text-white'
                   )}
                   aria-current={isActive ? 'page' : undefined}
-             
                 >
-                  {/* {item.icon && (
-                    <span
-                      className={clsx(
-                        'inline-block transform transition-transform duration-200 group-hover:scale-110',
-                        dir === 'rtl' ? 'ml-1.5 sm:ml-2' : 'mr-1.5 sm:mr-2', // Reduced icon spacing
-                        isMobile ? 'text-lg sm:text-xl' : 'text-base sm:text-lg',
-                      )}
-                    >
-                      {item.icon}
-                    </span>
-                  )} */}
-                  <span className="relative z-10">{item.name}</span>
-                  <motion.span
-                    className={clsx(
-                      'absolute bottom-0 w-full h-0.4 bg-gradient-to-r', // Thinner underline
-                      isActive
-                        ? item.href === '/profile'
-                          ? 'from-blue-500 to-blue-500/60'
-                          : 'from-primary to-primary/60'
-                        : 'from-primary to-primary/60',
-                      isActive ? 'opacity-100' : 'opacity-0 group-hover:opacity-100',
-                    )}
-                    initial={{ scaleX: 1 }}
-                    animate={{ scaleX: isActive ? 1 : 0 }}
-                    whileHover={{ scaleX: 1 }}
-                    transition={{ duration: 0.3, ease: 'easeOut' }}
-                  />
+                  {item.name}
+                  {isActive && (
+                    <motion.span
+                      layoutId="activeDot"
+                      className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-indigo-400 rounded-full"
+                      transition={{
+                        type: 'spring',
+                        stiffness: 500,
+                        damping: 30,
+                      }}
+                    />
+                  )}
                 </NextLink>
               </motion.div>
             );
           })
         ) : (
-          <p className="text-sm sm:text-base text-muted-foreground">{('noNavItems')}</p>
+          <p className="text-sm text-muted-foreground">
+            No navigation items available
+          </p>
         )}
       </nav>
     );
-  },
-);
-
-// Custom Tailwind shadow for glowing effect
-const tailwindConfig = `
-  .shadow-glow {
-    box-shadow: 0 4px 12px rgba(var(--primary), 0.15), 0 0 16px rgba(var(--primary), 0.1);
   }
-`;
+);
 
 NavLinks.displayName = 'NavLinks';
 

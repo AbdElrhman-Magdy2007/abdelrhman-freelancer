@@ -1,4 +1,4 @@
-// File: C:\Users\raya\ShoppingCart\portfolio - Copy - Copy - Copy - Copy - Copy - Copy (2) - Copy\src\app\layout.tsx
+// File: D:\portfolio\portfolio-1\src\app\layout.tsx
 import * as entry from '../../../src/app/layout.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 
