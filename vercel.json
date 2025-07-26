@@ -7,8 +7,8 @@
   "regions": ["fra1"],
   
   "env": {
-    "NEXTAUTH_URL": "https://abdelrhman-magdy.vercel.app",
-    "NEXT_PUBLIC_API_URL": "https://abdelrhman-magdy.vercel.app",
+    "NEXTAUTH_URL": "https://abdelrhman-dev.vercel.app/",
+    "NEXT_PUBLIC_API_URL": "https://abdelrhman-dev.vercel.app/",
     "NODE_ENV": "production"
   },
   "headers": [
