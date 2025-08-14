@@ -76,21 +76,53 @@ const uploadImage = async (imageFile: File): Promise<string> => {
   formData.append("pathName", "product_images");
 
   let lastError: Error | null = null;
+  // Build absolute base URL for server-side fetch
+  const getBaseUrl = () => {
+    const fromEnv = process.env.NEXT_PUBLIC_BASE_URL?.trim();
+    if (fromEnv) return fromEnv.replace(/\/+$/, "");
+    const vercel = process.env.VERCEL_URL?.trim();
+    if (vercel) return (vercel.startsWith("http") ? vercel : `https://${vercel}`).replace(/\/+$/, "");
+    const port = process.env.PORT || "3000";
+    return `http://localhost:${port}`;
+  };
+
   for (let attempt = 1; attempt <= MAX_UPLOAD_RETRIES; attempt++) {
     try {
       console.log(`${LOG_PREFIX} [${requestId}] Upload attempt ${attempt}`);
-      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/upload`, {
+      const url = `${getBaseUrl()}/api/upload`;
+      const response = await fetch(url, {
         method: "POST",
         body: formData,
       });
 
       if (!response.ok) {
-        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+        let serverMessage = "";
+        let details = "";
+        try {
+          const errJson = await response.json();
+          const name = errJson?.name;
+          const httpCode = errJson?.httpCode;
+          const cloudinaryError = errJson?.cloudinaryError;
+          serverMessage = errJson?.error || "";
+          const parts: string[] = [];
+          if (name) parts.push(`name=${name}`);
+          if (typeof httpCode === "number") parts.push(`httpCode=${httpCode}`);
+          if (cloudinaryError) parts.push(`cloudinaryError=${typeof cloudinaryError === "string" ? cloudinaryError : JSON.stringify(cloudinaryError)}`);
+          details = parts.length ? ` [${parts.join(", ")}]` : "";
+        } catch {
+          try {
+            const text = await response.text();
+            if (text) serverMessage = text;
+          } catch {}
+        }
+        throw new Error(
+          `HTTP ${response.status}: ${response.statusText}${serverMessage ? ` - ${serverMessage}` : ""}${details}`
+        );
       }
 
       const data = await response.json();
       if (!data?.url) {
-        throw new Error("Invalid response: Missing image URL");
+        throw new Error(`Invalid response: Missing image URL. Received keys: ${Object.keys(data || {}).join(", ")}`);
       }
 
       console.log(`${LOG_PREFIX} [${requestId}] Image uploaded: ${data.url}`);
@@ -282,31 +314,39 @@ export const addProduct = async (
       return optionsValidation;
     }
 
-    // Create product
-    const product = await db.product.create({
-      data: {
-        name,
-        description,
-        image: imageUrl,
-        categoryId,
-        liveDemoLink: liveDemoLink || null,
-        gitHubLink: validatedGitHubLink || null,
-        order: 0,
-        ProductTech: {
-          createMany: {
-            data: validatedTechs.map((tech) => ({
-              name: tech.name, // Store as string
-            })),
-          },
+    // Create product and related entities in a transaction
+    const product = await db.$transaction(async (tx) => {
+      const created = await tx.product.create({
+        data: {
+          name,
+          description,
+          image: imageUrl,
+          categoryId,
+          liveDemoLink: liveDemoLink || null,
+          gitHubLink: validatedGitHubLink || null,
+          order: 0,
         },
-        ProductAddon: {
-          createMany: {
-            data: validatedAddons.map((addon) => ({
-              name: addon.name as PackageOption,
-            })),
-          },
-        },
-      },
+      });
+
+      if (validatedTechs.length > 0) {
+        await tx.productTech.createMany({
+          data: validatedTechs.map((tech) => ({
+            productId: created.id,
+            name: tech.name,
+          })),
+        });
+      }
+
+      if (validatedAddons.length > 0) {
+        await tx.productAddon.createMany({
+          data: validatedAddons.map((addon) => ({
+            productId: created.id,
+            name: addon.name as PackageOption,
+          })),
+        });
+      }
+
+      return created;
     });
 
     console.log(`${LOG_PREFIX} [${requestId}] Product created: ${product.id}`);

@@ -1,11 +1,1 @@
-{
-  "version": 4,
-  "routes": {},
-  "dynamicRoutes": {},
-  "notFoundRoutes": [],
-  "preview": {
-    "previewModeId": "c787c7d08954d0467552df4545d91831",
-    "previewModeSigningKey": "b1b0665505f29b3acf6fefe09e731eb6b903e2b6af8d30fd886a10f33e0f6b33",
-    "previewModeEncryptionKey": "ea2f6c5099df22a25aa3cabaa8a76b15002fd65653eab713525f50ea47bb8a36"
-  }
-}
+{"version":4,"routes":{"/admin/menu-items/bfcae137-42b3-4307-a8cc-49de513366e7/edit":{}},"dynamicRoutes":{"/admin/menu-items/[productId]/edit":{"fallback":null}},"notFoundRoutes":[],"preview":{"previewModeId":"c2833a119ec4efc7841682f38310f948","previewModeSigningKey":"508f3542ee61b87de29424ae87db081551bcf9c810256d7f92b65963e90eec05","previewModeEncryptionKey":"58fdd213a94e39f3354b2448239d935a040378ea4862eedb1c7f90420cc75f85"}}
