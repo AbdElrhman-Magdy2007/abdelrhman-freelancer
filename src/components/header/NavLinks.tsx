@@ -1,15 +1,10 @@
-'use client';
+"use client";
 
-import React, {
-  useCallback,
-  useMemo,
-  useEffect,
-  useState,
-} from 'react';
-import NextLink from 'next/link';
-import { usePathname } from 'next/navigation';
-import { motion } from 'framer-motion';
-import clsx from 'clsx';
+import React, { useCallback, useMemo, useEffect, useState } from "react";
+import NextLink from "next/link";
+import { usePathname } from "next/navigation";
+import { motion } from "framer-motion";
+import clsx from "clsx";
 
 interface NavItem {
   name: string;
@@ -26,10 +21,13 @@ interface NavLinksProps {
 const NavLinks: React.FC<NavLinksProps> = React.memo(
   ({ navItems, isMobile = false, toggleMobileMenu }) => {
     const pathname = usePathname();
-    const [activeHash, setActiveHash] = useState<string>('');
+    const [activeHash, setActiveHash] = useState<string>("");
 
     const hashLinks = useMemo(
-      () => navItems.filter((item) => item.href.startsWith('/#') || item.href === '/'),
+      () =>
+        navItems.filter(
+          (item) => item.href.startsWith("/#") || item.href === "/"
+        ),
       [navItems]
     );
 
@@ -39,8 +37,8 @@ const NavLinks: React.FC<NavLinksProps> = React.memo(
           entries.forEach((entry) => {
             if (entry.isIntersecting) {
               const id = entry.target.id;
-              if (id === 'home') {
-                setActiveHash('');
+              if (id === "home") {
+                setActiveHash("");
               } else {
                 setActiveHash(`#${id}`);
               }
@@ -51,14 +49,14 @@ const NavLinks: React.FC<NavLinksProps> = React.memo(
       );
 
       hashLinks.forEach((item) => {
-        const id = item.href === '/' ? 'home' : item.href.replace('/#', '');
+        const id = item.href === "/" ? "home" : item.href.replace("/#", "");
         const el = document.getElementById(id);
         if (el) observer.observe(el);
       });
 
       return () => {
         hashLinks.forEach((item) => {
-          const id = item.href === '/' ? 'home' : item.href.replace('/#', '');
+          const id = item.href === "/" ? "home" : item.href.replace("/#", "");
           const el = document.getElementById(id);
           if (el) observer.unobserve(el);
         });
@@ -66,23 +64,23 @@ const NavLinks: React.FC<NavLinksProps> = React.memo(
     }, [hashLinks]);
 
     const normalizePath = useCallback((path: string) => {
-      const [basePath, hash] = path.split('#');
-      const normalized = basePath.replace(/^\/+/g, '').replace(/\/+$/g, '');
-      const cleanPath = normalized === '' ? '/' : `/${normalized}`;
+      const [basePath, hash] = path.split("#");
+      const normalized = basePath.replace(/^\/+/g, "").replace(/\/+$/g, "");
+      const cleanPath = normalized === "" ? "/" : `/${normalized}`;
       return hash ? `${cleanPath}#${hash}` : cleanPath;
     }, []);
 
     const isLinkActive = useCallback(
       (href: string) => {
         const normalizedHref = normalizePath(href);
-        const [_, hash] = normalizedHref.split('#');
+        const [_, hash] = normalizedHref.split("#");
         const isHashLink = !!hash;
 
         if (isHashLink) {
           return `#${hash}` === activeHash;
         } else {
-          const normalizedPathname = normalizePath(pathname || '/');
-          return normalizedHref === normalizedPathname && activeHash === '';
+          const normalizedPathname = normalizePath(pathname || "/");
+          return normalizedHref === normalizedPathname && activeHash === "";
         }
       },
       [pathname, activeHash, normalizePath]
@@ -98,19 +96,19 @@ const NavLinks: React.FC<NavLinksProps> = React.memo(
       (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
         if (isMobile && toggleMobileMenu) toggleMobileMenu();
 
-        if (href === '/') {
+        if (href === "/") {
           e.preventDefault();
-          window.location.href = '/'; // إعادة تحميل الصفحة الرئيسية مباشرة
+          window.location.href = "/"; // إعادة تحميل الصفحة الرئيسية مباشرة
           return;
         }
 
-        if (href.startsWith('/#')) {
+        if (href.startsWith("/#")) {
           e.preventDefault();
-          const id = href.replace('/#', '');
+          const id = href.replace("/#", "");
           const element = document.getElementById(id);
           if (element) {
-            window.history.pushState(null, '', `/#${id}`);
-            element.scrollIntoView({ behavior: 'smooth' });
+            window.history.pushState(null, "", `/#${id}`);
+            element.scrollIntoView({ behavior: "smooth" });
             setActiveHash(`#${id}`);
           }
         }
@@ -121,10 +119,10 @@ const NavLinks: React.FC<NavLinksProps> = React.memo(
     return (
       <nav
         className={clsx(
-          'flex items-center justify-center',
+          "flex items-center justify-center",
           isMobile
-            ? 'flex-col gap-4'
-            : 'gap-6 bg-white/5 backdrop-blur-md rounded-full px-6 py-2'
+            ? "flex-col gap-4"
+            : "gap-6 bg-white/5 backdrop-blur-md rounded-full px-6 py-2"
         )}
         role="navigation"
         aria-label="Main Navigation"
@@ -141,7 +139,7 @@ const NavLinks: React.FC<NavLinksProps> = React.memo(
                 transition={{
                   delay: index * 0.05,
                   duration: 0.3,
-                  ease: 'easeOut',
+                  ease: "easeOut",
                 }}
               >
                 <NextLink
@@ -149,20 +147,20 @@ const NavLinks: React.FC<NavLinksProps> = React.memo(
                   scroll={false}
                   onClick={(e) => handleClick(e, item.href)}
                   className={clsx(
-                    'relative inline-block px-3 py-1 text-sm sm:text-base font-medium transition-all duration-300 rounded-md',
+                    "relative inline-block px-3 py-1 text-sm sm:text-base font-medium transition-all duration-300 rounded-md",
                     isActive
-                      ? 'text-white font-semibold'
-                      : 'text-slate-300 hover:text-white'
+                      ? "text-white font-semibold"
+                      : "text-slate-300 hover:text-white"
                   )}
-                  aria-current={isActive ? 'page' : undefined}
+                  aria-current={isActive ? "page" : undefined}
                 >
                   {item.name}
                   {isActive && (
                     <motion.span
                       layoutId="activeDot"
-                      className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-indigo-400 rounded-full"
+                      className="absolute -bottom-0.5 left-0 w-full h-[2px] bg-indigo-400 rounded-md"
                       transition={{
-                        type: 'spring',
+                        type: "spring",
                         stiffness: 500,
                         damping: 30,
                       }}
@@ -182,6 +180,6 @@ const NavLinks: React.FC<NavLinksProps> = React.memo(
   }
 );
 
-NavLinks.displayName = 'NavLinks';
+NavLinks.displayName = "NavLinks";
 
 export default NavLinks;

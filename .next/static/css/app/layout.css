@@ -562,8 +562,8 @@ body{
   top: 0px;
   bottom: 0px;
 }
-.-bottom-1{
-  bottom: -0.25rem;
+.-bottom-0\.5{
+  bottom: -0.125rem;
 }
 .-bottom-12{
   bottom: -3rem;
@@ -645,6 +645,15 @@ body{
 }
 .top-full{
   top: 100%;
+}
+.-bottom-1{
+  bottom: -0.25rem;
+}
+.bottom-3{
+  bottom: 0.75rem;
+}
+.top-3{
+  top: 0.75rem;
 }
 .z-0{
   z-index: 0;
@@ -923,6 +932,9 @@ body{
 }
 .h-\[200px\]{
   height: 200px;
+}
+.h-\[2px\]{
+  height: 2px;
 }
 .h-\[400px\]{
   height: 400px;
@@ -2683,6 +2695,9 @@ body{
   --tw-text-opacity: 1;
   color: rgb(250 204 21 / var(--tw-text-opacity, 1));
 }
+.underline{
+  text-decoration-line: underline;
+}
 .underline-offset-4{
   text-underline-offset: 4px;
 }
@@ -3307,6 +3322,11 @@ body{
   --tw-gradient-to: rgb(220 38 38 / 0) var(--tw-gradient-to-position);
   --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
 }
+.hover\:from-\[\#4D4FCF\]:hover{
+  --tw-gradient-from: #4D4FCF var(--tw-gradient-from-position);
+  --tw-gradient-to: rgb(77 79 207 / 0) var(--tw-gradient-to-position);
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+}
 .hover\:via-purple-500:hover{
   --tw-gradient-to: rgb(168 85 247 / 0)  var(--tw-gradient-to-position);
   --tw-gradient-stops: var(--tw-gradient-from), #a855f7 var(--tw-gradient-via-position), var(--tw-gradient-to);
@@ -3328,6 +3348,9 @@ body{
 }
 .hover\:to-rose-600:hover{
   --tw-gradient-to: #e11d48 var(--tw-gradient-to-position);
+}
+.hover\:to-\[\#DF96AE\]:hover{
+  --tw-gradient-to: #DF96AE var(--tw-gradient-to-position);
 }
 .hover\:text-accent-foreground:hover{
   color: hsl(var(--accent-foreground));
@@ -3440,6 +3463,10 @@ body{
 .focus\:border-primary:focus{
   border-color: hsl(var(--primary) / 1);
 }
+.focus\:border-red-500:focus{
+  --tw-border-opacity: 1;
+  border-color: rgb(239 68 68 / var(--tw-border-opacity, 1));
+}
 .focus\:bg-accent:focus{
   background-color: hsl(var(--accent));
 }
@@ -3545,6 +3572,9 @@ body{
 .focus-visible\:ring-blue-400:focus-visible{
   --tw-ring-opacity: 1;
   --tw-ring-color: rgb(96 165 250 / var(--tw-ring-opacity, 1));
+}
+.focus-visible\:ring-indigo-400\/70:focus-visible{
+  --tw-ring-color: rgb(129 140 248 / 0.7);
 }
 .focus-visible\:ring-ring:focus-visible{
   --tw-ring-color: hsl(var(--ring));

@@ -195,9 +195,21 @@ const ContactForm: React.FC = () => {
     setIsSubmitting(true);
 
     try {
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-      console.log("Form submitted:", formData);
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+
+      if (!res.ok) {
+        let message = "Failed to send message";
+        try {
+          const data = await res.json();
+          message = data?.error || message;
+        } catch {}
+        throw new Error(message);
+      }
+
       setSubmitStatus("success");
       setFormData({ name: "", email: "", message: "", honeypot: "" });
       setErrors({});

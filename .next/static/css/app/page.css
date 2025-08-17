@@ -1,0 +1,341 @@
+/*!****************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[13].oneOf[10].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[13].oneOf[10].use[3]!./src/components/Hero/Aurora.css ***!
+  \****************************************************************************************************************************************************************************************************************************************************************************/
+.aurora-container {
+  width: 100%;
+  height: 100%;
+}
+/*!*********************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[13].oneOf[10].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[13].oneOf[10].use[3]!./src/components/About/CurvedLoop.css ***!
+  \*********************************************************************************************************************************************************************************************************************************************************************************/
+.curved-loop-jacket {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+  }
+  
+  .curved-loop-svg {
+    -webkit-user-select: none;
+       -moz-user-select: none;
+            user-select: none;
+    width: 100%;
+    aspect-ratio: 100 / 12;
+    overflow: visible;
+    display: block;
+    font-size: 6rem;
+    fill: #ffffff;
+    font-weight: 700;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    line-height: 1;
+  }
+  
+  .curved-loop-jacket {
+    width: 100%;
+    overflow: hidden;
+    -webkit-user-select: none;
+       -moz-user-select: none;
+            user-select: none;
+  }
+  
+  .curved-loop-svg {
+    width: 100%;
+    height: 120px;
+  }
+  
+  .curved-loop-jacket {
+    width: 100%;
+    overflow: hidden;
+    -webkit-user-select: none;
+       -moz-user-select: none;
+            user-select: none;
+    margin: 0;
+    padding: 0;
+    line-height: 0;
+  }
+  
+  .curved-loop-svg {
+    display: block;
+    width: 100%;
+    height: 120px;
+    margin: 0;
+    padding: 0;
+    line-height: 0;
+  }
+  
+/*!**********************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[13].oneOf[10].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[13].oneOf[10].use[3]!./src/components/About/ScrollStack.css ***!
+  \**********************************************************************************************************************************************************************************************************************************************************************************/
+/* Professional Sticky Card Stack Styles - Ultimate Polish */
+:root {
+  --card-transition-duration: 0.5s;
+  --card-transition-easing: cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.scroll-stack-container {
+  position: relative;
+}
+.scroll-stack-card-wrapper {
+  height: 100vh;
+  position: relative;
+  perspective: 2000px;
+  transition: perspective 0.8s var(--card-transition-easing);
+}
+.scroll-stack-card-wrapper:hover {
+  perspective: 2500px;
+}
+@keyframes snap-effect {
+  0%,
+  100% {
+    transform: translateY(-50%) scale(var(--scale));
+  }
+  50% {
+    transform: translateY(-50%) scale(calc(var(--scale) * 1.025));
+  }
+}
+.scroll-stack-card.is-snapping {
+  animation: snap-effect 0.4s var(--card-transition-easing);
+}
+.scroll-stack-card {
+  --scale: 0;
+  --opacity: 0;
+  --rotate-x: 0deg;
+  --rotate-y: 0deg;
+  --mouse-x: 50%;
+  --mouse-y: 50%;
+
+  position: sticky;
+  top: 50%;
+  transform: translateY(-50%) scale(var(--scale)) rotateX(var(--rotate-x))
+    rotateY(var(--rotate-y));
+  opacity: var(--opacity);
+  transform-style: preserve-3d;
+
+  width: 90%;
+  max-width: 650px;
+  height: 70vh;
+  margin: 0 auto;
+
+  background-color: #22252a;
+  background-image: linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.035) 0%,
+      rgba(0, 0, 0, 0.25) 100%
+    ),
+    url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%239C92AC' fill-opacity='0.035'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+
+  border-radius: 2.25rem;
+  box-shadow: 0px 2.8px 5.3px rgba(0, 0, 0, 0.07),
+    0px 9.3px 17.9px rgba(0, 0, 0, 0.05), 0px 42px 80px rgba(0, 0, 0, 0.06),
+    inset 0 1px 1px rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+
+  padding: 3rem;
+  color: white;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+
+  /* Physics-based Transition */
+  will-change: transform, opacity;
+  transition: transform var(--transition-duration, 0.5s)
+    var(--card-transition-easing);
+}
+.scroll-stack-card::before,
+.scroll-stack-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  z-index: -1;
+  transition: opacity 0.6s var(--card-transition-easing);
+  opacity: 0;
+}
+/* Chromatic Aberration Glow & Shine */
+.scroll-stack-card::before {
+  /* Main glow + chromatic aberration */
+  background: radial-gradient(
+      circle at 50% 50%,
+      rgba(168, 85, 247, 0.15) 0%,
+      transparent 60%
+    ),
+    radial-gradient(
+      circle at 52% 51%,
+      rgba(244, 114, 182, 0.1) 0%,
+      transparent 70%
+    ),
+    radial-gradient(
+      circle at 48% 49%,
+      rgba(6, 182, 212, 0.1) 0%,
+      transparent 70%
+    );
+}
+.scroll-stack-card::after {
+  background: radial-gradient(
+    450px circle at var(--mouse-x) var(--mouse-y),
+    rgba(255, 255, 255, 0.15),
+    transparent 55%
+  );
+  mix-blend-mode: soft-light;
+}
+.scroll-stack-card.is-active::before,
+.scroll-stack-card.is-active:hover::after {
+  opacity: 1;
+}
+.scroll-stack-card h2,
+.scroll-stack-card p {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s 0.2s var(--card-transition-easing),
+    transform 0.8s 0.2s var(--card-transition-easing);
+}
+.scroll-stack-card.is-active h2 {
+  transition-delay: 0.25s;
+}
+.scroll-stack-card.is-active p {
+  transition-delay: 0.35s;
+}
+.scroll-stack-card.is-active h2,
+.scroll-stack-card.is-active p {
+  opacity: 1;
+  transform: translateY(0);
+}
+.scroll-stack-card h2 {
+  font-size: 2.6rem;
+  font-weight: 800;
+  background: linear-gradient(120deg, #ffffff 0%, #e0e0e0 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 1rem;
+}
+.scroll-stack-card p {
+  font-size: 1.15rem;
+  color: #d0d5e0;
+  max-width: 85%;
+  line-height: 1.8;
+}
+body::-webkit-scrollbar {
+  width: 9px;
+}
+body::-webkit-scrollbar-track {
+  background: #1a1c20;
+}
+body::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.12);
+  border-radius: 9px;
+  border: 2px solid #1a1c20;
+}
+body::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(255, 255, 255, 0.22);
+}
+.card-content {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+  will-change: opacity, transform;
+}
+.scroll-stack-card.is-active .card-content {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/*!************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[13].oneOf[10].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[13].oneOf[10].use[3]!./src/components/Services/GlitchText.css ***!
+  \************************************************************************************************************************************************************************************************************************************************************************************/
+.glitch {
+  position: relative;
+  display: inline-block;
+  color: white;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 700;
+  font-size: clamp(2rem, 5vw, 4rem);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  animation: glitchText 2s infinite;
+  --before-shadow: -2px 0 cyan;
+  --after-shadow: 2px 0 red;
+  --before-duration: 2.5s;
+  --after-duration: 2s;
+}
+
+.glitch::before,
+.glitch::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  color: white;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.glitch::before {
+  animation: glitchTop var(--before-duration) infinite linear;
+  color: cyan;
+  text-shadow: var(--before-shadow);
+}
+
+.glitch::after {
+  animation: glitchBottom var(--after-duration) infinite linear;
+  color: red;
+  text-shadow: var(--after-shadow);
+}
+
+/* توقف الحركة عند عدم التحويم */
+
+.hover-enabled::before,
+.hover-enabled::after {
+  animation-play-state: paused;
+}
+
+.hover-enabled:hover::before,
+.hover-enabled:hover::after {
+  animation-play-state: running;
+}
+
+@keyframes glitchText {
+  0% {
+    transform: none;
+  }
+  20% {
+    transform: translate(-2px, 2px) skew(-1deg);
+  }
+  40% {
+    transform: translate(-2px, -1px) skew(1deg);
+  }
+  60% {
+    transform: translate(2px, 1px) skew(-1deg);
+  }
+  80% {
+    transform: translate(2px, -2px) skew(1deg);
+  }
+  100% {
+    transform: none;
+  }
+}
+
+@keyframes glitchTop {
+  0% { clip-path: inset(0 0 100% 0); }
+  10% { clip-path: inset(10% 0 60% 0); }
+  20% { clip-path: inset(20% 0 40% 0); }
+  30% { clip-path: inset(5% 0 50% 0); }
+  40% { clip-path: inset(0 0 100% 0); }
+  100% { clip-path: inset(0 0 100% 0); }
+}
+
+@keyframes glitchBottom {
+  0% { clip-path: inset(100% 0 0 0); }
+  10% { clip-path: inset(60% 0 10% 0); }
+  20% { clip-path: inset(40% 0 20% 0); }
+  30% { clip-path: inset(50% 0 5% 0); }
+  40% { clip-path: inset(100% 0 0 0); }
+  100% { clip-path: inset(100% 0 0 0); }
+}
+

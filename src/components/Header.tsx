@@ -144,14 +144,7 @@ const Header: React.FC = React.memo(() => {
         >
           <NavLinks navItems={navItems} toggleMobileMenu={toggleMobileMenu} />
           <motion.div whileHover={{ scale: 1.05 }}>
-            <AuthSection
-              variant="default"
-              theme="purple"
-              glow="soft"
-              showIcons
-              enableRipple
-              onCloseMenu={toggleMobileMenu}
-            />
+            <AuthSection onCloseMenu={toggleMobileMenu} />
           </motion.div>
         </motion.nav>
 
