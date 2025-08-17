@@ -21,6 +21,7 @@ const AdminTabs = memo(() => {
     { id: "tab-categories", title: "Categories", href: `${Routes.ADMIN}/${Pages.CATEGORIES}` },
     { id: "tab-menu-items", title: "Menu Items", href: `${Routes.ADMIN}/${Pages.MENU_ITEMS}` },
     { id: "tab-users", title: "Users", href: `${Routes.ADMIN}/${Pages.USERS}` },
+    { id: "tab-chatuser", title: "Chat Messages", href: `${Routes.ADMIN}/chatuser` },
     // { id: "tab-orders", title: "Orders", href: `${Routes.ADMIN}/${Pages.ORDERS}` },
   ];
 

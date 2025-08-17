@@ -1,6 +1,10 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import db from "@/lib/prisma";
+import { Prisma } from "@prisma/client";
+
+// Ensure this route runs on the Node.js runtime (Prisma is not supported on Edge)
+export const runtime = "nodejs";
 
 const ContactSchema = z.object({
   name: z.string().min(2).max(200),
@@ -48,6 +52,21 @@ export async function POST(req: Request) {
     );
   } catch (err) {
     console.error("/api/contact POST error:", err);
+
+    // Provide clearer feedback for common Prisma/DB issues
+    if (err instanceof Prisma.PrismaClientKnownRequestError) {
+      // P2021: table or column does not exist; P1001: DB unreachable
+      if (err.code === "P2021" || err.code === "P1001") {
+        return NextResponse.json(
+          {
+            error:
+              "Database is not ready. Please run: `npx prisma generate` and `npx prisma migrate dev`.",
+          },
+          { status: 503 }
+        );
+      }
+    }
+
     return NextResponse.json(
       { error: "Internal server error" },
       { status: 500 }
