@@ -1,290 +1,91 @@
 {
   "node": {
-    "7f3babbf5ca9179b1b48b1e3c30be883f340597845": {
+    "7fa363b169cf4b226d4242bd0d34406cf0106b2ec0": {
       "workers": {
         "app/api/auth/[...nextauth]/route": {
-          "moduleId": "(rsc)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22D%3A%5C%5Cportfolio%5C%5Cportfolio-1%5C%5Csrc%5C%5Capp%5C%5Cserver%5C%5C_actions%5C%5Cauth.ts%22%2C%5B%7B%22id%22%3A%227f3babbf5ca9179b1b48b1e3c30be883f340597845%22%2C%22exportedName%22%3A%22signup%22%7D%2C%7B%22id%22%3A%227ffb041174aaae82660f149b6ea6f61aac6e8c3fc1%22%2C%22exportedName%22%3A%22login%22%7D%5D%5D%5D&__client_imported__=!",
-          "async": false
-        },
-        "app/profile/page": {
-          "moduleId": "(rsc)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22D%3A%5C%5Cportfolio%5C%5Cportfolio-1%5C%5Csrc%5C%5Capp%5C%5Cserver%5C%5C_actions%5C%5Cauth.ts%22%2C%5B%7B%22id%22%3A%227f3babbf5ca9179b1b48b1e3c30be883f340597845%22%2C%22exportedName%22%3A%22signup%22%7D%2C%7B%22id%22%3A%227ffb041174aaae82660f149b6ea6f61aac6e8c3fc1%22%2C%22exportedName%22%3A%22login%22%7D%5D%5D%5D&__client_imported__=!",
-          "async": false
-        },
-        "app/admin/page": {
-          "moduleId": "(rsc)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22D%3A%5C%5Cportfolio%5C%5Cportfolio-1%5C%5Csrc%5C%5Capp%5C%5Cadmin%5C%5Clayout.tsx%22%2C%5B%7B%22id%22%3A%2240cb551a2f10d50579bced789126f1e1725ea7a420%22%2C%22exportedName%22%3A%22default%22%7D%5D%5D%2C%5B%22D%3A%5C%5Cportfolio%5C%5Cportfolio-1%5C%5Csrc%5C%5Capp%5C%5Cserver%5C%5C_actions%5C%5Cauth.ts%22%2C%5B%7B%22id%22%3A%227f3babbf5ca9179b1b48b1e3c30be883f340597845%22%2C%22exportedName%22%3A%22signup%22%7D%2C%7B%22id%22%3A%227ffb041174aaae82660f149b6ea6f61aac6e8c3fc1%22%2C%22exportedName%22%3A%22login%22%7D%5D%5D%5D&__client_imported__=!",
-          "async": false
-        },
-        "app/admin/menu-items/page": {
-          "moduleId": "(rsc)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22D%3A%5C%5Cportfolio%5C%5Cportfolio-1%5C%5Csrc%5C%5Capp%5C%5Cadmin%5C%5Clayout.tsx%22%2C%5B%7B%22id%22%3A%2240cb551a2f10d50579bced789126f1e1725ea7a420%22%2C%22exportedName%22%3A%22default%22%7D%5D%5D%2C%5B%22D%3A%5C%5Cportfolio%5C%5Cportfolio-1%5C%5Csrc%5C%5Capp%5C%5Cserver%5C%5C_actions%5C%5Cauth.ts%22%2C%5B%7B%22id%22%3A%227f3babbf5ca9179b1b48b1e3c30be883f340597845%22%2C%22exportedName%22%3A%22signup%22%7D%2C%7B%22id%22%3A%227ffb041174aaae82660f149b6ea6f61aac6e8c3fc1%22%2C%22exportedName%22%3A%22login%22%7D%5D%5D%2C%5B%22D%3A%5C%5Cportfolio%5C%5Cportfolio-1%5C%5Csrc%5C%5Capp%5C%5Cadmin%5C%5Cmenu-items%5C%5Cpage.tsx%22%2C%5B%7B%22id%22%3A%227f681223fa2a593b9ed38d50a8ca54c99215822bb0%22%2C%22exportedName%22%3A%22default%22%7D%5D%5D%2C%5B%22D%3A%5C%5Cportfolio%5C%5Cportfolio-1%5C%5Csrc%5C%5Capp%5C%5Cserver%5C%5Cdb%5C%5Cproducts.ts%22%2C%5B%7B%22id%22%3A%227f0a277ca91f8b548ae50d522356abedd59d9c9faa%22%2C%22exportedName%22%3A%22getProductsByCategory%22%7D%2C%7B%22id%22%3A%227f0ce3f237a0b7153c3ed9a53af337032c880d87da%22%2C%22exportedName%22%3A%22getProductsByCategoryId%22%7D%2C%7B%22id%22%3A%227f32eb513cb7cfdbe8d8218f3f5acfa0ab74852849%22%2C%22exportedName%22%3A%22getProducts%22%7D%2C%7B%22id%22%3A%227f379cef7033993f0df5da919ba2756976a8dfd3b4%22%2C%22exportedName%22%3A%22getBestSellers%22%7D%2C%7B%22id%22%3A%227f5cb95b7e9183733ab22556994ec9b8854c5f7818%22%2C%22exportedName%22%3A%22getProductsCount%22%7D%2C%7B%22id%22%3A%227f72a7154fa12743a1bad302af59c74d37794d44d6%22%2C%22exportedName%22%3A%22getAllProducts%22%7D%5D%5D%5D&__client_imported__=!",
-          "async": false
-        },
-        "app/admin/menu-items/new/page": {
-          "moduleId": "(rsc)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22D%3A%5C%5Cportfolio%5C%5Cportfolio-1%5C%5Csrc%5C%5Capp%5C%5Cadmin%5C%5Clayout.tsx%22%2C%5B%7B%22id%22%3A%2240cb551a2f10d50579bced789126f1e1725ea7a420%22%2C%22exportedName%22%3A%22default%22%7D%5D%5D%2C%5B%22D%3A%5C%5Cportfolio%5C%5Cportfolio-1%5C%5Csrc%5C%5Capp%5C%5Cserver%5C%5C_actions%5C%5Cauth.ts%22%2C%5B%7B%22id%22%3A%227f3babbf5ca9179b1b48b1e3c30be883f340597845%22%2C%22exportedName%22%3A%22signup%22%7D%2C%7B%22id%22%3A%227ffb041174aaae82660f149b6ea6f61aac6e8c3fc1%22%2C%22exportedName%22%3A%22login%22%7D%5D%5D%5D&__client_imported__=!",
-          "async": false
-        },
-        "app/admin/categories/page": {
-          "moduleId": "(rsc)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22D%3A%5C%5Cportfolio%5C%5Cportfolio-1%5C%5Csrc%5C%5Capp%5C%5Cadmin%5C%5Clayout.tsx%22%2C%5B%7B%22id%22%3A%2240cb551a2f10d50579bced789126f1e1725ea7a420%22%2C%22exportedName%22%3A%22default%22%7D%5D%5D%2C%5B%22D%3A%5C%5Cportfolio%5C%5Cportfolio-1%5C%5Csrc%5C%5Capp%5C%5Cserver%5C%5C_actions%5C%5Cauth.ts%22%2C%5B%7B%22id%22%3A%227f3babbf5ca9179b1b48b1e3c30be883f340597845%22%2C%22exportedName%22%3A%22signup%22%7D%2C%7B%22id%22%3A%227ffb041174aaae82660f149b6ea6f61aac6e8c3fc1%22%2C%22exportedName%22%3A%22login%22%7D%5D%5D%5D&__client_imported__=!",
+          "moduleId": "(rsc)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22D%3A%5C%5Cportfolio%5C%5Cportfolio-1%20-%20freelancer%5C%5Csrc%5C%5Capp%5C%5Cserver%5C%5C_actions%5C%5Cauth.ts%22%2C%5B%7B%22id%22%3A%227fa363b169cf4b226d4242bd0d34406cf0106b2ec0%22%2C%22exportedName%22%3A%22login%22%7D%2C%7B%22id%22%3A%227fe147ee5f70f0df30558aa89c7317545fef19f8c6%22%2C%22exportedName%22%3A%22signup%22%7D%5D%5D%5D&__client_imported__=!",
           "async": false
         }
       },
       "layer": {
-        "app/api/auth/[...nextauth]/route": "rsc",
-        "app/profile/page": "rsc",
-        "app/admin/page": "rsc",
-        "app/admin/menu-items/page": "rsc",
-        "app/admin/menu-items/new/page": "rsc",
-        "app/admin/categories/page": "rsc"
+        "app/api/auth/[...nextauth]/route": "rsc"
       }
     },
-    "7ffb041174aaae82660f149b6ea6f61aac6e8c3fc1": {
+    "7fe147ee5f70f0df30558aa89c7317545fef19f8c6": {
       "workers": {
         "app/api/auth/[...nextauth]/route": {
-          "moduleId": "(rsc)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22D%3A%5C%5Cportfolio%5C%5Cportfolio-1%5C%5Csrc%5C%5Capp%5C%5Cserver%5C%5C_actions%5C%5Cauth.ts%22%2C%5B%7B%22id%22%3A%227f3babbf5ca9179b1b48b1e3c30be883f340597845%22%2C%22exportedName%22%3A%22signup%22%7D%2C%7B%22id%22%3A%227ffb041174aaae82660f149b6ea6f61aac6e8c3fc1%22%2C%22exportedName%22%3A%22login%22%7D%5D%5D%5D&__client_imported__=!",
-          "async": false
-        },
-        "app/profile/page": {
-          "moduleId": "(rsc)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22D%3A%5C%5Cportfolio%5C%5Cportfolio-1%5C%5Csrc%5C%5Capp%5C%5Cserver%5C%5C_actions%5C%5Cauth.ts%22%2C%5B%7B%22id%22%3A%227f3babbf5ca9179b1b48b1e3c30be883f340597845%22%2C%22exportedName%22%3A%22signup%22%7D%2C%7B%22id%22%3A%227ffb041174aaae82660f149b6ea6f61aac6e8c3fc1%22%2C%22exportedName%22%3A%22login%22%7D%5D%5D%5D&__client_imported__=!",
-          "async": false
-        },
-        "app/admin/page": {
-          "moduleId": "(rsc)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22D%3A%5C%5Cportfolio%5C%5Cportfolio-1%5C%5Csrc%5C%5Capp%5C%5Cadmin%5C%5Clayout.tsx%22%2C%5B%7B%22id%22%3A%2240cb551a2f10d50579bced789126f1e1725ea7a420%22%2C%22exportedName%22%3A%22default%22%7D%5D%5D%2C%5B%22D%3A%5C%5Cportfolio%5C%5Cportfolio-1%5C%5Csrc%5C%5Capp%5C%5Cserver%5C%5C_actions%5C%5Cauth.ts%22%2C%5B%7B%22id%22%3A%227f3babbf5ca9179b1b48b1e3c30be883f340597845%22%2C%22exportedName%22%3A%22signup%22%7D%2C%7B%22id%22%3A%227ffb041174aaae82660f149b6ea6f61aac6e8c3fc1%22%2C%22exportedName%22%3A%22login%22%7D%5D%5D%5D&__client_imported__=!",
-          "async": false
-        },
-        "app/admin/menu-items/page": {
-          "moduleId": "(rsc)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22D%3A%5C%5Cportfolio%5C%5Cportfolio-1%5C%5Csrc%5C%5Capp%5C%5Cadmin%5C%5Clayout.tsx%22%2C%5B%7B%22id%22%3A%2240cb551a2f10d50579bced789126f1e1725ea7a420%22%2C%22exportedName%22%3A%22default%22%7D%5D%5D%2C%5B%22D%3A%5C%5Cportfolio%5C%5Cportfolio-1%5C%5Csrc%5C%5Capp%5C%5Cserver%5C%5C_actions%5C%5Cauth.ts%22%2C%5B%7B%22id%22%3A%227f3babbf5ca9179b1b48b1e3c30be883f340597845%22%2C%22exportedName%22%3A%22signup%22%7D%2C%7B%22id%22%3A%227ffb041174aaae82660f149b6ea6f61aac6e8c3fc1%22%2C%22exportedName%22%3A%22login%22%7D%5D%5D%2C%5B%22D%3A%5C%5Cportfolio%5C%5Cportfolio-1%5C%5Csrc%5C%5Capp%5C%5Cadmin%5C%5Cmenu-items%5C%5Cpage.tsx%22%2C%5B%7B%22id%22%3A%227f681223fa2a593b9ed38d50a8ca54c99215822bb0%22%2C%22exportedName%22%3A%22default%22%7D%5D%5D%2C%5B%22D%3A%5C%5Cportfolio%5C%5Cportfolio-1%5C%5Csrc%5C%5Capp%5C%5Cserver%5C%5Cdb%5C%5Cproducts.ts%22%2C%5B%7B%22id%22%3A%227f0a277ca91f8b548ae50d522356abedd59d9c9faa%22%2C%22exportedName%22%3A%22getProductsByCategory%22%7D%2C%7B%22id%22%3A%227f0ce3f237a0b7153c3ed9a53af337032c880d87da%22%2C%22exportedName%22%3A%22getProductsByCategoryId%22%7D%2C%7B%22id%22%3A%227f32eb513cb7cfdbe8d8218f3f5acfa0ab74852849%22%2C%22exportedName%22%3A%22getProducts%22%7D%2C%7B%22id%22%3A%227f379cef7033993f0df5da919ba2756976a8dfd3b4%22%2C%22exportedName%22%3A%22getBestSellers%22%7D%2C%7B%22id%22%3A%227f5cb95b7e9183733ab22556994ec9b8854c5f7818%22%2C%22exportedName%22%3A%22getProductsCount%22%7D%2C%7B%22id%22%3A%227f72a7154fa12743a1bad302af59c74d37794d44d6%22%2C%22exportedName%22%3A%22getAllProducts%22%7D%5D%5D%5D&__client_imported__=!",
-          "async": false
-        },
-        "app/admin/menu-items/new/page": {
-          "moduleId": "(rsc)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22D%3A%5C%5Cportfolio%5C%5Cportfolio-1%5C%5Csrc%5C%5Capp%5C%5Cadmin%5C%5Clayout.tsx%22%2C%5B%7B%22id%22%3A%2240cb551a2f10d50579bced789126f1e1725ea7a420%22%2C%22exportedName%22%3A%22default%22%7D%5D%5D%2C%5B%22D%3A%5C%5Cportfolio%5C%5Cportfolio-1%5C%5Csrc%5C%5Capp%5C%5Cserver%5C%5C_actions%5C%5Cauth.ts%22%2C%5B%7B%22id%22%3A%227f3babbf5ca9179b1b48b1e3c30be883f340597845%22%2C%22exportedName%22%3A%22signup%22%7D%2C%7B%22id%22%3A%227ffb041174aaae82660f149b6ea6f61aac6e8c3fc1%22%2C%22exportedName%22%3A%22login%22%7D%5D%5D%5D&__client_imported__=!",
-          "async": false
-        },
-        "app/admin/categories/page": {
-          "moduleId": "(rsc)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22D%3A%5C%5Cportfolio%5C%5Cportfolio-1%5C%5Csrc%5C%5Capp%5C%5Cadmin%5C%5Clayout.tsx%22%2C%5B%7B%22id%22%3A%2240cb551a2f10d50579bced789126f1e1725ea7a420%22%2C%22exportedName%22%3A%22default%22%7D%5D%5D%2C%5B%22D%3A%5C%5Cportfolio%5C%5Cportfolio-1%5C%5Csrc%5C%5Capp%5C%5Cserver%5C%5C_actions%5C%5Cauth.ts%22%2C%5B%7B%22id%22%3A%227f3babbf5ca9179b1b48b1e3c30be883f340597845%22%2C%22exportedName%22%3A%22signup%22%7D%2C%7B%22id%22%3A%227ffb041174aaae82660f149b6ea6f61aac6e8c3fc1%22%2C%22exportedName%22%3A%22login%22%7D%5D%5D%5D&__client_imported__=!",
+          "moduleId": "(rsc)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22D%3A%5C%5Cportfolio%5C%5Cportfolio-1%20-%20freelancer%5C%5Csrc%5C%5Capp%5C%5Cserver%5C%5C_actions%5C%5Cauth.ts%22%2C%5B%7B%22id%22%3A%227fa363b169cf4b226d4242bd0d34406cf0106b2ec0%22%2C%22exportedName%22%3A%22login%22%7D%2C%7B%22id%22%3A%227fe147ee5f70f0df30558aa89c7317545fef19f8c6%22%2C%22exportedName%22%3A%22signup%22%7D%5D%5D%5D&__client_imported__=!",
           "async": false
         }
       },
       "layer": {
-        "app/api/auth/[...nextauth]/route": "rsc",
-        "app/profile/page": "rsc",
-        "app/admin/page": "rsc",
-        "app/admin/menu-items/page": "rsc",
-        "app/admin/menu-items/new/page": "rsc",
-        "app/admin/categories/page": "rsc"
+        "app/api/auth/[...nextauth]/route": "rsc"
       }
     },
-    "7f9088c593e8000650e01161249187c8558ff72fdf": {
+    "7f356ea5f9aa8bc51decf25e71216274dd11cd1215": {
       "workers": {
-        "app/profile/page": {
-          "moduleId": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22D%3A%5C%5Cportfolio%5C%5Cportfolio-1%5C%5Csrc%5C%5Ccomponents%5C%5Cedit-user-form%5C%5C_actions%5C%5Cprofile.ts%22%2C%5B%7B%22id%22%3A%227f9088c593e8000650e01161249187c8558ff72fdf%22%2C%22exportedName%22%3A%22updateProfile%22%7D%5D%5D%5D&__client_imported__=true!",
-          "async": false
-        },
-        "app/admin/page": {
-          "moduleId": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22D%3A%5C%5Cportfolio%5C%5Cportfolio-1%5C%5Csrc%5C%5Ccomponents%5C%5Cedit-user-form%5C%5C_actions%5C%5Cprofile.ts%22%2C%5B%7B%22id%22%3A%227f9088c593e8000650e01161249187c8558ff72fdf%22%2C%22exportedName%22%3A%22updateProfile%22%7D%5D%5D%5D&__client_imported__=true!",
-          "async": false
-        }
-      },
-      "layer": {
-        "app/profile/page": "action-browser",
-        "app/admin/page": "action-browser"
-      }
-    },
-    "40cb551a2f10d50579bced789126f1e1725ea7a420": {
-      "workers": {
-        "app/admin/page": {
-          "moduleId": "(rsc)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22D%3A%5C%5Cportfolio%5C%5Cportfolio-1%5C%5Csrc%5C%5Capp%5C%5Cadmin%5C%5Clayout.tsx%22%2C%5B%7B%22id%22%3A%2240cb551a2f10d50579bced789126f1e1725ea7a420%22%2C%22exportedName%22%3A%22default%22%7D%5D%5D%2C%5B%22D%3A%5C%5Cportfolio%5C%5Cportfolio-1%5C%5Csrc%5C%5Capp%5C%5Cserver%5C%5C_actions%5C%5Cauth.ts%22%2C%5B%7B%22id%22%3A%227f3babbf5ca9179b1b48b1e3c30be883f340597845%22%2C%22exportedName%22%3A%22signup%22%7D%2C%7B%22id%22%3A%227ffb041174aaae82660f149b6ea6f61aac6e8c3fc1%22%2C%22exportedName%22%3A%22login%22%7D%5D%5D%5D&__client_imported__=!",
-          "async": false
-        },
-        "app/admin/menu-items/page": {
-          "moduleId": "(rsc)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22D%3A%5C%5Cportfolio%5C%5Cportfolio-1%5C%5Csrc%5C%5Capp%5C%5Cadmin%5C%5Clayout.tsx%22%2C%5B%7B%22id%22%3A%2240cb551a2f10d50579bced789126f1e1725ea7a420%22%2C%22exportedName%22%3A%22default%22%7D%5D%5D%2C%5B%22D%3A%5C%5Cportfolio%5C%5Cportfolio-1%5C%5Csrc%5C%5Capp%5C%5Cserver%5C%5C_actions%5C%5Cauth.ts%22%2C%5B%7B%22id%22%3A%227f3babbf5ca9179b1b48b1e3c30be883f340597845%22%2C%22exportedName%22%3A%22signup%22%7D%2C%7B%22id%22%3A%227ffb041174aaae82660f149b6ea6f61aac6e8c3fc1%22%2C%22exportedName%22%3A%22login%22%7D%5D%5D%2C%5B%22D%3A%5C%5Cportfolio%5C%5Cportfolio-1%5C%5Csrc%5C%5Capp%5C%5Cadmin%5C%5Cmenu-items%5C%5Cpage.tsx%22%2C%5B%7B%22id%22%3A%227f681223fa2a593b9ed38d50a8ca54c99215822bb0%22%2C%22exportedName%22%3A%22default%22%7D%5D%5D%2C%5B%22D%3A%5C%5Cportfolio%5C%5Cportfolio-1%5C%5Csrc%5C%5Capp%5C%5Cserver%5C%5Cdb%5C%5Cproducts.ts%22%2C%5B%7B%22id%22%3A%227f0a277ca91f8b548ae50d522356abedd59d9c9faa%22%2C%22exportedName%22%3A%22getProductsByCategory%22%7D%2C%7B%22id%22%3A%227f0ce3f237a0b7153c3ed9a53af337032c880d87da%22%2C%22exportedName%22%3A%22getProductsByCategoryId%22%7D%2C%7B%22id%22%3A%227f32eb513cb7cfdbe8d8218f3f5acfa0ab74852849%22%2C%22exportedName%22%3A%22getProducts%22%7D%2C%7B%22id%22%3A%227f379cef7033993f0df5da919ba2756976a8dfd3b4%22%2C%22exportedName%22%3A%22getBestSellers%22%7D%2C%7B%22id%22%3A%227f5cb95b7e9183733ab22556994ec9b8854c5f7818%22%2C%22exportedName%22%3A%22getProductsCount%22%7D%2C%7B%22id%22%3A%227f72a7154fa12743a1bad302af59c74d37794d44d6%22%2C%22exportedName%22%3A%22getAllProducts%22%7D%5D%5D%5D&__client_imported__=!",
-          "async": false
-        },
-        "app/admin/menu-items/new/page": {
-          "moduleId": "(rsc)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22D%3A%5C%5Cportfolio%5C%5Cportfolio-1%5C%5Csrc%5C%5Capp%5C%5Cadmin%5C%5Clayout.tsx%22%2C%5B%7B%22id%22%3A%2240cb551a2f10d50579bced789126f1e1725ea7a420%22%2C%22exportedName%22%3A%22default%22%7D%5D%5D%2C%5B%22D%3A%5C%5Cportfolio%5C%5Cportfolio-1%5C%5Csrc%5C%5Capp%5C%5Cserver%5C%5C_actions%5C%5Cauth.ts%22%2C%5B%7B%22id%22%3A%227f3babbf5ca9179b1b48b1e3c30be883f340597845%22%2C%22exportedName%22%3A%22signup%22%7D%2C%7B%22id%22%3A%227ffb041174aaae82660f149b6ea6f61aac6e8c3fc1%22%2C%22exportedName%22%3A%22login%22%7D%5D%5D%5D&__client_imported__=!",
-          "async": false
-        },
-        "app/admin/categories/page": {
-          "moduleId": "(rsc)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22D%3A%5C%5Cportfolio%5C%5Cportfolio-1%5C%5Csrc%5C%5Capp%5C%5Cadmin%5C%5Clayout.tsx%22%2C%5B%7B%22id%22%3A%2240cb551a2f10d50579bced789126f1e1725ea7a420%22%2C%22exportedName%22%3A%22default%22%7D%5D%5D%2C%5B%22D%3A%5C%5Cportfolio%5C%5Cportfolio-1%5C%5Csrc%5C%5Capp%5C%5Cserver%5C%5C_actions%5C%5Cauth.ts%22%2C%5B%7B%22id%22%3A%227f3babbf5ca9179b1b48b1e3c30be883f340597845%22%2C%22exportedName%22%3A%22signup%22%7D%2C%7B%22id%22%3A%227ffb041174aaae82660f149b6ea6f61aac6e8c3fc1%22%2C%22exportedName%22%3A%22login%22%7D%5D%5D%5D&__client_imported__=!",
-          "async": false
-        }
-      },
-      "layer": {
-        "app/admin/page": "rsc",
-        "app/admin/menu-items/page": "rsc",
-        "app/admin/menu-items/new/page": "rsc",
-        "app/admin/categories/page": "rsc"
-      }
-    },
-    "7f681223fa2a593b9ed38d50a8ca54c99215822bb0": {
-      "workers": {
-        "app/admin/menu-items/page": {
-          "moduleId": "(rsc)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22D%3A%5C%5Cportfolio%5C%5Cportfolio-1%5C%5Csrc%5C%5Capp%5C%5Cadmin%5C%5Clayout.tsx%22%2C%5B%7B%22id%22%3A%2240cb551a2f10d50579bced789126f1e1725ea7a420%22%2C%22exportedName%22%3A%22default%22%7D%5D%5D%2C%5B%22D%3A%5C%5Cportfolio%5C%5Cportfolio-1%5C%5Csrc%5C%5Capp%5C%5Cserver%5C%5C_actions%5C%5Cauth.ts%22%2C%5B%7B%22id%22%3A%227f3babbf5ca9179b1b48b1e3c30be883f340597845%22%2C%22exportedName%22%3A%22signup%22%7D%2C%7B%22id%22%3A%227ffb041174aaae82660f149b6ea6f61aac6e8c3fc1%22%2C%22exportedName%22%3A%22login%22%7D%5D%5D%2C%5B%22D%3A%5C%5Cportfolio%5C%5Cportfolio-1%5C%5Csrc%5C%5Capp%5C%5Cadmin%5C%5Cmenu-items%5C%5Cpage.tsx%22%2C%5B%7B%22id%22%3A%227f681223fa2a593b9ed38d50a8ca54c99215822bb0%22%2C%22exportedName%22%3A%22default%22%7D%5D%5D%2C%5B%22D%3A%5C%5Cportfolio%5C%5Cportfolio-1%5C%5Csrc%5C%5Capp%5C%5Cserver%5C%5Cdb%5C%5Cproducts.ts%22%2C%5B%7B%22id%22%3A%227f0a277ca91f8b548ae50d522356abedd59d9c9faa%22%2C%22exportedName%22%3A%22getProductsByCategory%22%7D%2C%7B%22id%22%3A%227f0ce3f237a0b7153c3ed9a53af337032c880d87da%22%2C%22exportedName%22%3A%22getProductsByCategoryId%22%7D%2C%7B%22id%22%3A%227f32eb513cb7cfdbe8d8218f3f5acfa0ab74852849%22%2C%22exportedName%22%3A%22getProducts%22%7D%2C%7B%22id%22%3A%227f379cef7033993f0df5da919ba2756976a8dfd3b4%22%2C%22exportedName%22%3A%22getBestSellers%22%7D%2C%7B%22id%22%3A%227f5cb95b7e9183733ab22556994ec9b8854c5f7818%22%2C%22exportedName%22%3A%22getProductsCount%22%7D%2C%7B%22id%22%3A%227f72a7154fa12743a1bad302af59c74d37794d44d6%22%2C%22exportedName%22%3A%22getAllProducts%22%7D%5D%5D%5D&__client_imported__=!",
-          "async": false
-        }
-      },
-      "layer": {
-        "app/admin/menu-items/page": "rsc"
-      }
-    },
-    "7f0a277ca91f8b548ae50d522356abedd59d9c9faa": {
-      "workers": {
-        "app/admin/menu-items/page": {
-          "moduleId": "(rsc)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22D%3A%5C%5Cportfolio%5C%5Cportfolio-1%5C%5Csrc%5C%5Capp%5C%5Cadmin%5C%5Clayout.tsx%22%2C%5B%7B%22id%22%3A%2240cb551a2f10d50579bced789126f1e1725ea7a420%22%2C%22exportedName%22%3A%22default%22%7D%5D%5D%2C%5B%22D%3A%5C%5Cportfolio%5C%5Cportfolio-1%5C%5Csrc%5C%5Capp%5C%5Cserver%5C%5C_actions%5C%5Cauth.ts%22%2C%5B%7B%22id%22%3A%227f3babbf5ca9179b1b48b1e3c30be883f340597845%22%2C%22exportedName%22%3A%22signup%22%7D%2C%7B%22id%22%3A%227ffb041174aaae82660f149b6ea6f61aac6e8c3fc1%22%2C%22exportedName%22%3A%22login%22%7D%5D%5D%2C%5B%22D%3A%5C%5Cportfolio%5C%5Cportfolio-1%5C%5Csrc%5C%5Capp%5C%5Cadmin%5C%5Cmenu-items%5C%5Cpage.tsx%22%2C%5B%7B%22id%22%3A%227f681223fa2a593b9ed38d50a8ca54c99215822bb0%22%2C%22exportedName%22%3A%22default%22%7D%5D%5D%2C%5B%22D%3A%5C%5Cportfolio%5C%5Cportfolio-1%5C%5Csrc%5C%5Capp%5C%5Cserver%5C%5Cdb%5C%5Cproducts.ts%22%2C%5B%7B%22id%22%3A%227f0a277ca91f8b548ae50d522356abedd59d9c9faa%22%2C%22exportedName%22%3A%22getProductsByCategory%22%7D%2C%7B%22id%22%3A%227f0ce3f237a0b7153c3ed9a53af337032c880d87da%22%2C%22exportedName%22%3A%22getProductsByCategoryId%22%7D%2C%7B%22id%22%3A%227f32eb513cb7cfdbe8d8218f3f5acfa0ab74852849%22%2C%22exportedName%22%3A%22getProducts%22%7D%2C%7B%22id%22%3A%227f379cef7033993f0df5da919ba2756976a8dfd3b4%22%2C%22exportedName%22%3A%22getBestSellers%22%7D%2C%7B%22id%22%3A%227f5cb95b7e9183733ab22556994ec9b8854c5f7818%22%2C%22exportedName%22%3A%22getProductsCount%22%7D%2C%7B%22id%22%3A%227f72a7154fa12743a1bad302af59c74d37794d44d6%22%2C%22exportedName%22%3A%22getAllProducts%22%7D%5D%5D%5D&__client_imported__=!",
-          "async": false
-        },
         "app/projects/page": {
-          "moduleId": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22D%3A%5C%5Cportfolio%5C%5Cportfolio-1%5C%5Csrc%5C%5Capp%5C%5Cserver%5C%5Cdb%5C%5Cproducts.ts%22%2C%5B%7B%22id%22%3A%227f0a277ca91f8b548ae50d522356abedd59d9c9faa%22%2C%22exportedName%22%3A%22getProductsByCategory%22%7D%2C%7B%22id%22%3A%227f0ce3f237a0b7153c3ed9a53af337032c880d87da%22%2C%22exportedName%22%3A%22getProductsByCategoryId%22%7D%2C%7B%22id%22%3A%227f32eb513cb7cfdbe8d8218f3f5acfa0ab74852849%22%2C%22exportedName%22%3A%22getProducts%22%7D%2C%7B%22id%22%3A%227f379cef7033993f0df5da919ba2756976a8dfd3b4%22%2C%22exportedName%22%3A%22getBestSellers%22%7D%2C%7B%22id%22%3A%227f5cb95b7e9183733ab22556994ec9b8854c5f7818%22%2C%22exportedName%22%3A%22getProductsCount%22%7D%2C%7B%22id%22%3A%227f72a7154fa12743a1bad302af59c74d37794d44d6%22%2C%22exportedName%22%3A%22getAllProducts%22%7D%5D%5D%5D&__client_imported__=true!",
+          "moduleId": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22D%3A%5C%5Cportfolio%5C%5Cportfolio-1%20-%20freelancer%5C%5Csrc%5C%5Capp%5C%5Cserver%5C%5Cdb%5C%5Cproducts.ts%22%2C%5B%7B%22id%22%3A%227f356ea5f9aa8bc51decf25e71216274dd11cd1215%22%2C%22exportedName%22%3A%22getProductsByCategoryId%22%7D%2C%7B%22id%22%3A%227f43c2ccbfa8ba734d201e19350f3638df659468ec%22%2C%22exportedName%22%3A%22getProductsCount%22%7D%2C%7B%22id%22%3A%227f51e1c932e086317ee414606006bc57975a4e6631%22%2C%22exportedName%22%3A%22getProductsByCategory%22%7D%2C%7B%22id%22%3A%227f838289fd301b420f2cd0f770a5aedffbf9fb9cb8%22%2C%22exportedName%22%3A%22getBestSellers%22%7D%2C%7B%22id%22%3A%227f9c5d1cbe0f94d9298b9be5fd5c1905f292480ff5%22%2C%22exportedName%22%3A%22getProducts%22%7D%2C%7B%22id%22%3A%227fa17c7a7fa2ad64694b9d83fa5f77cfc8c322904b%22%2C%22exportedName%22%3A%22getAllProducts%22%7D%5D%5D%5D&__client_imported__=true!",
           "async": false
         }
       },
       "layer": {
-        "app/admin/menu-items/page": "rsc",
         "app/projects/page": "action-browser"
       }
     },
-    "7f0ce3f237a0b7153c3ed9a53af337032c880d87da": {
+    "7f43c2ccbfa8ba734d201e19350f3638df659468ec": {
       "workers": {
-        "app/admin/menu-items/page": {
-          "moduleId": "(rsc)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22D%3A%5C%5Cportfolio%5C%5Cportfolio-1%5C%5Csrc%5C%5Capp%5C%5Cadmin%5C%5Clayout.tsx%22%2C%5B%7B%22id%22%3A%2240cb551a2f10d50579bced789126f1e1725ea7a420%22%2C%22exportedName%22%3A%22default%22%7D%5D%5D%2C%5B%22D%3A%5C%5Cportfolio%5C%5Cportfolio-1%5C%5Csrc%5C%5Capp%5C%5Cserver%5C%5C_actions%5C%5Cauth.ts%22%2C%5B%7B%22id%22%3A%227f3babbf5ca9179b1b48b1e3c30be883f340597845%22%2C%22exportedName%22%3A%22signup%22%7D%2C%7B%22id%22%3A%227ffb041174aaae82660f149b6ea6f61aac6e8c3fc1%22%2C%22exportedName%22%3A%22login%22%7D%5D%5D%2C%5B%22D%3A%5C%5Cportfolio%5C%5Cportfolio-1%5C%5Csrc%5C%5Capp%5C%5Cadmin%5C%5Cmenu-items%5C%5Cpage.tsx%22%2C%5B%7B%22id%22%3A%227f681223fa2a593b9ed38d50a8ca54c99215822bb0%22%2C%22exportedName%22%3A%22default%22%7D%5D%5D%2C%5B%22D%3A%5C%5Cportfolio%5C%5Cportfolio-1%5C%5Csrc%5C%5Capp%5C%5Cserver%5C%5Cdb%5C%5Cproducts.ts%22%2C%5B%7B%22id%22%3A%227f0a277ca91f8b548ae50d522356abedd59d9c9faa%22%2C%22exportedName%22%3A%22getProductsByCategory%22%7D%2C%7B%22id%22%3A%227f0ce3f237a0b7153c3ed9a53af337032c880d87da%22%2C%22exportedName%22%3A%22getProductsByCategoryId%22%7D%2C%7B%22id%22%3A%227f32eb513cb7cfdbe8d8218f3f5acfa0ab74852849%22%2C%22exportedName%22%3A%22getProducts%22%7D%2C%7B%22id%22%3A%227f379cef7033993f0df5da919ba2756976a8dfd3b4%22%2C%22exportedName%22%3A%22getBestSellers%22%7D%2C%7B%22id%22%3A%227f5cb95b7e9183733ab22556994ec9b8854c5f7818%22%2C%22exportedName%22%3A%22getProductsCount%22%7D%2C%7B%22id%22%3A%227f72a7154fa12743a1bad302af59c74d37794d44d6%22%2C%22exportedName%22%3A%22getAllProducts%22%7D%5D%5D%5D&__client_imported__=!",
-          "async": false
-        },
         "app/projects/page": {
-          "moduleId": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22D%3A%5C%5Cportfolio%5C%5Cportfolio-1%5C%5Csrc%5C%5Capp%5C%5Cserver%5C%5Cdb%5C%5Cproducts.ts%22%2C%5B%7B%22id%22%3A%227f0a277ca91f8b548ae50d522356abedd59d9c9faa%22%2C%22exportedName%22%3A%22getProductsByCategory%22%7D%2C%7B%22id%22%3A%227f0ce3f237a0b7153c3ed9a53af337032c880d87da%22%2C%22exportedName%22%3A%22getProductsByCategoryId%22%7D%2C%7B%22id%22%3A%227f32eb513cb7cfdbe8d8218f3f5acfa0ab74852849%22%2C%22exportedName%22%3A%22getProducts%22%7D%2C%7B%22id%22%3A%227f379cef7033993f0df5da919ba2756976a8dfd3b4%22%2C%22exportedName%22%3A%22getBestSellers%22%7D%2C%7B%22id%22%3A%227f5cb95b7e9183733ab22556994ec9b8854c5f7818%22%2C%22exportedName%22%3A%22getProductsCount%22%7D%2C%7B%22id%22%3A%227f72a7154fa12743a1bad302af59c74d37794d44d6%22%2C%22exportedName%22%3A%22getAllProducts%22%7D%5D%5D%5D&__client_imported__=true!",
+          "moduleId": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22D%3A%5C%5Cportfolio%5C%5Cportfolio-1%20-%20freelancer%5C%5Csrc%5C%5Capp%5C%5Cserver%5C%5Cdb%5C%5Cproducts.ts%22%2C%5B%7B%22id%22%3A%227f356ea5f9aa8bc51decf25e71216274dd11cd1215%22%2C%22exportedName%22%3A%22getProductsByCategoryId%22%7D%2C%7B%22id%22%3A%227f43c2ccbfa8ba734d201e19350f3638df659468ec%22%2C%22exportedName%22%3A%22getProductsCount%22%7D%2C%7B%22id%22%3A%227f51e1c932e086317ee414606006bc57975a4e6631%22%2C%22exportedName%22%3A%22getProductsByCategory%22%7D%2C%7B%22id%22%3A%227f838289fd301b420f2cd0f770a5aedffbf9fb9cb8%22%2C%22exportedName%22%3A%22getBestSellers%22%7D%2C%7B%22id%22%3A%227f9c5d1cbe0f94d9298b9be5fd5c1905f292480ff5%22%2C%22exportedName%22%3A%22getProducts%22%7D%2C%7B%22id%22%3A%227fa17c7a7fa2ad64694b9d83fa5f77cfc8c322904b%22%2C%22exportedName%22%3A%22getAllProducts%22%7D%5D%5D%5D&__client_imported__=true!",
           "async": false
         }
       },
       "layer": {
-        "app/admin/menu-items/page": "rsc",
         "app/projects/page": "action-browser"
       }
     },
-    "7f32eb513cb7cfdbe8d8218f3f5acfa0ab74852849": {
+    "7f51e1c932e086317ee414606006bc57975a4e6631": {
       "workers": {
-        "app/admin/menu-items/page": {
-          "moduleId": "(rsc)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22D%3A%5C%5Cportfolio%5C%5Cportfolio-1%5C%5Csrc%5C%5Capp%5C%5Cadmin%5C%5Clayout.tsx%22%2C%5B%7B%22id%22%3A%2240cb551a2f10d50579bced789126f1e1725ea7a420%22%2C%22exportedName%22%3A%22default%22%7D%5D%5D%2C%5B%22D%3A%5C%5Cportfolio%5C%5Cportfolio-1%5C%5Csrc%5C%5Capp%5C%5Cserver%5C%5C_actions%5C%5Cauth.ts%22%2C%5B%7B%22id%22%3A%227f3babbf5ca9179b1b48b1e3c30be883f340597845%22%2C%22exportedName%22%3A%22signup%22%7D%2C%7B%22id%22%3A%227ffb041174aaae82660f149b6ea6f61aac6e8c3fc1%22%2C%22exportedName%22%3A%22login%22%7D%5D%5D%2C%5B%22D%3A%5C%5Cportfolio%5C%5Cportfolio-1%5C%5Csrc%5C%5Capp%5C%5Cadmin%5C%5Cmenu-items%5C%5Cpage.tsx%22%2C%5B%7B%22id%22%3A%227f681223fa2a593b9ed38d50a8ca54c99215822bb0%22%2C%22exportedName%22%3A%22default%22%7D%5D%5D%2C%5B%22D%3A%5C%5Cportfolio%5C%5Cportfolio-1%5C%5Csrc%5C%5Capp%5C%5Cserver%5C%5Cdb%5C%5Cproducts.ts%22%2C%5B%7B%22id%22%3A%227f0a277ca91f8b548ae50d522356abedd59d9c9faa%22%2C%22exportedName%22%3A%22getProductsByCategory%22%7D%2C%7B%22id%22%3A%227f0ce3f237a0b7153c3ed9a53af337032c880d87da%22%2C%22exportedName%22%3A%22getProductsByCategoryId%22%7D%2C%7B%22id%22%3A%227f32eb513cb7cfdbe8d8218f3f5acfa0ab74852849%22%2C%22exportedName%22%3A%22getProducts%22%7D%2C%7B%22id%22%3A%227f379cef7033993f0df5da919ba2756976a8dfd3b4%22%2C%22exportedName%22%3A%22getBestSellers%22%7D%2C%7B%22id%22%3A%227f5cb95b7e9183733ab22556994ec9b8854c5f7818%22%2C%22exportedName%22%3A%22getProductsCount%22%7D%2C%7B%22id%22%3A%227f72a7154fa12743a1bad302af59c74d37794d44d6%22%2C%22exportedName%22%3A%22getAllProducts%22%7D%5D%5D%5D&__client_imported__=!",
-          "async": false
-        },
         "app/projects/page": {
-          "moduleId": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22D%3A%5C%5Cportfolio%5C%5Cportfolio-1%5C%5Csrc%5C%5Capp%5C%5Cserver%5C%5Cdb%5C%5Cproducts.ts%22%2C%5B%7B%22id%22%3A%227f0a277ca91f8b548ae50d522356abedd59d9c9faa%22%2C%22exportedName%22%3A%22getProductsByCategory%22%7D%2C%7B%22id%22%3A%227f0ce3f237a0b7153c3ed9a53af337032c880d87da%22%2C%22exportedName%22%3A%22getProductsByCategoryId%22%7D%2C%7B%22id%22%3A%227f32eb513cb7cfdbe8d8218f3f5acfa0ab74852849%22%2C%22exportedName%22%3A%22getProducts%22%7D%2C%7B%22id%22%3A%227f379cef7033993f0df5da919ba2756976a8dfd3b4%22%2C%22exportedName%22%3A%22getBestSellers%22%7D%2C%7B%22id%22%3A%227f5cb95b7e9183733ab22556994ec9b8854c5f7818%22%2C%22exportedName%22%3A%22getProductsCount%22%7D%2C%7B%22id%22%3A%227f72a7154fa12743a1bad302af59c74d37794d44d6%22%2C%22exportedName%22%3A%22getAllProducts%22%7D%5D%5D%5D&__client_imported__=true!",
+          "moduleId": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22D%3A%5C%5Cportfolio%5C%5Cportfolio-1%20-%20freelancer%5C%5Csrc%5C%5Capp%5C%5Cserver%5C%5Cdb%5C%5Cproducts.ts%22%2C%5B%7B%22id%22%3A%227f356ea5f9aa8bc51decf25e71216274dd11cd1215%22%2C%22exportedName%22%3A%22getProductsByCategoryId%22%7D%2C%7B%22id%22%3A%227f43c2ccbfa8ba734d201e19350f3638df659468ec%22%2C%22exportedName%22%3A%22getProductsCount%22%7D%2C%7B%22id%22%3A%227f51e1c932e086317ee414606006bc57975a4e6631%22%2C%22exportedName%22%3A%22getProductsByCategory%22%7D%2C%7B%22id%22%3A%227f838289fd301b420f2cd0f770a5aedffbf9fb9cb8%22%2C%22exportedName%22%3A%22getBestSellers%22%7D%2C%7B%22id%22%3A%227f9c5d1cbe0f94d9298b9be5fd5c1905f292480ff5%22%2C%22exportedName%22%3A%22getProducts%22%7D%2C%7B%22id%22%3A%227fa17c7a7fa2ad64694b9d83fa5f77cfc8c322904b%22%2C%22exportedName%22%3A%22getAllProducts%22%7D%5D%5D%5D&__client_imported__=true!",
           "async": false
         }
       },
       "layer": {
-        "app/admin/menu-items/page": "rsc",
         "app/projects/page": "action-browser"
       }
     },
-    "7f379cef7033993f0df5da919ba2756976a8dfd3b4": {
+    "7f838289fd301b420f2cd0f770a5aedffbf9fb9cb8": {
       "workers": {
-        "app/admin/menu-items/page": {
-          "moduleId": "(rsc)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22D%3A%5C%5Cportfolio%5C%5Cportfolio-1%5C%5Csrc%5C%5Capp%5C%5Cadmin%5C%5Clayout.tsx%22%2C%5B%7B%22id%22%3A%2240cb551a2f10d50579bced789126f1e1725ea7a420%22%2C%22exportedName%22%3A%22default%22%7D%5D%5D%2C%5B%22D%3A%5C%5Cportfolio%5C%5Cportfolio-1%5C%5Csrc%5C%5Capp%5C%5Cserver%5C%5C_actions%5C%5Cauth.ts%22%2C%5B%7B%22id%22%3A%227f3babbf5ca9179b1b48b1e3c30be883f340597845%22%2C%22exportedName%22%3A%22signup%22%7D%2C%7B%22id%22%3A%227ffb041174aaae82660f149b6ea6f61aac6e8c3fc1%22%2C%22exportedName%22%3A%22login%22%7D%5D%5D%2C%5B%22D%3A%5C%5Cportfolio%5C%5Cportfolio-1%5C%5Csrc%5C%5Capp%5C%5Cadmin%5C%5Cmenu-items%5C%5Cpage.tsx%22%2C%5B%7B%22id%22%3A%227f681223fa2a593b9ed38d50a8ca54c99215822bb0%22%2C%22exportedName%22%3A%22default%22%7D%5D%5D%2C%5B%22D%3A%5C%5Cportfolio%5C%5Cportfolio-1%5C%5Csrc%5C%5Capp%5C%5Cserver%5C%5Cdb%5C%5Cproducts.ts%22%2C%5B%7B%22id%22%3A%227f0a277ca91f8b548ae50d522356abedd59d9c9faa%22%2C%22exportedName%22%3A%22getProductsByCategory%22%7D%2C%7B%22id%22%3A%227f0ce3f237a0b7153c3ed9a53af337032c880d87da%22%2C%22exportedName%22%3A%22getProductsByCategoryId%22%7D%2C%7B%22id%22%3A%227f32eb513cb7cfdbe8d8218f3f5acfa0ab74852849%22%2C%22exportedName%22%3A%22getProducts%22%7D%2C%7B%22id%22%3A%227f379cef7033993f0df5da919ba2756976a8dfd3b4%22%2C%22exportedName%22%3A%22getBestSellers%22%7D%2C%7B%22id%22%3A%227f5cb95b7e9183733ab22556994ec9b8854c5f7818%22%2C%22exportedName%22%3A%22getProductsCount%22%7D%2C%7B%22id%22%3A%227f72a7154fa12743a1bad302af59c74d37794d44d6%22%2C%22exportedName%22%3A%22getAllProducts%22%7D%5D%5D%5D&__client_imported__=!",
-          "async": false
-        },
         "app/projects/page": {
-          "moduleId": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22D%3A%5C%5Cportfolio%5C%5Cportfolio-1%5C%5Csrc%5C%5Capp%5C%5Cserver%5C%5Cdb%5C%5Cproducts.ts%22%2C%5B%7B%22id%22%3A%227f0a277ca91f8b548ae50d522356abedd59d9c9faa%22%2C%22exportedName%22%3A%22getProductsByCategory%22%7D%2C%7B%22id%22%3A%227f0ce3f237a0b7153c3ed9a53af337032c880d87da%22%2C%22exportedName%22%3A%22getProductsByCategoryId%22%7D%2C%7B%22id%22%3A%227f32eb513cb7cfdbe8d8218f3f5acfa0ab74852849%22%2C%22exportedName%22%3A%22getProducts%22%7D%2C%7B%22id%22%3A%227f379cef7033993f0df5da919ba2756976a8dfd3b4%22%2C%22exportedName%22%3A%22getBestSellers%22%7D%2C%7B%22id%22%3A%227f5cb95b7e9183733ab22556994ec9b8854c5f7818%22%2C%22exportedName%22%3A%22getProductsCount%22%7D%2C%7B%22id%22%3A%227f72a7154fa12743a1bad302af59c74d37794d44d6%22%2C%22exportedName%22%3A%22getAllProducts%22%7D%5D%5D%5D&__client_imported__=true!",
+          "moduleId": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22D%3A%5C%5Cportfolio%5C%5Cportfolio-1%20-%20freelancer%5C%5Csrc%5C%5Capp%5C%5Cserver%5C%5Cdb%5C%5Cproducts.ts%22%2C%5B%7B%22id%22%3A%227f356ea5f9aa8bc51decf25e71216274dd11cd1215%22%2C%22exportedName%22%3A%22getProductsByCategoryId%22%7D%2C%7B%22id%22%3A%227f43c2ccbfa8ba734d201e19350f3638df659468ec%22%2C%22exportedName%22%3A%22getProductsCount%22%7D%2C%7B%22id%22%3A%227f51e1c932e086317ee414606006bc57975a4e6631%22%2C%22exportedName%22%3A%22getProductsByCategory%22%7D%2C%7B%22id%22%3A%227f838289fd301b420f2cd0f770a5aedffbf9fb9cb8%22%2C%22exportedName%22%3A%22getBestSellers%22%7D%2C%7B%22id%22%3A%227f9c5d1cbe0f94d9298b9be5fd5c1905f292480ff5%22%2C%22exportedName%22%3A%22getProducts%22%7D%2C%7B%22id%22%3A%227fa17c7a7fa2ad64694b9d83fa5f77cfc8c322904b%22%2C%22exportedName%22%3A%22getAllProducts%22%7D%5D%5D%5D&__client_imported__=true!",
           "async": false
         }
       },
       "layer": {
-        "app/admin/menu-items/page": "rsc",
         "app/projects/page": "action-browser"
       }
     },
-    "7f5cb95b7e9183733ab22556994ec9b8854c5f7818": {
+    "7f9c5d1cbe0f94d9298b9be5fd5c1905f292480ff5": {
       "workers": {
-        "app/admin/menu-items/page": {
-          "moduleId": "(rsc)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22D%3A%5C%5Cportfolio%5C%5Cportfolio-1%5C%5Csrc%5C%5Capp%5C%5Cadmin%5C%5Clayout.tsx%22%2C%5B%7B%22id%22%3A%2240cb551a2f10d50579bced789126f1e1725ea7a420%22%2C%22exportedName%22%3A%22default%22%7D%5D%5D%2C%5B%22D%3A%5C%5Cportfolio%5C%5Cportfolio-1%5C%5Csrc%5C%5Capp%5C%5Cserver%5C%5C_actions%5C%5Cauth.ts%22%2C%5B%7B%22id%22%3A%227f3babbf5ca9179b1b48b1e3c30be883f340597845%22%2C%22exportedName%22%3A%22signup%22%7D%2C%7B%22id%22%3A%227ffb041174aaae82660f149b6ea6f61aac6e8c3fc1%22%2C%22exportedName%22%3A%22login%22%7D%5D%5D%2C%5B%22D%3A%5C%5Cportfolio%5C%5Cportfolio-1%5C%5Csrc%5C%5Capp%5C%5Cadmin%5C%5Cmenu-items%5C%5Cpage.tsx%22%2C%5B%7B%22id%22%3A%227f681223fa2a593b9ed38d50a8ca54c99215822bb0%22%2C%22exportedName%22%3A%22default%22%7D%5D%5D%2C%5B%22D%3A%5C%5Cportfolio%5C%5Cportfolio-1%5C%5Csrc%5C%5Capp%5C%5Cserver%5C%5Cdb%5C%5Cproducts.ts%22%2C%5B%7B%22id%22%3A%227f0a277ca91f8b548ae50d522356abedd59d9c9faa%22%2C%22exportedName%22%3A%22getProductsByCategory%22%7D%2C%7B%22id%22%3A%227f0ce3f237a0b7153c3ed9a53af337032c880d87da%22%2C%22exportedName%22%3A%22getProductsByCategoryId%22%7D%2C%7B%22id%22%3A%227f32eb513cb7cfdbe8d8218f3f5acfa0ab74852849%22%2C%22exportedName%22%3A%22getProducts%22%7D%2C%7B%22id%22%3A%227f379cef7033993f0df5da919ba2756976a8dfd3b4%22%2C%22exportedName%22%3A%22getBestSellers%22%7D%2C%7B%22id%22%3A%227f5cb95b7e9183733ab22556994ec9b8854c5f7818%22%2C%22exportedName%22%3A%22getProductsCount%22%7D%2C%7B%22id%22%3A%227f72a7154fa12743a1bad302af59c74d37794d44d6%22%2C%22exportedName%22%3A%22getAllProducts%22%7D%5D%5D%5D&__client_imported__=!",
-          "async": false
-        },
         "app/projects/page": {
-          "moduleId": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22D%3A%5C%5Cportfolio%5C%5Cportfolio-1%5C%5Csrc%5C%5Capp%5C%5Cserver%5C%5Cdb%5C%5Cproducts.ts%22%2C%5B%7B%22id%22%3A%227f0a277ca91f8b548ae50d522356abedd59d9c9faa%22%2C%22exportedName%22%3A%22getProductsByCategory%22%7D%2C%7B%22id%22%3A%227f0ce3f237a0b7153c3ed9a53af337032c880d87da%22%2C%22exportedName%22%3A%22getProductsByCategoryId%22%7D%2C%7B%22id%22%3A%227f32eb513cb7cfdbe8d8218f3f5acfa0ab74852849%22%2C%22exportedName%22%3A%22getProducts%22%7D%2C%7B%22id%22%3A%227f379cef7033993f0df5da919ba2756976a8dfd3b4%22%2C%22exportedName%22%3A%22getBestSellers%22%7D%2C%7B%22id%22%3A%227f5cb95b7e9183733ab22556994ec9b8854c5f7818%22%2C%22exportedName%22%3A%22getProductsCount%22%7D%2C%7B%22id%22%3A%227f72a7154fa12743a1bad302af59c74d37794d44d6%22%2C%22exportedName%22%3A%22getAllProducts%22%7D%5D%5D%5D&__client_imported__=true!",
+          "moduleId": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22D%3A%5C%5Cportfolio%5C%5Cportfolio-1%20-%20freelancer%5C%5Csrc%5C%5Capp%5C%5Cserver%5C%5Cdb%5C%5Cproducts.ts%22%2C%5B%7B%22id%22%3A%227f356ea5f9aa8bc51decf25e71216274dd11cd1215%22%2C%22exportedName%22%3A%22getProductsByCategoryId%22%7D%2C%7B%22id%22%3A%227f43c2ccbfa8ba734d201e19350f3638df659468ec%22%2C%22exportedName%22%3A%22getProductsCount%22%7D%2C%7B%22id%22%3A%227f51e1c932e086317ee414606006bc57975a4e6631%22%2C%22exportedName%22%3A%22getProductsByCategory%22%7D%2C%7B%22id%22%3A%227f838289fd301b420f2cd0f770a5aedffbf9fb9cb8%22%2C%22exportedName%22%3A%22getBestSellers%22%7D%2C%7B%22id%22%3A%227f9c5d1cbe0f94d9298b9be5fd5c1905f292480ff5%22%2C%22exportedName%22%3A%22getProducts%22%7D%2C%7B%22id%22%3A%227fa17c7a7fa2ad64694b9d83fa5f77cfc8c322904b%22%2C%22exportedName%22%3A%22getAllProducts%22%7D%5D%5D%5D&__client_imported__=true!",
           "async": false
         }
       },
       "layer": {
-        "app/admin/menu-items/page": "rsc",
         "app/projects/page": "action-browser"
       }
     },
-    "7f72a7154fa12743a1bad302af59c74d37794d44d6": {
+    "7fa17c7a7fa2ad64694b9d83fa5f77cfc8c322904b": {
       "workers": {
-        "app/admin/menu-items/page": {
-          "moduleId": "(rsc)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22D%3A%5C%5Cportfolio%5C%5Cportfolio-1%5C%5Csrc%5C%5Capp%5C%5Cadmin%5C%5Clayout.tsx%22%2C%5B%7B%22id%22%3A%2240cb551a2f10d50579bced789126f1e1725ea7a420%22%2C%22exportedName%22%3A%22default%22%7D%5D%5D%2C%5B%22D%3A%5C%5Cportfolio%5C%5Cportfolio-1%5C%5Csrc%5C%5Capp%5C%5Cserver%5C%5C_actions%5C%5Cauth.ts%22%2C%5B%7B%22id%22%3A%227f3babbf5ca9179b1b48b1e3c30be883f340597845%22%2C%22exportedName%22%3A%22signup%22%7D%2C%7B%22id%22%3A%227ffb041174aaae82660f149b6ea6f61aac6e8c3fc1%22%2C%22exportedName%22%3A%22login%22%7D%5D%5D%2C%5B%22D%3A%5C%5Cportfolio%5C%5Cportfolio-1%5C%5Csrc%5C%5Capp%5C%5Cadmin%5C%5Cmenu-items%5C%5Cpage.tsx%22%2C%5B%7B%22id%22%3A%227f681223fa2a593b9ed38d50a8ca54c99215822bb0%22%2C%22exportedName%22%3A%22default%22%7D%5D%5D%2C%5B%22D%3A%5C%5Cportfolio%5C%5Cportfolio-1%5C%5Csrc%5C%5Capp%5C%5Cserver%5C%5Cdb%5C%5Cproducts.ts%22%2C%5B%7B%22id%22%3A%227f0a277ca91f8b548ae50d522356abedd59d9c9faa%22%2C%22exportedName%22%3A%22getProductsByCategory%22%7D%2C%7B%22id%22%3A%227f0ce3f237a0b7153c3ed9a53af337032c880d87da%22%2C%22exportedName%22%3A%22getProductsByCategoryId%22%7D%2C%7B%22id%22%3A%227f32eb513cb7cfdbe8d8218f3f5acfa0ab74852849%22%2C%22exportedName%22%3A%22getProducts%22%7D%2C%7B%22id%22%3A%227f379cef7033993f0df5da919ba2756976a8dfd3b4%22%2C%22exportedName%22%3A%22getBestSellers%22%7D%2C%7B%22id%22%3A%227f5cb95b7e9183733ab22556994ec9b8854c5f7818%22%2C%22exportedName%22%3A%22getProductsCount%22%7D%2C%7B%22id%22%3A%227f72a7154fa12743a1bad302af59c74d37794d44d6%22%2C%22exportedName%22%3A%22getAllProducts%22%7D%5D%5D%5D&__client_imported__=!",
-          "async": false
-        },
         "app/projects/page": {
-          "moduleId": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22D%3A%5C%5Cportfolio%5C%5Cportfolio-1%5C%5Csrc%5C%5Capp%5C%5Cserver%5C%5Cdb%5C%5Cproducts.ts%22%2C%5B%7B%22id%22%3A%227f0a277ca91f8b548ae50d522356abedd59d9c9faa%22%2C%22exportedName%22%3A%22getProductsByCategory%22%7D%2C%7B%22id%22%3A%227f0ce3f237a0b7153c3ed9a53af337032c880d87da%22%2C%22exportedName%22%3A%22getProductsByCategoryId%22%7D%2C%7B%22id%22%3A%227f32eb513cb7cfdbe8d8218f3f5acfa0ab74852849%22%2C%22exportedName%22%3A%22getProducts%22%7D%2C%7B%22id%22%3A%227f379cef7033993f0df5da919ba2756976a8dfd3b4%22%2C%22exportedName%22%3A%22getBestSellers%22%7D%2C%7B%22id%22%3A%227f5cb95b7e9183733ab22556994ec9b8854c5f7818%22%2C%22exportedName%22%3A%22getProductsCount%22%7D%2C%7B%22id%22%3A%227f72a7154fa12743a1bad302af59c74d37794d44d6%22%2C%22exportedName%22%3A%22getAllProducts%22%7D%5D%5D%5D&__client_imported__=true!",
+          "moduleId": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22D%3A%5C%5Cportfolio%5C%5Cportfolio-1%20-%20freelancer%5C%5Csrc%5C%5Capp%5C%5Cserver%5C%5Cdb%5C%5Cproducts.ts%22%2C%5B%7B%22id%22%3A%227f356ea5f9aa8bc51decf25e71216274dd11cd1215%22%2C%22exportedName%22%3A%22getProductsByCategoryId%22%7D%2C%7B%22id%22%3A%227f43c2ccbfa8ba734d201e19350f3638df659468ec%22%2C%22exportedName%22%3A%22getProductsCount%22%7D%2C%7B%22id%22%3A%227f51e1c932e086317ee414606006bc57975a4e6631%22%2C%22exportedName%22%3A%22getProductsByCategory%22%7D%2C%7B%22id%22%3A%227f838289fd301b420f2cd0f770a5aedffbf9fb9cb8%22%2C%22exportedName%22%3A%22getBestSellers%22%7D%2C%7B%22id%22%3A%227f9c5d1cbe0f94d9298b9be5fd5c1905f292480ff5%22%2C%22exportedName%22%3A%22getProducts%22%7D%2C%7B%22id%22%3A%227fa17c7a7fa2ad64694b9d83fa5f77cfc8c322904b%22%2C%22exportedName%22%3A%22getAllProducts%22%7D%5D%5D%5D&__client_imported__=true!",
           "async": false
         }
       },
       "layer": {
-        "app/admin/menu-items/page": "rsc",
         "app/projects/page": "action-browser"
-      }
-    },
-    "7f4c225fe55ad2577323f74a2d6ebe3161ba322082": {
-      "workers": {
-        "app/admin/menu-items/new/page": {
-          "moduleId": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22D%3A%5C%5Cportfolio%5C%5Cportfolio-1%5C%5Csrc%5C%5Capp%5C%5Cadmin%5C%5Cmenu-items%5C%5C_actions%5C%5Cproduct.ts%22%2C%5B%7B%22id%22%3A%227f4c225fe55ad2577323f74a2d6ebe3161ba322082%22%2C%22exportedName%22%3A%22updateProduct%22%7D%2C%7B%22id%22%3A%227f6aaa58bd3dc4a58942c640ae551b024809d536c7%22%2C%22exportedName%22%3A%22addProduct%22%7D%2C%7B%22id%22%3A%227f934b34d4e58ad81fa36baa119f57d93b27aed560%22%2C%22exportedName%22%3A%22deleteProduct%22%7D%5D%5D%5D&__client_imported__=true!",
-          "async": false
-        }
-      },
-      "layer": {
-        "app/admin/menu-items/new/page": "action-browser"
-      }
-    },
-    "7f6aaa58bd3dc4a58942c640ae551b024809d536c7": {
-      "workers": {
-        "app/admin/menu-items/new/page": {
-          "moduleId": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22D%3A%5C%5Cportfolio%5C%5Cportfolio-1%5C%5Csrc%5C%5Capp%5C%5Cadmin%5C%5Cmenu-items%5C%5C_actions%5C%5Cproduct.ts%22%2C%5B%7B%22id%22%3A%227f4c225fe55ad2577323f74a2d6ebe3161ba322082%22%2C%22exportedName%22%3A%22updateProduct%22%7D%2C%7B%22id%22%3A%227f6aaa58bd3dc4a58942c640ae551b024809d536c7%22%2C%22exportedName%22%3A%22addProduct%22%7D%2C%7B%22id%22%3A%227f934b34d4e58ad81fa36baa119f57d93b27aed560%22%2C%22exportedName%22%3A%22deleteProduct%22%7D%5D%5D%5D&__client_imported__=true!",
-          "async": false
-        }
-      },
-      "layer": {
-        "app/admin/menu-items/new/page": "action-browser"
-      }
-    },
-    "7f934b34d4e58ad81fa36baa119f57d93b27aed560": {
-      "workers": {
-        "app/admin/menu-items/new/page": {
-          "moduleId": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22D%3A%5C%5Cportfolio%5C%5Cportfolio-1%5C%5Csrc%5C%5Capp%5C%5Cadmin%5C%5Cmenu-items%5C%5C_actions%5C%5Cproduct.ts%22%2C%5B%7B%22id%22%3A%227f4c225fe55ad2577323f74a2d6ebe3161ba322082%22%2C%22exportedName%22%3A%22updateProduct%22%7D%2C%7B%22id%22%3A%227f6aaa58bd3dc4a58942c640ae551b024809d536c7%22%2C%22exportedName%22%3A%22addProduct%22%7D%2C%7B%22id%22%3A%227f934b34d4e58ad81fa36baa119f57d93b27aed560%22%2C%22exportedName%22%3A%22deleteProduct%22%7D%5D%5D%5D&__client_imported__=true!",
-          "async": false
-        }
-      },
-      "layer": {
-        "app/admin/menu-items/new/page": "action-browser"
-      }
-    },
-    "40b90ad2cc5212b591efe4c542557149a5f2855d03": {
-      "workers": {
-        "app/admin/categories/page": {
-          "moduleId": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22D%3A%5C%5Cportfolio%5C%5Cportfolio-1%5C%5Csrc%5C%5Capp%5C%5Cadmin%5C%5Ccategories%5C%5C_actions%5C%5Ccategory.ts%22%2C%5B%7B%22id%22%3A%2240b90ad2cc5212b591efe4c542557149a5f2855d03%22%2C%22exportedName%22%3A%22deleteCategory%22%7D%2C%7B%22id%22%3A%22602534452f8533855775184332b71bffb0c68aedb9%22%2C%22exportedName%22%3A%22addCategory%22%7D%2C%7B%22id%22%3A%2270d17e19320ef1a5df853b4ccbc087ed3f70f0337d%22%2C%22exportedName%22%3A%22updateCategory%22%7D%5D%5D%5D&__client_imported__=true!",
-          "async": false
-        }
-      },
-      "layer": {
-        "app/admin/categories/page": "action-browser"
-      }
-    },
-    "602534452f8533855775184332b71bffb0c68aedb9": {
-      "workers": {
-        "app/admin/categories/page": {
-          "moduleId": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22D%3A%5C%5Cportfolio%5C%5Cportfolio-1%5C%5Csrc%5C%5Capp%5C%5Cadmin%5C%5Ccategories%5C%5C_actions%5C%5Ccategory.ts%22%2C%5B%7B%22id%22%3A%2240b90ad2cc5212b591efe4c542557149a5f2855d03%22%2C%22exportedName%22%3A%22deleteCategory%22%7D%2C%7B%22id%22%3A%22602534452f8533855775184332b71bffb0c68aedb9%22%2C%22exportedName%22%3A%22addCategory%22%7D%2C%7B%22id%22%3A%2270d17e19320ef1a5df853b4ccbc087ed3f70f0337d%22%2C%22exportedName%22%3A%22updateCategory%22%7D%5D%5D%5D&__client_imported__=true!",
-          "async": false
-        }
-      },
-      "layer": {
-        "app/admin/categories/page": "action-browser"
-      }
-    },
-    "70d17e19320ef1a5df853b4ccbc087ed3f70f0337d": {
-      "workers": {
-        "app/admin/categories/page": {
-          "moduleId": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22D%3A%5C%5Cportfolio%5C%5Cportfolio-1%5C%5Csrc%5C%5Capp%5C%5Cadmin%5C%5Ccategories%5C%5C_actions%5C%5Ccategory.ts%22%2C%5B%7B%22id%22%3A%2240b90ad2cc5212b591efe4c542557149a5f2855d03%22%2C%22exportedName%22%3A%22deleteCategory%22%7D%2C%7B%22id%22%3A%22602534452f8533855775184332b71bffb0c68aedb9%22%2C%22exportedName%22%3A%22addCategory%22%7D%2C%7B%22id%22%3A%2270d17e19320ef1a5df853b4ccbc087ed3f70f0337d%22%2C%22exportedName%22%3A%22updateCategory%22%7D%5D%5D%5D&__client_imported__=true!",
-          "async": false
-        }
-      },
-      "layer": {
-        "app/admin/categories/page": "action-browser"
       }
     }
   },

@@ -221,7 +221,7 @@ const ProjectCard: React.FC<{ project: Project }> = React.memo(({ project }) => 
               animate="visible"
               whileHover="hover"
               whileTap="tap"
-              className="bg-gradient-to-r from-[#FF6AC2] to-[#7B61FF] text-white text-xs font-medium px-3 py-1 rounded-full backdrop-blur-md"
+              className="bg-gradient-to-r from-[#14055e] to-[#14055e] text-white text-xs font-medium px-3 py-1 rounded-full backdrop-blur-md"
             >
               {addon}
             </motion.span>
