@@ -1,27 +1,5 @@
 {
   "node": {
-    "7fa363b169cf4b226d4242bd0d34406cf0106b2ec0": {
-      "workers": {
-        "app/api/auth/[...nextauth]/route": {
-          "moduleId": "(rsc)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22D%3A%5C%5Cportfolio%5C%5Cportfolio-1%20-%20freelancer%5C%5Csrc%5C%5Capp%5C%5Cserver%5C%5C_actions%5C%5Cauth.ts%22%2C%5B%7B%22id%22%3A%227fa363b169cf4b226d4242bd0d34406cf0106b2ec0%22%2C%22exportedName%22%3A%22login%22%7D%2C%7B%22id%22%3A%227fe147ee5f70f0df30558aa89c7317545fef19f8c6%22%2C%22exportedName%22%3A%22signup%22%7D%5D%5D%5D&__client_imported__=!",
-          "async": false
-        }
-      },
-      "layer": {
-        "app/api/auth/[...nextauth]/route": "rsc"
-      }
-    },
-    "7fe147ee5f70f0df30558aa89c7317545fef19f8c6": {
-      "workers": {
-        "app/api/auth/[...nextauth]/route": {
-          "moduleId": "(rsc)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22D%3A%5C%5Cportfolio%5C%5Cportfolio-1%20-%20freelancer%5C%5Csrc%5C%5Capp%5C%5Cserver%5C%5C_actions%5C%5Cauth.ts%22%2C%5B%7B%22id%22%3A%227fa363b169cf4b226d4242bd0d34406cf0106b2ec0%22%2C%22exportedName%22%3A%22login%22%7D%2C%7B%22id%22%3A%227fe147ee5f70f0df30558aa89c7317545fef19f8c6%22%2C%22exportedName%22%3A%22signup%22%7D%5D%5D%5D&__client_imported__=!",
-          "async": false
-        }
-      },
-      "layer": {
-        "app/api/auth/[...nextauth]/route": "rsc"
-      }
-    },
     "7f356ea5f9aa8bc51decf25e71216274dd11cd1215": {
       "workers": {
         "app/projects/page": {
@@ -86,6 +64,28 @@
       },
       "layer": {
         "app/projects/page": "action-browser"
+      }
+    },
+    "7fa363b169cf4b226d4242bd0d34406cf0106b2ec0": {
+      "workers": {
+        "app/api/auth/[...nextauth]/route": {
+          "moduleId": "(rsc)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22D%3A%5C%5Cportfolio%5C%5Cportfolio-1%20-%20freelancer%5C%5Csrc%5C%5Capp%5C%5Cserver%5C%5C_actions%5C%5Cauth.ts%22%2C%5B%7B%22id%22%3A%227fa363b169cf4b226d4242bd0d34406cf0106b2ec0%22%2C%22exportedName%22%3A%22login%22%7D%2C%7B%22id%22%3A%227fe147ee5f70f0df30558aa89c7317545fef19f8c6%22%2C%22exportedName%22%3A%22signup%22%7D%5D%5D%5D&__client_imported__=!",
+          "async": false
+        }
+      },
+      "layer": {
+        "app/api/auth/[...nextauth]/route": "rsc"
+      }
+    },
+    "7fe147ee5f70f0df30558aa89c7317545fef19f8c6": {
+      "workers": {
+        "app/api/auth/[...nextauth]/route": {
+          "moduleId": "(rsc)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22D%3A%5C%5Cportfolio%5C%5Cportfolio-1%20-%20freelancer%5C%5Csrc%5C%5Capp%5C%5Cserver%5C%5C_actions%5C%5Cauth.ts%22%2C%5B%7B%22id%22%3A%227fa363b169cf4b226d4242bd0d34406cf0106b2ec0%22%2C%22exportedName%22%3A%22login%22%7D%2C%7B%22id%22%3A%227fe147ee5f70f0df30558aa89c7317545fef19f8c6%22%2C%22exportedName%22%3A%22signup%22%7D%5D%5D%5D&__client_imported__=!",
+          "async": false
+        }
+      },
+      "layer": {
+        "app/api/auth/[...nextauth]/route": "rsc"
       }
     }
   },
